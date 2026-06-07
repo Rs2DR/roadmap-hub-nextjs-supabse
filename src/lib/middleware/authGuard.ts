@@ -1,5 +1,6 @@
-import { createServerClient } from '@supabase/ssr';
 import { NextResponse } from 'next/server';
+
+import { createServerSupabase } from '../supabase/server';
 
 import type { NextFetchEvent, NextRequest } from 'next/server';
 
@@ -9,29 +10,19 @@ export const withAuthGuard: MiddlewareFactory = (next) => {
   return async (request: NextRequest, event: NextFetchEvent) => {
     const pathname = request.nextUrl.pathname;
 
-    const supabase = createServerClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
-      {
-        cookies: {
-          getAll() {
-            return request.cookies.getAll();
-          },
-        },
-      },
-    );
+    const supabase = await createServerSupabase();
 
     const {
       data: { user },
     } = await supabase.auth.getUser();
 
     const isAuthPage =
-      pathname.startsWith('/login') || pathname.startsWith('/register');
-    const isProtectedPage = pathname.startsWith('/dashboard'); // Добавьте свои приватные пути
+      pathname.startsWith('/sign-in') || pathname.startsWith('/sign-up');
+    const isProtectedPage = pathname.startsWith('/dashboard');
 
     if (!user && isProtectedPage) {
       const url = request.nextUrl.clone();
-      url.pathname = '/login';
+      url.pathname = '/sign-in';
       return NextResponse.redirect(url);
     }
 
@@ -44,4 +35,3 @@ export const withAuthGuard: MiddlewareFactory = (next) => {
     return next(request, event);
   };
 };
-

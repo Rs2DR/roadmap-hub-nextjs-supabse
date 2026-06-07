@@ -6,7 +6,7 @@ import { signUpNewUser } from '@/actions/auth/signUpNewUser';
 
 import type { SignUpInput } from '@/shcemas/signUpSchema';
 
-export const useSignUp = () => {
+export const useSignUpNewUser = () => {
   return useMutation({
     mutationFn: (data: SignUpInput) => signUpNewUser(data),
   });
