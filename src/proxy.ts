@@ -1,6 +1,7 @@
 import { chain } from '@/lib/middleware/chain';
+
+import { withAuthGuard } from './lib/middleware/authGuard';
 import { withSupabase } from './lib/middleware/supabase';
-import { withAuthGuard } from './lib/middleware/auth-guard';
 
 export default chain([withSupabase, withAuthGuard]);
 

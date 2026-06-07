@@ -1,6 +1,9 @@
-import { NextFetchEvent, NextRequest, NextResponse } from 'next/server';
 import { createServerClient } from '@supabase/ssr';
-import { MiddlewareFactory } from './chain';
+import { NextResponse } from 'next/server';
+
+import type { NextFetchEvent, NextRequest } from 'next/server';
+
+import type { MiddlewareFactory } from './chain';
 
 export const withAuthGuard: MiddlewareFactory = (next) => {
   return async (request: NextRequest, event: NextFetchEvent) => {

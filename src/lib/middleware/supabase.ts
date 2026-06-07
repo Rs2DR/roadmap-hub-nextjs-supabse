@@ -1,6 +1,8 @@
 import { createServerClient } from '@supabase/ssr';
-import { NextFetchEvent, NextRequest, NextResponse } from 'next/server';
-import { MiddlewareFactory } from './chain';
+
+import type { NextFetchEvent, NextRequest } from 'next/server';
+
+import type { MiddlewareFactory } from './chain';
 
 export const withSupabase: MiddlewareFactory = (next) => {
   return async (request: NextRequest, event: NextFetchEvent) => {
@@ -36,3 +38,4 @@ export const withSupabase: MiddlewareFactory = (next) => {
     return response;
   };
 };
+

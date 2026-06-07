@@ -1,8 +1,9 @@
 'use server';
 
-import { createServerSupabase } from '@/lib/supabase/server';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
+
+import { createServerSupabase } from '@/lib/supabase/server';
 
 export const signInWithEmail = async (formData: FormData) => {
   'use server';
