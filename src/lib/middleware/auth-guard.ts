@@ -24,8 +24,7 @@ export const withAuthGuard: MiddlewareFactory = (next) => {
 
     const isAuthPage =
       pathname.startsWith('/login') || pathname.startsWith('/register');
-    const isProtectedPage =
-      pathname.startsWith('/dashboard') || pathname.startsWith('/profile'); // Добавьте свои приватные пути
+    const isProtectedPage = pathname.startsWith('/dashboard'); // Добавьте свои приватные пути
 
     if (!user && isProtectedPage) {
       const url = request.nextUrl.clone();
