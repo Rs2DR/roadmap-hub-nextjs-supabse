@@ -24,7 +24,7 @@ import { SocialProviders } from '../social-providers';
 import type { SignInInput } from '@/shcemas/signInSchema';
 
 export function SignInForm({ className, ...props }: ComponentProps<'form'>) {
-  const { mutate } = useSignInWithEmail();
+  const { mutate: signIn } = useSignInWithEmail();
   const { handleSubmit, control } = useForm<SignInInput>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
@@ -34,7 +34,7 @@ export function SignInForm({ className, ...props }: ComponentProps<'form'>) {
   });
 
   const onSubmit = async (data: SignInInput) => {
-    mutate(data);
+    signIn(data);
   };
 
   return (

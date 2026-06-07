@@ -1,5 +1,6 @@
-import { GalleryVerticalEnd, Link } from 'lucide-react';
+import { GalleryVerticalEnd } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { ResetPasswordForm } from '@/components/reset-password-form';
 

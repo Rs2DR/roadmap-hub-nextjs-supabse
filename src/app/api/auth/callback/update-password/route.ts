@@ -18,5 +18,5 @@ export async function GET(request: Request) {
     }
   }
 
-  return NextResponse.redirect(new URL('/reset-password', request.url));
+  return NextResponse.redirect(new URL('/reset-password/new', request.url));
 }

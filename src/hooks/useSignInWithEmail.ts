@@ -9,4 +9,7 @@ import type { SignInInput } from '@/shcemas/signInSchema';
 export const useSignInWithEmail = () =>
   useMutation({
     mutationFn: (data: SignInInput) => signInWithEmail(data),
+    onError: (error) => {
+      console.log(error.message);
+    },
   });
