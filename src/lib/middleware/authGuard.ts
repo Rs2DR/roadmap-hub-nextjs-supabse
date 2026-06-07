@@ -18,7 +18,9 @@ export const withAuthGuard: MiddlewareFactory = (next) => {
 
     const isAuthPage =
       pathname.startsWith('/sign-in') || pathname.startsWith('/sign-up');
-    const isProtectedPage = pathname.startsWith('/dashboard');
+    const isProtectedPage =
+      pathname.startsWith('/dashboard') ||
+      pathname.startsWith('/reset-password/new');
 
     if (!user && isProtectedPage) {
       const url = request.nextUrl.clone();

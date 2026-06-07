@@ -1,5 +1,6 @@
 'use client';
 
+import type { ComponentProps } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -22,10 +23,7 @@ import { SocialProviders } from '../social-providers';
 
 import type { SignInInput } from '@/shcemas/signInSchema';
 
-export function SignInForm({
-  className,
-  ...props
-}: React.ComponentProps<'form'>) {
+export function SignInForm({ className, ...props }: ComponentProps<'form'>) {
   const { mutate } = useSignInWithEmail();
   const { handleSubmit, control } = useForm<SignInInput>({
     resolver: zodResolver(signInSchema),
@@ -83,6 +81,9 @@ export function SignInForm({
                 aria-invalid={fieldState.invalid}
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+              <FieldDescription className="text-right">
+                <Link href="reset-password">Забыл пароль?</Link>
+              </FieldDescription>
             </Field>
           )}
         />
@@ -92,11 +93,10 @@ export function SignInForm({
         <SocialProviders />
         <Field>
           <FieldDescription className="px-6 text-center">
-            У вас еще нет фккаунта? <Link href="/sign-up">Создать</Link>
+            У вас еще нет аккаунта? <Link href="/sign-up">Создать</Link>
           </FieldDescription>
         </Field>
       </FieldGroup>
     </form>
   );
 }
-
