@@ -2,13 +2,25 @@
 
 import { useSuspenseQuery } from '@tanstack/react-query';
 
+import { useSignOut } from '@/hooks/useSignOut';
 import { getUserQueryOptions } from '@/queries/getUserQueryOptions';
+
+import { Button } from '../ui/Button';
 
 export function User() {
   const { data } = useSuspenseQuery(getUserQueryOptions());
+  const { mutate } = useSignOut();
+
+  const handleSignOut = () => {
+    mutate();
+  };
 
   if (!data) return null;
 
-  return <div>{JSON.stringify(data)}</div>;
+  return (
+    <div>
+      <Button onClick={handleSignOut}>Выйти</Button>
+      {JSON.stringify(data)}
+    </div>
+  );
 }
-

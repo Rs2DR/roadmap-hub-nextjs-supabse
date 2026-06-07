@@ -1,7 +1,5 @@
 'use server';
 
-import { redirect } from 'next/navigation';
-
 import { createServerSupabase } from '@/lib/supabase/server';
 
 import type { SignUpInput } from '@/shcemas/signUpSchema';
@@ -22,6 +20,5 @@ export const signUpNewUser = async ({ name, email, password }: SignUpInput) => {
 
   if (error) throw new Error(error.message);
 
-  return redirect('/confirm-email');
+  return { success: true };
 };
-
