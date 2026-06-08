@@ -15,6 +15,7 @@ import {
   FieldLabel,
 } from '@/components/ui/Field';
 import { Input } from '@/components/ui/Input';
+import { AUTH_ROUTES } from '@/constants/routes';
 import { useSignUpNewUser } from '@/hooks/useSignUpNewUser';
 import { cn } from '@/lib/utils';
 import { signUpSchema } from '@/shcemas/signUpSchema';
@@ -139,7 +140,8 @@ export function SignUpForm({ className, ...props }: ComponentProps<'form'>) {
         <SocialProviders />
         <Field>
           <FieldDescription className="px-6 text-center">
-            У вас уже есть аккаунт? <Link href="/sign-in">Войти</Link>
+            У вас уже есть аккаунт?{' '}
+            <Link href={AUTH_ROUTES.SIGN_IN}>Войти</Link>
           </FieldDescription>
         </Field>
       </FieldGroup>

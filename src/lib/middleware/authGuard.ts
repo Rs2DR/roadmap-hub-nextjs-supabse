@@ -1,5 +1,12 @@
 import { NextResponse } from 'next/server';
 
+import {
+  AUTH_PROTECTED_ROUTES,
+  APP_PROTECTED_ROUTES,
+  AUTH_ROUTES,
+  APP_ROUTES,
+} from '@/constants/routes';
+
 import { createServerSupabase } from '../supabase/server';
 
 import type { NextFetchEvent, NextRequest } from 'next/server';
@@ -16,23 +23,22 @@ export const withAuthGuard: MiddlewareFactory = (next) => {
       data: { user },
     } = await supabase.auth.getUser();
 
-    const isAuthPage =
-      pathname.startsWith('/sign-in') ||
-      pathname.startsWith('/sign-up') ||
-      pathname.startsWith('/reset-password');
-    const isProtectedPage =
-      pathname.startsWith('/dashboard') ||
-      pathname.startsWith('/reset-password/new');
+    const isAuthPage = AUTH_PROTECTED_ROUTES.some((path) =>
+      pathname.startsWith(path),
+    );
+    const isProtectedPage = APP_PROTECTED_ROUTES.some((path) =>
+      pathname.startsWith(path),
+    );
 
     if (!user && isProtectedPage) {
       const url = request.nextUrl.clone();
-      url.pathname = '/sign-in';
+      url.pathname = AUTH_ROUTES.SIGN_IN;
       return NextResponse.redirect(url);
     }
 
     if (user && isAuthPage) {
       const url = request.nextUrl.clone();
-      url.pathname = '/dashboard';
+      url.pathname = APP_ROUTES.DASHBOARD;
       return NextResponse.redirect(url);
     }
 

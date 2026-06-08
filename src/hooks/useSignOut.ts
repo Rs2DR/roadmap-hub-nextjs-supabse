@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
 import { signOut } from '@/actions/auth/signOut';
+import { APP_ROUTES } from '@/constants/routes';
 
 export const useSignOut = () => {
   const router = useRouter();
@@ -13,7 +14,7 @@ export const useSignOut = () => {
     mutationFn: () => signOut(),
     onSuccess: ({ success }) => {
       if (success) {
-        router.push('/');
+        router.push(APP_ROUTES.ROOT);
         toast.success('Вы успешно вышли из аккаунта');
       }
     },

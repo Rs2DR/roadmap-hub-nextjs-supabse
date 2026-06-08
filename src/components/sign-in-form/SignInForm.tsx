@@ -15,6 +15,7 @@ import {
   FieldLabel,
 } from '@/components/ui/Field';
 import { Input } from '@/components/ui/Input';
+import { AUTH_ROUTES } from '@/constants/routes';
 import { useSignInWithEmail } from '@/hooks/useSignInWithEmail';
 import { cn } from '@/lib/utils';
 import { signInSchema } from '@/shcemas/signInSchema';
@@ -86,7 +87,7 @@ export function SignInForm({ className, ...props }: ComponentProps<'form'>) {
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
               <FieldDescription className="text-right">
-                <Link href="reset-password">Забыл пароль?</Link>
+                <Link href={AUTH_ROUTES.RESET_PASSWORD}>Забыл пароль?</Link>
               </FieldDescription>
             </Field>
           )}
@@ -103,7 +104,8 @@ export function SignInForm({ className, ...props }: ComponentProps<'form'>) {
         <SocialProviders />
         <Field>
           <FieldDescription className="px-6 text-center">
-            У вас еще нет аккаунта? <Link href="/sign-up">Создать</Link>
+            У вас еще нет аккаунта?{' '}
+            <Link href={AUTH_ROUTES.SIGN_UP}>Создать</Link>
           </FieldDescription>
         </Field>
       </FieldGroup>

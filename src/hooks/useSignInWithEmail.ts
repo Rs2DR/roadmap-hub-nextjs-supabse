@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
 import { signInWithEmail } from '@/actions/auth/signInWithEmail';
+import { APP_ROUTES } from '@/constants/routes';
 
 import type { SignInInput } from '@/shcemas/signInSchema';
 
@@ -15,7 +16,7 @@ export const useSignInWithEmail = () => {
     mutationFn: (data: SignInInput) => signInWithEmail(data),
     onSuccess: ({ success }) => {
       if (success) {
-        router.push('/dashboard');
+        router.push(APP_ROUTES.DASHBOARD);
         toast.success('Вы успешно вошли в аккаунт');
       }
     },

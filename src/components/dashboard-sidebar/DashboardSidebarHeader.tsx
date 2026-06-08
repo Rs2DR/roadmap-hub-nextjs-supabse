@@ -3,6 +3,8 @@
 import { GalleryVerticalEnd } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
+import { APP_ROUTES } from '@/constants/routes';
+
 import {
   SidebarHeader,
   SidebarMenu,
@@ -13,7 +15,7 @@ import {
 export function DashboardSidebarHeader() {
   const router = useRouter();
 
-  const handleNavigateToRoot = () => router.push('/');
+  const handleNavigateToRoot = () => router.push(APP_ROUTES.ROOT);
 
   return (
     <SidebarHeader>

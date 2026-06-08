@@ -1,6 +1,8 @@
 import { Settings } from 'lucide-react';
 import Link from 'next/link';
 
+import { DASHBOARD_ROUTES } from '@/constants/routes';
+
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -14,7 +16,7 @@ export function NavSystem() {
       <SidebarGroupLabel>Система</SidebarGroupLabel>
       <SidebarMenuItem>
         <SidebarMenuButton asChild>
-          <Link href="/dashboard/settings">
+          <Link href={DASHBOARD_ROUTES.SETTINGS}>
             <Settings /> <span>Настройки</span>
           </Link>
         </SidebarMenuButton>
