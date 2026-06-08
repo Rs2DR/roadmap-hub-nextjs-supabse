@@ -1,10 +1,21 @@
 'use client';
 
 import { useMutation } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 
 import { requestPasswordReset } from '@/actions/auth/requestPasswordReset';
 
-export const useRequestPasswordReset = () =>
-  useMutation({
-    mutationFn: (email: string) => requestPasswordReset(email),
+import type { RequestResetPasswordInput } from '@/shcemas/requestResetPasswordSchema';
+
+export const useRequestPasswordReset = () => {
+  const router = useRouter();
+
+  return useMutation({
+    mutationFn: (data: RequestResetPasswordInput) => requestPasswordReset(data),
+    onSuccess: ({ success }) => {
+      if (success) {
+        router.push('/dashboard');
+      }
+    },
   });
+};

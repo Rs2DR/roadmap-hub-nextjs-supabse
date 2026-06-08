@@ -1,5 +1,6 @@
 'use client';
 
+import type { ComponentProps } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -22,11 +23,8 @@ import { SocialProviders } from '../social-providers';
 
 import type { SignUpInput } from '@/shcemas/signUpSchema';
 
-export function SignUpForm({
-  className,
-  ...props
-}: React.ComponentProps<'form'>) {
-  const { mutate } = useSignUpNewUser();
+export function SignUpForm({ className, ...props }: ComponentProps<'form'>) {
+  const { mutate: signUp } = useSignUpNewUser();
   const { handleSubmit, control } = useForm<SignUpInput>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
@@ -38,7 +36,7 @@ export function SignUpForm({
   });
 
   const onSubmit = async (data: SignUpInput) => {
-    mutate(data);
+    signUp(data);
   };
 
   return (
@@ -138,4 +136,3 @@ export function SignUpForm({
     </form>
   );
 }
-

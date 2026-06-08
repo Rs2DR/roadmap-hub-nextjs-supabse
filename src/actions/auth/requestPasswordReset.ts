@@ -2,7 +2,11 @@
 
 import { createServerSupabase } from '@/lib/supabase/server';
 
-export const requestPasswordReset = async (email: string) => {
+import type { RequestResetPasswordInput } from '@/shcemas/requestResetPasswordSchema';
+
+export const requestPasswordReset = async ({
+  email,
+}: RequestResetPasswordInput) => {
   const supabase = await createServerSupabase();
 
   const { error } = await supabase.auth.resetPasswordForEmail(email, {

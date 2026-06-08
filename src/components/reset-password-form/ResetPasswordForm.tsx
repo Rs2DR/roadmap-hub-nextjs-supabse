@@ -51,7 +51,7 @@ export function ResetPasswordForm({
           control={control}
           render={({ field, fieldState }) => (
             <Field>
-              <FieldLabel htmlFor="password">Пароль</FieldLabel>
+              <FieldLabel htmlFor="password">Новый пароль</FieldLabel>
               <Input
                 {...field}
                 id="password"
