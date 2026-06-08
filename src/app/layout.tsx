@@ -1,4 +1,5 @@
 import { Roboto } from 'next/font/google';
+import { Toaster } from 'sonner';
 
 import Providers from './providers';
 
@@ -24,8 +25,8 @@ export default function RootLayout({
     <html lang="en" className={`${roboto.className} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         <Providers>{children}</Providers>
+        <Toaster />
       </body>
     </html>
   );
 }
-

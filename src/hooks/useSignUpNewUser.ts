@@ -2,6 +2,7 @@
 
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 import { signUpNewUser } from '@/actions/auth/signUpNewUser';
 
@@ -15,8 +16,8 @@ export const useSignUpNewUser = () => {
     onSuccess: ({ success }) => {
       if (success) router.push('/confirm-email');
     },
-    onError: (error) => {
-      console.error('Критическая ошибка сети или сервера:', error);
+    onError: ({ message }) => {
+      toast.error(message);
     },
   });
 };

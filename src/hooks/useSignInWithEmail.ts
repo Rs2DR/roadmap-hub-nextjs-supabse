@@ -2,6 +2,7 @@
 
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 import { signInWithEmail } from '@/actions/auth/signInWithEmail';
 
@@ -13,10 +14,13 @@ export const useSignInWithEmail = () => {
   return useMutation({
     mutationFn: (data: SignInInput) => signInWithEmail(data),
     onSuccess: ({ success }) => {
-      if (success) router.push('/dashboard');
+      if (success) {
+        router.push('/dashboard');
+        toast.success('Вы успешно вошли в аккаунт');
+      }
     },
-    onError: (error) => {
-      console.log(error.message);
+    onError: ({ message }) => {
+      toast.error(message);
     },
   });
 };
