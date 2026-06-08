@@ -1,7 +1,5 @@
 'use server';
 
-import { redirect } from 'next/navigation';
-
 import { createServerSupabase } from '@/lib/supabase/server';
 
 import type { SignInInput } from '@/shcemas/signInSchema';
@@ -16,6 +14,5 @@ export const signInWithEmail = async ({ email, password }: SignInInput) => {
 
   if (error) throw new Error(error.message);
 
-  return redirect('/dashboard');
+  return { success: true };
 };
-

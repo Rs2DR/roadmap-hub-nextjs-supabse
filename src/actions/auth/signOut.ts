@@ -1,7 +1,5 @@
 'use server';
 
-import { redirect } from 'next/navigation';
-
 import { createServerSupabase } from '@/lib/supabase/server';
 
 export const signOut = async () => {
@@ -11,5 +9,5 @@ export const signOut = async () => {
 
   if (error) throw new Error(error.message);
 
-  return redirect('/');
+  return { success: true };
 };

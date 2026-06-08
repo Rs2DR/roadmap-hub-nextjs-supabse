@@ -13,9 +13,7 @@ export const useRequestPasswordReset = () => {
   return useMutation({
     mutationFn: (data: RequestResetPasswordInput) => requestPasswordReset(data),
     onSuccess: ({ success }) => {
-      if (success) {
-        router.push('/dashboard');
-      }
+      if (success) router.push('/sign-in');
     },
   });
 };

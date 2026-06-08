@@ -1,7 +1,5 @@
 'use server';
 
-import { redirect } from 'next/navigation';
-
 import { createServerSupabase } from '@/lib/supabase/server';
 
 export const signInWithGitHub = async () => {
@@ -13,6 +11,5 @@ export const signInWithGitHub = async () => {
 
   if (error) throw new Error(error.message);
 
-  return redirect('/dashboard');
+  return { success: true };
 };
-
