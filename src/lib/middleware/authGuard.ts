@@ -17,7 +17,9 @@ export const withAuthGuard: MiddlewareFactory = (next) => {
     } = await supabase.auth.getUser();
 
     const isAuthPage =
-      pathname.startsWith('/sign-in') || pathname.startsWith('/sign-up');
+      pathname.startsWith('/sign-in') ||
+      pathname.startsWith('/sign-up') ||
+      pathname.startsWith('/reset-password');
     const isProtectedPage =
       pathname.startsWith('/dashboard') ||
       pathname.startsWith('/reset-password/new');

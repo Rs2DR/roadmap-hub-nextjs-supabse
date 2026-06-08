@@ -24,8 +24,12 @@ import { SocialProviders } from '../social-providers';
 import type { SignInInput } from '@/shcemas/signInSchema';
 
 export function SignInForm({ className, ...props }: ComponentProps<'form'>) {
-  const { mutate: signIn } = useSignInWithEmail();
-  const { handleSubmit, control } = useForm<SignInInput>({
+  const { mutate: signIn, isPending } = useSignInWithEmail();
+  const {
+    handleSubmit,
+    control,
+    formState: { isSubmitting, isValid },
+  } = useForm<SignInInput>({
     resolver: zodResolver(signInSchema),
     defaultValues: {
       email: '',
@@ -88,7 +92,13 @@ export function SignInForm({ className, ...props }: ComponentProps<'form'>) {
           )}
         />
         <Field>
-          <Button type="submit">Войти</Button>
+          <Button
+            type="submit"
+            disabled={!isValid}
+            loading={isPending || isSubmitting}
+          >
+            Войти
+          </Button>
         </Field>
         <SocialProviders />
         <Field>

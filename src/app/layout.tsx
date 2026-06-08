@@ -1,5 +1,6 @@
 import { Roboto } from 'next/font/google';
-import { Toaster } from 'sonner';
+
+import { Toaster } from '@/components/ui/Sonner';
 
 import Providers from './providers';
 

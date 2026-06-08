@@ -19,8 +19,12 @@ export function RequestResetPasswordForm({
   className,
   ...props
 }: ComponentProps<'form'>) {
-  const { mutate: resetPassowrd } = useRequestPasswordReset();
-  const { handleSubmit, control } = useForm<RequestResetPasswordInput>({
+  const { mutate: resetPassowrd, isPending } = useRequestPasswordReset();
+  const {
+    handleSubmit,
+    control,
+    formState: { isSubmitting, isValid },
+  } = useForm<RequestResetPasswordInput>({
     resolver: zodResolver(requestResetPasswordSchema),
     defaultValues: {
       email: '',
@@ -62,7 +66,13 @@ export function RequestResetPasswordForm({
           )}
         />
         <Field>
-          <Button type="submit">Запросить письмо</Button>
+          <Button
+            type="submit"
+            disabled={!isValid}
+            loading={isPending || isSubmitting}
+          >
+            Запросить письмо
+          </Button>
         </Field>
       </FieldGroup>
     </form>

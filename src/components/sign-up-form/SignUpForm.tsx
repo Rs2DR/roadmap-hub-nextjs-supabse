@@ -24,8 +24,12 @@ import { SocialProviders } from '../social-providers';
 import type { SignUpInput } from '@/shcemas/signUpSchema';
 
 export function SignUpForm({ className, ...props }: ComponentProps<'form'>) {
-  const { mutate: signUp } = useSignUpNewUser();
-  const { handleSubmit, control } = useForm<SignUpInput>({
+  const { mutate: signUp, isPending } = useSignUpNewUser();
+  const {
+    handleSubmit,
+    control,
+    formState: { isSubmitting, isValid },
+  } = useForm<SignUpInput>({
     resolver: zodResolver(signUpSchema),
     defaultValues: {
       name: '',
@@ -124,7 +128,13 @@ export function SignUpForm({ className, ...props }: ComponentProps<'form'>) {
           )}
         />
         <Field>
-          <Button type="submit">Зарегестрироваться</Button>
+          <Button
+            type="submit"
+            disabled={!isValid}
+            loading={isPending || isSubmitting}
+          >
+            Зарегестрироваться
+          </Button>
         </Field>
         <SocialProviders />
         <Field>

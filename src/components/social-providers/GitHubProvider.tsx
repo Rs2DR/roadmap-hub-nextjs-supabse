@@ -17,10 +17,8 @@ export function GitHubProvider() {
   return (
     <Field>
       <Button variant="outline" type="button" onClick={handleSignIn}>
-        <FaGithub />
-        Продолжить с GitHub
+        <FaGithub /> Продолжить с GitHub
       </Button>
     </Field>
   );
 }
-

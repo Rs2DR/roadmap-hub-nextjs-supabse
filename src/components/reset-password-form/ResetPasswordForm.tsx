@@ -19,8 +19,12 @@ export function ResetPasswordForm({
   className,
   ...props
 }: ComponentProps<'form'>) {
-  const { mutate: updatePassword } = useUpdatePassword();
-  const { handleSubmit, control } = useForm<ResetPasswordInput>({
+  const { mutate: updatePassword, isPending } = useUpdatePassword();
+  const {
+    handleSubmit,
+    control,
+    formState: { isSubmitting, isValid },
+  } = useForm<ResetPasswordInput>({
     resolver: zodResolver(resetPasswordSchema),
     defaultValues: {
       password: '',
@@ -83,7 +87,13 @@ export function ResetPasswordForm({
           )}
         />
         <Field>
-          <Button type="submit">Сменить пароль</Button>
+          <Button
+            type="submit"
+            disabled={!isValid}
+            loading={isPending || isSubmitting}
+          >
+            Сменить пароль
+          </Button>
         </Field>
       </FieldGroup>
     </form>
