@@ -38,4 +38,3 @@ export const withSupabase: MiddlewareFactory = (next) => {
     return response;
   };
 };
-
