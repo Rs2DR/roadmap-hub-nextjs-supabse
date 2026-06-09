@@ -1,16 +1,10 @@
 import { queryOptions } from '@tanstack/react-query';
 
-import { createClientSupabase } from '@/lib/supabase/client';
+import { getUser } from '@/actions/user/getUser';
+import { USER_QUERY_KEY } from '@/constants/queries';
 
 export const getUserQueryOptions = () =>
   queryOptions({
-    queryKey: ['user'],
-    queryFn: async () => {
-      const supabase = createClientSupabase();
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      return user;
-    },
+    queryKey: [USER_QUERY_KEY],
+    queryFn: () => getUser(),
   });
-

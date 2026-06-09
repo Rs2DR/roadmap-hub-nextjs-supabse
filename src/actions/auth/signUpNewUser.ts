@@ -1,5 +1,6 @@
 'use server';
 
+import { API_ROUTES } from '@/constants/api';
 import { createServerSupabase } from '@/lib/supabase/server';
 
 import type { SignUpInput } from '@/shcemas/signUpSchema';
@@ -14,7 +15,7 @@ export const signUpNewUser = async ({ name, email, password }: SignUpInput) => {
       data: {
         firstName: name,
       },
-      emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/api/auth/callback?next=/dashboard`,
+      emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}${API_ROUTES.CONFIRM_PASSWORD}?next=/dashboard`,
     },
   });
 

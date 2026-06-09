@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 
+import { AUTH_ROUTES } from '@/constants/routes';
 import { createServerSupabase } from '@/lib/supabase/server';
 
 export async function GET(request: Request) {
@@ -13,10 +14,12 @@ export async function GET(request: Request) {
 
     if (error) {
       return NextResponse.redirect(
-        `${origin}/reset-password?error=invalid_code`,
+        `${origin}${AUTH_ROUTES.RESET_PASSWORD}?error=invalid_code`,
       );
     }
   }
 
-  return NextResponse.redirect(new URL('/reset-password/new', request.url));
+  return NextResponse.redirect(
+    new URL(AUTH_ROUTES.UPDATE_PASSWORD, request.url),
+  );
 }
