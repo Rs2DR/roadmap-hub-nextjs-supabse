@@ -1,4 +1,11 @@
-import { Heart, MessageSquare, MoreHorizontal } from 'lucide-react';
+import {
+  Heart,
+  MessageSquare,
+  MoreHorizontal,
+  Pencil,
+  Share,
+  Trash,
+} from 'lucide-react';
 
 import { Avatar, AvatarFallback } from '../ui/Avatar';
 import { Button } from '../ui/Button';
@@ -10,15 +17,46 @@ import {
   CardHeader,
   CardTitle,
 } from '../ui/Card';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuTrigger,
+} from '../ui/DropdownMenu';
+import { Separator } from '../ui/Separator';
 
 export function MyRoadmapCard() {
   return (
-    <Card className="relative mx-auto w-full max-w-sm ">
+    <Card className="relative mx-auto w-full">
       <CardHeader>
         <CardAction>
-          <Button variant="outline" size="icon">
-            <MoreHorizontal />
-          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" size="icon">
+                <MoreHorizontal />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuGroup>
+                <DropdownMenuLabel>Инструменты</DropdownMenuLabel>
+                <DropdownMenuItem className="text-accent-foreground">
+                  <Pencil /> Изменить
+                </DropdownMenuItem>
+                <DropdownMenuItem className="text-accent-foreground">
+                  <Trash /> Удалить
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+              <Separator />
+              <DropdownMenuGroup>
+                <DropdownMenuLabel>Основное</DropdownMenuLabel>
+                <DropdownMenuItem className="text-accent-foreground">
+                  <Share /> Поделиться
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </CardAction>
         <div className="inline-flex items-center gap-4">
           <Avatar>
