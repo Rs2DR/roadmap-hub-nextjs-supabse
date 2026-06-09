@@ -1,45 +1,83 @@
+import { Suspense } from 'react';
+
+import {
+  dehydrate,
+  HydrationBoundary,
+  useSuspenseQuery,
+} from '@tanstack/react-query';
 import { Plus, Search } from 'lucide-react';
 
-import { MyRoadmapCard } from '@/components/my-roadmap-card';
+import { ManageMyRoadmapForm } from '@/components/manage-my-roadmap-from';
+import { MyRoadmapsList } from '@/components/my-roadmaps-list';
 import { Button } from '@/components/ui/Button';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/dialog';
 import { Field, FieldLabel } from '@/components/ui/Field';
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupInput,
 } from '@/components/ui/InputGroup';
+import { createServerSupabase } from '@/lib/supabase/server';
+import { getQueryClient } from '@/lib/tanstack-query/getQueryClient';
+import { getMyRoadmapsQueryOptions } from '@/queries/getMyRoadmapQueryOptions';
 
-export default function MyRoadmapsPage() {
+export default async function MyRoadmapsPage() {
+  const queryClient = getQueryClient();
+  const supabase = await createServerSupabase();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) return null;
+
+  await queryClient.prefetchQuery(
+    getMyRoadmapsQueryOptions({ userId: user.id }),
+  );
+
   return (
-    <div className="flex flex-col gap-4">
-      <div className="inline-flex w-full items-end gap-4">
-        <Field className="grow">
-          <FieldLabel htmlFor="input-search-roadmap">
-            Найди свой Roadmap
-          </FieldLabel>
-          <InputGroup>
-            <InputGroupAddon>
-              <Search />
-            </InputGroupAddon>
-            <InputGroupInput id="input-search-roadmap" placeholder="search" />
-          </InputGroup>
-        </Field>
-        <Button>
-          <Plus />
-          <span className="hidden sm:inline">Создать Roadmap</span>
-        </Button>
+    <HydrationBoundary state={dehydrate(queryClient)}>
+      <div className="flex flex-col gap-4">
+        <div className="inline-flex w-full items-end gap-4">
+          <Field className="grow">
+            <FieldLabel htmlFor="input-search-roadmap">
+              Найди свой Roadmap
+            </FieldLabel>
+            <InputGroup>
+              <InputGroupAddon>
+                <Search />
+              </InputGroupAddon>
+              <InputGroupInput
+                id="input-search-roadmap"
+                placeholder="Поиск..."
+              />
+            </InputGroup>
+          </Field>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button>
+                <Plus />
+                <span className="hidden sm:inline">Создать Roadmap</span>
+              </Button>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogTitle>Создание Roadmap</DialogTitle>
+              <DialogDescription>
+                Тут вы можете создать свой Roadmap
+              </DialogDescription>
+              <ManageMyRoadmapForm />
+            </DialogContent>
+          </Dialog>
+        </div>
+        <Suspense>
+          <MyRoadmapsList userId={user.id} />
+        </Suspense>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
-        <MyRoadmapCard />
-        <MyRoadmapCard />
-        <MyRoadmapCard />
-        <MyRoadmapCard />
-        <MyRoadmapCard />
-        <MyRoadmapCard />
-        <MyRoadmapCard />
-        <MyRoadmapCard />
-        <MyRoadmapCard />
-      </div>
-    </div>
+    </HydrationBoundary>
   );
 }

@@ -31,8 +31,6 @@ export function NavUser() {
 
   if (!user) return null;
 
-  console.log(user);
-
   const { user_metadata } = user;
   const { firstName, email, avatar } = user_metadata;
 

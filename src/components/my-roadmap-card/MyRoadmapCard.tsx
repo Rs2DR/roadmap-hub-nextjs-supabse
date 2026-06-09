@@ -27,7 +27,13 @@ import {
 } from '../ui/DropdownMenu';
 import { Separator } from '../ui/Separator';
 
-export function MyRoadmapCard() {
+interface MyRoadmapCardProps {
+  roadmap: { title: string; description: string };
+}
+
+export function MyRoadmapCard({ roadmap }: MyRoadmapCardProps) {
+  const { title, description } = roadmap;
+
   return (
     <Card className="relative mx-auto w-full">
       <CardHeader>
@@ -62,14 +68,11 @@ export function MyRoadmapCard() {
           <Avatar>
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
-          <CardTitle>Design systems meetup</CardTitle>
+          <CardTitle>{title}</CardTitle>
         </div>
-        <CardDescription className="mt-2">
-          A practical talk on component APIs, accessibility, and shipping
-          faster.
-        </CardDescription>
+        <CardDescription className="mt-2">{description}</CardDescription>
       </CardHeader>
-      <CardFooter className="py-2">
+      <CardFooter className="inline-flex items-center justify-between py-2">
         <div className="inline-flex gap-2 text-muted-foreground">
           <div className="inline-flex items-center gap-1.5">
             <MessageSquare size={18} />
@@ -80,6 +83,7 @@ export function MyRoadmapCard() {
             <span className="trext-lg">0</span>
           </div>
         </div>
+        <Button>Открыть</Button>
       </CardFooter>
     </Card>
   );
