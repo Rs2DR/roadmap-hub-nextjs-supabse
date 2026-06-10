@@ -1,18 +1,15 @@
 'use client';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
 import { createRoadmap } from '@/actions/roadmap/createRoadmap';
 import { MY_ROADMAPS_KEY } from '@/constants/queries';
-import { DASHBOARD_ROUTES } from '@/constants/routes';
 
 import type { ManageMyRoadmapInput } from '@/shcemas/ManageMyRoadmapSchema';
 import type { Roadmap } from '@/shcemas/RoadmapSchema';
 
 export const useCreateRoadmap = () => {
-  const router = useRouter();
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -43,7 +40,7 @@ export const useCreateRoadmap = () => {
       return { previousRoadmaps };
     },
 
-    onSuccess: ({ success, data: { id } }) => {
+    onSuccess: ({ success }) => {
       if (!success) return;
 
       toast.success('Roadmap успешно создана');
@@ -51,11 +48,9 @@ export const useCreateRoadmap = () => {
       queryClient.invalidateQueries({
         queryKey: [MY_ROADMAPS_KEY],
       });
-
-      router.push(`${DASHBOARD_ROUTES.MY_ROADMAPS}/${id}`);
     },
 
-    onError: ({ message }, _variables, context) => {
+    onError: ({ message }, _vars, context) => {
       if (context?.previousRoadmaps) {
         queryClient.setQueryData([MY_ROADMAPS_KEY], context.previousRoadmaps);
       }

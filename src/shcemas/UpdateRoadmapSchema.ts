@@ -1,9 +1,10 @@
-import { z } from 'zod';
-
 import { ManageMyRoadmapSchema } from './ManageMyRoadmapSchema';
+import { RoadmapSchema } from './RoadmapSchema';
+
+import type { z } from 'zod';
 
 export const UpdateRoadmapSchema = ManageMyRoadmapSchema.extend({
-  id: z.uuid(),
+  id: RoadmapSchema.shape.id,
 });
 
 export type UpdateRoadmapInput = z.infer<typeof UpdateRoadmapSchema>;

@@ -15,7 +15,6 @@ export const createRoadmap = async ({
     await supabase.auth.getClaims();
 
   if (claimsError) throw new Error(claimsError.message);
-
   if (!claimsData) throw new Error('Пользователь не авторизован');
 
   const {
