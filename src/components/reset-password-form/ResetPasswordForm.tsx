@@ -4,7 +4,9 @@ import type { ComponentProps } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
 
+import { APP_ROUTES, AUTH_ROUTES } from '@/constants/routes';
 import { useUpdatePassword } from '@/hooks/useUpdatePassword';
 import { cn } from '@/lib/utils';
 import { ResetPasswordSchema } from '@/shcemas/ResetPasswordSchema';
@@ -19,7 +21,10 @@ export function ResetPasswordForm({
   className,
   ...props
 }: ComponentProps<'form'>) {
+  const router = useRouter();
+
   const { mutate: updatePassword, isPending } = useUpdatePassword();
+
   const {
     handleSubmit,
     control,
@@ -33,7 +38,11 @@ export function ResetPasswordForm({
   });
 
   const onSubmit = async (data: ResetPasswordInput) => {
-    updatePassword(data);
+    updatePassword(data, {
+      onSuccess: () => {
+        router.push(APP_ROUTES.DASHBOARD);
+      },
+    });
   };
 
   return (

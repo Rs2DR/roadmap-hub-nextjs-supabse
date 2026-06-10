@@ -4,7 +4,9 @@ import type { ComponentProps } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/navigation';
 
+import { DASHBOARD_ROUTES } from '@/constants/routes';
 import { useCreateRoadmap } from '@/hooks/useCreateRoadmap';
 import { useUpdateRoadmap } from '@/hooks/useUpdateRoadmap';
 import { cn } from '@/lib/utils';
@@ -33,8 +35,9 @@ export function ManageMyRoadmapForm({
   className,
   ...props
 }: ManageMyRoadmapFormProps) {
-  const { mutate: createRoadmap, isPending: isCreating } = useCreateRoadmap();
+  const router = useRouter();
 
+  const { mutate: createRoadmap, isPending: isCreating } = useCreateRoadmap();
   const { mutate: updateRoadmap, isPending: isUpdating } = useUpdateRoadmap();
 
   const {
@@ -54,9 +57,10 @@ export function ManageMyRoadmapForm({
   const onSubmit = async (data: ManageMyRoadmapInput) => {
     if (mode === 'create') {
       createRoadmap(data, {
-        onSuccess: () => {
+        onSuccess: ({ data: { id } }) => {
           reset();
           onSuccess?.();
+          router.push(`${DASHBOARD_ROUTES.MY_ROADMAPS}/${id}`);
         },
       });
     }

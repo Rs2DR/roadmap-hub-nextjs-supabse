@@ -5,6 +5,7 @@ import { Controller, useForm } from 'react-hook-form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import { Button } from '@/components/ui/Button';
 import {
@@ -25,7 +26,10 @@ import { SocialProviders } from '../social-providers';
 import type { SignUpInput } from '@/shcemas/SignUpSchema';
 
 export function SignUpForm({ className, ...props }: ComponentProps<'form'>) {
+  const router = useRouter();
+
   const { mutate: signUp, isPending } = useSignUpNewUser();
+
   const {
     handleSubmit,
     control,
@@ -41,7 +45,11 @@ export function SignUpForm({ className, ...props }: ComponentProps<'form'>) {
   });
 
   const onSubmit = async (data: SignUpInput) => {
-    signUp(data);
+    signUp(data, {
+      onSuccess: () => {
+        router.push(AUTH_ROUTES.CONFIRM_EMAIL);
+      },
+    });
   };
 
   return (

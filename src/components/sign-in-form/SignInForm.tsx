@@ -5,6 +5,7 @@ import { Controller, useForm } from 'react-hook-form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import { Button } from '@/components/ui/Button';
 import {
@@ -15,7 +16,7 @@ import {
   FieldLabel,
 } from '@/components/ui/Field';
 import { Input } from '@/components/ui/Input';
-import { AUTH_ROUTES } from '@/constants/routes';
+import { APP_ROUTES, AUTH_ROUTES } from '@/constants/routes';
 import { useSignInWithEmail } from '@/hooks/useSignInWithEmail';
 import { cn } from '@/lib/utils';
 import { SignInSchema } from '@/shcemas/SignInSchema';
@@ -25,7 +26,10 @@ import { SocialProviders } from '../social-providers';
 import type { SignInInput } from '@/shcemas/SignInSchema';
 
 export function SignInForm({ className, ...props }: ComponentProps<'form'>) {
+  const router = useRouter();
+
   const { mutate: signIn, isPending } = useSignInWithEmail();
+
   const {
     handleSubmit,
     control,
@@ -39,7 +43,11 @@ export function SignInForm({ className, ...props }: ComponentProps<'form'>) {
   });
 
   const onSubmit = async (data: SignInInput) => {
-    signIn(data);
+    signIn(data, {
+      onSuccess: () => {
+        router.push(APP_ROUTES.DASHBOARD);
+      },
+    });
   };
 
   return (

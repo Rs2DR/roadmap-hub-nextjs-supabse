@@ -4,7 +4,9 @@ import type { ComponentProps } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/router';
 
+import { AUTH_ROUTES } from '@/constants/routes';
 import { useRequestPasswordReset } from '@/hooks/useRequestPasswordReset';
 import { cn } from '@/lib/utils';
 import { RequestResetPasswordSchema } from '@/shcemas/RequestResetPasswordSchema';
@@ -19,6 +21,8 @@ export function RequestResetPasswordForm({
   className,
   ...props
 }: ComponentProps<'form'>) {
+  const router = useRouter();
+
   const { mutate: resetPassowrd, isPending } = useRequestPasswordReset();
   const {
     handleSubmit,
@@ -32,7 +36,11 @@ export function RequestResetPasswordForm({
   });
 
   const onSubmit = async (data: RequestResetPasswordInput) => {
-    resetPassowrd(data);
+    resetPassowrd(data, {
+      onSuccess: () => {
+        router.push(AUTH_ROUTES.SIGN_IN);
+      },
+    });
   };
 
   return (
