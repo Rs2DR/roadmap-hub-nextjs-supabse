@@ -7,7 +7,7 @@ import { toast } from 'sonner';
 import { requestPasswordReset } from '@/actions/auth/requestPasswordReset';
 import { AUTH_ROUTES } from '@/constants/routes';
 
-import type { RequestResetPasswordInput } from '@/shcemas/requestResetPasswordSchema';
+import type { RequestResetPasswordInput } from '@/shcemas/RequestResetPasswordSchema';
 
 export const useRequestPasswordReset = () => {
   const router = useRouter();

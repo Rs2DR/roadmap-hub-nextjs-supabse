@@ -7,13 +7,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import { useUpdatePassword } from '@/hooks/useUpdatePassword';
 import { cn } from '@/lib/utils';
-import { resetPasswordSchema } from '@/shcemas/resetPasswordSchema';
+import { ResetPasswordSchema } from '@/shcemas/ResetPasswordSchema';
 
 import { Button } from '../ui/Button';
 import { Field, FieldError, FieldGroup, FieldLabel } from '../ui/Field';
 import { Input } from '../ui/Input';
 
-import type { ResetPasswordInput } from '@/shcemas/resetPasswordSchema';
+import type { ResetPasswordInput } from '@/shcemas/ResetPasswordSchema';
 
 export function ResetPasswordForm({
   className,
@@ -25,7 +25,7 @@ export function ResetPasswordForm({
     control,
     formState: { isSubmitting, isValid },
   } = useForm<ResetPasswordInput>({
-    resolver: zodResolver(resetPasswordSchema),
+    resolver: zodResolver(ResetPasswordSchema),
     defaultValues: {
       password: '',
       confirmPassword: '',

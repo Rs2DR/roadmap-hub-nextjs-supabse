@@ -7,14 +7,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import { useCreateRoadmap } from '@/hooks/useCreateRoadmap';
 import { cn } from '@/lib/utils';
-import { manageMyRoadmapSchema } from '@/shcemas/manageMyRoadmapSchema';
+import { ManageMyRoadmapSchema } from '@/shcemas/ManageMyRoadmapSchema';
 
 import { Button } from '../ui/Button';
 import { Field, FieldError, FieldGroup, FieldLabel } from '../ui/Field';
 import { Input } from '../ui/Input';
 import { Textarea } from '../ui/Textarea';
 
-import type { ManageMyRoadmapInput } from '@/shcemas/manageMyRoadmapSchema';
+import type { ManageMyRoadmapInput } from '@/shcemas/ManageMyRoadmapSchema';
 
 export function ManageMyRoadmapForm({
   className,
@@ -27,7 +27,7 @@ export function ManageMyRoadmapForm({
     formState: { isSubmitting, isValid },
   } = useForm<ManageMyRoadmapInput>({
     mode: 'onChange',
-    resolver: zodResolver(manageMyRoadmapSchema),
+    resolver: zodResolver(ManageMyRoadmapSchema),
     defaultValues: {
       title: '',
       description: '',

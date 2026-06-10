@@ -7,13 +7,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import { useRequestPasswordReset } from '@/hooks/useRequestPasswordReset';
 import { cn } from '@/lib/utils';
-import { requestResetPasswordSchema } from '@/shcemas/requestResetPasswordSchema';
+import { RequestResetPasswordSchema } from '@/shcemas/RequestResetPasswordSchema';
 
 import { Button } from '../ui/Button';
 import { Field, FieldError, FieldGroup, FieldLabel } from '../ui/Field';
 import { Input } from '../ui/Input';
 
-import type { RequestResetPasswordInput } from '@/shcemas/requestResetPasswordSchema';
+import type { RequestResetPasswordInput } from '@/shcemas/RequestResetPasswordSchema';
 
 export function RequestResetPasswordForm({
   className,
@@ -25,7 +25,7 @@ export function RequestResetPasswordForm({
     control,
     formState: { isSubmitting, isValid },
   } = useForm<RequestResetPasswordInput>({
-    resolver: zodResolver(requestResetPasswordSchema),
+    resolver: zodResolver(RequestResetPasswordSchema),
     defaultValues: {
       email: '',
     },

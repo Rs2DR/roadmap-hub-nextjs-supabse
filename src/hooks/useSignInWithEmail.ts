@@ -7,7 +7,7 @@ import { toast } from 'sonner';
 import { signInWithEmail } from '@/actions/auth/signInWithEmail';
 import { APP_ROUTES } from '@/constants/routes';
 
-import type { SignInInput } from '@/shcemas/signInSchema';
+import type { SignInInput } from '@/shcemas/SignInSchema';
 
 export const useSignInWithEmail = () => {
   const router = useRouter();

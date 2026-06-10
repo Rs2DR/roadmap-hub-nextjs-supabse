@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const signUpSchema = z
+export const SignUpSchema = z
   .object({
     name: z.string().min(2, 'Имя должно содержать минимум 2 символа'),
     email: z.email('Некорректный формат email'),
@@ -12,5 +12,4 @@ export const signUpSchema = z
     path: ['confirmPassword'],
   });
 
-export type SignUpInput = z.infer<typeof signUpSchema>;
-
+export type SignUpInput = z.infer<typeof SignUpSchema>;

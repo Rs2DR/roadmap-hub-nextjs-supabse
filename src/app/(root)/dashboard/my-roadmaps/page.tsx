@@ -1,10 +1,6 @@
 import { Suspense } from 'react';
 
-import {
-  dehydrate,
-  HydrationBoundary,
-  useSuspenseQuery,
-} from '@tanstack/react-query';
+import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { Plus, Search } from 'lucide-react';
 
 import { ManageMyRoadmapForm } from '@/components/manage-my-roadmap-from';
@@ -23,22 +19,13 @@ import {
   InputGroupAddon,
   InputGroupInput,
 } from '@/components/ui/InputGroup';
-import { createServerSupabase } from '@/lib/supabase/server';
 import { getQueryClient } from '@/lib/tanstack-query/getQueryClient';
 import { getMyRoadmapsQueryOptions } from '@/queries/getMyRoadmapQueryOptions';
 
 export default async function MyRoadmapsPage() {
   const queryClient = getQueryClient();
-  const supabase = await createServerSupabase();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
 
-  if (!user) return null;
-
-  await queryClient.prefetchQuery(
-    getMyRoadmapsQueryOptions({ userId: user.id }),
-  );
+  await queryClient.prefetchQuery(getMyRoadmapsQueryOptions());
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
@@ -75,7 +62,7 @@ export default async function MyRoadmapsPage() {
           </Dialog>
         </div>
         <Suspense>
-          <MyRoadmapsList userId={user.id} />
+          <MyRoadmapsList />
         </Suspense>
       </div>
     </HydrationBoundary>

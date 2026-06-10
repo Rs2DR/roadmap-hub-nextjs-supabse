@@ -2,7 +2,7 @@
 
 import { createServerSupabase } from '@/lib/supabase/server';
 
-import type { ManageMyRoadmapInput } from '@/shcemas/manageMyRoadmapSchema';
+import type { ManageMyRoadmapInput } from '@/shcemas/ManageMyRoadmapSchema';
 
 export const createRoadmap = async ({
   title,
@@ -10,20 +10,28 @@ export const createRoadmap = async ({
 }: ManageMyRoadmapInput) => {
   const supabase = await createServerSupabase();
 
+  const { data: claimsData, error: claimsError } =
+    await supabase.auth.getClaims();
+
+  if (claimsError) throw new Error(claimsError.message);
+
+  if (!claimsData) throw new Error('Пользователь не авторизован');
+
   const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) throw new Error('Не авторизован');
+    claims: { sub },
+  } = claimsData;
 
-  const { data, error } = await supabase.from('roadmaps').insert([
-    {
-      title,
-      description,
-      user_id: user.id,
-    },
-  ]);
+  const { data: roadmapsData, error: roadmapsError } = await supabase
+    .from('roadmaps')
+    .insert([
+      {
+        title,
+        description,
+        user_id: sub,
+      },
+    ]);
 
-  if (error) throw new Error(error.message);
+  if (roadmapsError) throw new Error(roadmapsError.message);
 
-  return { success: true, data };
+  return { success: true, data: roadmapsData };
 };

@@ -7,7 +7,7 @@ import { toast } from 'sonner';
 import { signUpNewUser } from '@/actions/auth/signUpNewUser';
 import { AUTH_ROUTES } from '@/constants/routes';
 
-import type { SignUpInput } from '@/shcemas/signUpSchema';
+import type { SignUpInput } from '@/shcemas/SignUpSchema';
 
 export const useSignUpNewUser = () => {
   const router = useRouter();

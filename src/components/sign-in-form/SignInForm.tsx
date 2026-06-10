@@ -18,11 +18,11 @@ import { Input } from '@/components/ui/Input';
 import { AUTH_ROUTES } from '@/constants/routes';
 import { useSignInWithEmail } from '@/hooks/useSignInWithEmail';
 import { cn } from '@/lib/utils';
-import { signInSchema } from '@/shcemas/signInSchema';
+import { SignInSchema } from '@/shcemas/SignInSchema';
 
 import { SocialProviders } from '../social-providers';
 
-import type { SignInInput } from '@/shcemas/signInSchema';
+import type { SignInInput } from '@/shcemas/SignInSchema';
 
 export function SignInForm({ className, ...props }: ComponentProps<'form'>) {
   const { mutate: signIn, isPending } = useSignInWithEmail();
@@ -31,7 +31,7 @@ export function SignInForm({ className, ...props }: ComponentProps<'form'>) {
     control,
     formState: { isSubmitting, isValid },
   } = useForm<SignInInput>({
-    resolver: zodResolver(signInSchema),
+    resolver: zodResolver(SignInSchema),
     defaultValues: {
       email: '',
       password: '',

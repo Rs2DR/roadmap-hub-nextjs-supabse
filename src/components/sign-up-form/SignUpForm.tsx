@@ -18,11 +18,11 @@ import { Input } from '@/components/ui/Input';
 import { AUTH_ROUTES } from '@/constants/routes';
 import { useSignUpNewUser } from '@/hooks/useSignUpNewUser';
 import { cn } from '@/lib/utils';
-import { signUpSchema } from '@/shcemas/signUpSchema';
+import { SignUpSchema } from '@/shcemas/SignUpSchema';
 
 import { SocialProviders } from '../social-providers';
 
-import type { SignUpInput } from '@/shcemas/signUpSchema';
+import type { SignUpInput } from '@/shcemas/SignUpSchema';
 
 export function SignUpForm({ className, ...props }: ComponentProps<'form'>) {
   const { mutate: signUp, isPending } = useSignUpNewUser();
@@ -31,7 +31,7 @@ export function SignUpForm({ className, ...props }: ComponentProps<'form'>) {
     control,
     formState: { isSubmitting, isValid },
   } = useForm<SignUpInput>({
-    resolver: zodResolver(signUpSchema),
+    resolver: zodResolver(SignUpSchema),
     defaultValues: {
       name: '',
       email: '',

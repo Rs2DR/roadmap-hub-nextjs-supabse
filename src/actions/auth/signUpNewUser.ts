@@ -3,7 +3,7 @@
 import { API_ROUTES } from '@/constants/api';
 import { createServerSupabase } from '@/lib/supabase/server';
 
-import type { SignUpInput } from '@/shcemas/signUpSchema';
+import type { SignUpInput } from '@/shcemas/SignUpSchema';
 
 export const signUpNewUser = async ({ name, email, password }: SignUpInput) => {
   const supabase = await createServerSupabase();
