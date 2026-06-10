@@ -1,6 +1,7 @@
 'use server';
 
 import { createServerSupabase } from '@/lib/supabase/server';
+import { RoadmapSchema } from '@/shcemas/RoadmapSchema';
 
 import type { ManageMyRoadmapInput } from '@/shcemas/ManageMyRoadmapSchema';
 
@@ -21,7 +22,7 @@ export const createRoadmap = async ({
     claims: { sub },
   } = claimsData;
 
-  const { data: roadmapsData, error: roadmapsError } = await supabase
+  const { data, error: createdRoadmapError } = await supabase
     .from('roadmaps')
     .insert([
       {
@@ -29,9 +30,13 @@ export const createRoadmap = async ({
         description,
         user_id: sub,
       },
-    ]);
+    ])
+    .select()
+    .single();
 
-  if (roadmapsError) throw new Error(roadmapsError.message);
+  if (createdRoadmapError) throw new Error(createdRoadmapError.message);
 
-  return { success: true, data: roadmapsData };
+  const parsedCreatedRoadmap = RoadmapSchema.parse(data);
+
+  return { success: true, data: parsedCreatedRoadmap };
 };

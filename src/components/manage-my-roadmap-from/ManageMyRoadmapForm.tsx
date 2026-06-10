@@ -6,6 +6,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { useCreateRoadmap } from '@/hooks/useCreateRoadmap';
+import { useUpdateRoadmap } from '@/hooks/useUpdateRoadmap';
 import { cn } from '@/lib/utils';
 import { ManageMyRoadmapSchema } from '@/shcemas/ManageMyRoadmapSchema';
 
@@ -15,28 +16,68 @@ import { Input } from '../ui/Input';
 import { Textarea } from '../ui/Textarea';
 
 import type { ManageMyRoadmapInput } from '@/shcemas/ManageMyRoadmapSchema';
+import type { FormModeType } from '@/types/FormModeType';
+
+interface ManageMyRoadmapFormProps extends ComponentProps<'form'> {
+  mode?: FormModeType;
+  roadmapId?: string;
+  initialValues?: ManageMyRoadmapInput;
+  onSuccess?: () => void;
+}
 
 export function ManageMyRoadmapForm({
+  mode = 'create',
+  roadmapId,
+  initialValues,
+  onSuccess,
   className,
   ...props
-}: ComponentProps<'form'>) {
-  const { mutate: createRoadmap, isPending } = useCreateRoadmap();
+}: ManageMyRoadmapFormProps) {
+  const { mutate: createRoadmap, isPending: isCreating } = useCreateRoadmap();
+
+  const { mutate: updateRoadmap, isPending: isUpdating } = useUpdateRoadmap();
+
   const {
     handleSubmit,
     control,
+    reset,
     formState: { isSubmitting, isValid },
   } = useForm<ManageMyRoadmapInput>({
     mode: 'onChange',
     resolver: zodResolver(ManageMyRoadmapSchema),
-    defaultValues: {
+    defaultValues: initialValues ?? {
       title: '',
       description: '',
     },
   });
 
   const onSubmit = async (data: ManageMyRoadmapInput) => {
-    createRoadmap(data);
+    if (mode === 'create') {
+      createRoadmap(data, {
+        onSuccess: () => {
+          reset();
+          onSuccess?.();
+        },
+      });
+    }
+
+    if (mode === 'update') {
+      if (!roadmapId) {
+        throw new Error('roadmapId is required for update');
+      }
+
+      updateRoadmap(
+        { id: roadmapId, ...data },
+        {
+          onSuccess: () => {
+            onSuccess?.();
+          },
+        },
+      );
+    }
   };
+
+  const isPending = isCreating || isUpdating;
 
   return (
     <form
@@ -85,7 +126,7 @@ export function ManageMyRoadmapForm({
             disabled={!isValid}
             loading={isPending || isSubmitting}
           >
-            Создать
+            {mode === 'create' ? 'Создать' : 'Сохранить'}
           </Button>
         </Field>
       </FieldGroup>

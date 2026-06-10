@@ -1,6 +1,9 @@
 'use server';
 
+import z from 'zod';
+
 import { createServerSupabase } from '@/lib/supabase/server';
+import { RoadmapSchema } from '@/shcemas/RoadmapSchema';
 
 export async function getMyRoadmaps() {
   const supabase = await createServerSupabase();
@@ -24,5 +27,7 @@ export async function getMyRoadmaps() {
 
   if (roadmapsError) throw new Error(roadmapsError.message);
 
-  return data;
+  const parsedData = z.array(RoadmapSchema).parse(data);
+
+  return { roadmaps: parsedData };
 }

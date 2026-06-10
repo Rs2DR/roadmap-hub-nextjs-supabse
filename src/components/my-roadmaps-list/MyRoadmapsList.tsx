@@ -7,7 +7,11 @@ import { getMyRoadmapsQueryOptions } from '@/queries/getMyRoadmapQueryOptions';
 import { MyRoadmapCard } from '../my-roadmap-card';
 
 export function MyRoadmapsList() {
-  const { data: roadmaps } = useSuspenseQuery(getMyRoadmapsQueryOptions());
+  const {
+    data: { roadmaps },
+  } = useSuspenseQuery(getMyRoadmapsQueryOptions());
+
+  console.log(roadmaps);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">

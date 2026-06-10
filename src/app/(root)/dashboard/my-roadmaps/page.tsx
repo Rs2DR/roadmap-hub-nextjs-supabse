@@ -3,16 +3,9 @@ import { Suspense } from 'react';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { Plus, Search } from 'lucide-react';
 
-import { ManageMyRoadmapForm } from '@/components/manage-my-roadmap-from';
+import { ManageMyRoadmapDialog } from '@/components/manage-my-roadmap-dialog';
 import { MyRoadmapsList } from '@/components/my-roadmaps-list';
 import { Button } from '@/components/ui/Button';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogTitle,
-  DialogTrigger,
-} from '@/components/ui/dialog';
 import { Field, FieldLabel } from '@/components/ui/Field';
 import {
   InputGroup,
@@ -45,21 +38,15 @@ export default async function MyRoadmapsPage() {
               />
             </InputGroup>
           </Field>
-          <Dialog>
-            <DialogTrigger asChild>
-              <Button>
-                <Plus />
-                <span className="hidden sm:inline">Создать Roadmap</span>
-              </Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogTitle>Создание Roadmap</DialogTitle>
-              <DialogDescription>
-                Тут вы можете создать свой Roadmap
-              </DialogDescription>
-              <ManageMyRoadmapForm />
-            </DialogContent>
-          </Dialog>
+          <ManageMyRoadmapDialog
+            title="Создать roadmap"
+            description="Тут вы можете создать свой Roadmap"
+          >
+            <Button>
+              <Plus />
+              <span className="hidden sm:inline">Создать Roadmap</span>
+            </Button>
+          </ManageMyRoadmapDialog>
         </div>
         <Suspense>
           <MyRoadmapsList />
