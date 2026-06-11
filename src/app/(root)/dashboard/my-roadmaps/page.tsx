@@ -1,17 +1,12 @@
 import { Suspense } from 'react';
 
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
-import { Plus, Search } from 'lucide-react';
+import { Plus } from 'lucide-react';
 
+import { FilterInput } from '@/components/filter-input';
 import { ManageMyRoadmapDialog } from '@/components/manage-my-roadmap-dialog';
 import { MyRoadmapsList } from '@/components/my-roadmaps-list';
 import { Button } from '@/components/ui/Button';
-import { Field, FieldLabel } from '@/components/ui/Field';
-import {
-  InputGroup,
-  InputGroupAddon,
-  InputGroupInput,
-} from '@/components/ui/InputGroup';
 import { getQueryClient } from '@/lib/tanstack-query/getQueryClient';
 import { getMyRoadmapsQueryOptions } from '@/queries/getMyRoadmapQueryOptions';
 
@@ -24,20 +19,7 @@ export default async function MyRoadmapsPage() {
     <HydrationBoundary state={dehydrate(queryClient)}>
       <div className="flex flex-col gap-4">
         <div className="inline-flex w-full items-end gap-4">
-          <Field className="grow">
-            <FieldLabel htmlFor="input-search-roadmap">
-              Найди свой Roadmap
-            </FieldLabel>
-            <InputGroup>
-              <InputGroupAddon>
-                <Search />
-              </InputGroupAddon>
-              <InputGroupInput
-                id="input-search-roadmap"
-                placeholder="Поиск..."
-              />
-            </InputGroup>
-          </Field>
+          <FilterInput />
           <ManageMyRoadmapDialog
             title="Создать roadmap"
             description="Тут вы можете создать свой Roadmap"
