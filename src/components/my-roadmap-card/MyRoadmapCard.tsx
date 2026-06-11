@@ -17,7 +17,7 @@ interface MyRoadmapCardProps {
 }
 
 export function MyRoadmapCard({ roadmap }: MyRoadmapCardProps) {
-  const { id, title, description } = roadmap;
+  const { title, description } = roadmap;
 
   return (
     <Card className="relative mx-auto w-full">
@@ -33,7 +33,7 @@ export function MyRoadmapCard({ roadmap }: MyRoadmapCardProps) {
         </div>
         <CardDescription className="mt-2">{description}</CardDescription>
       </CardHeader>
-      <MyRoadmapCardFooter roadmapId={id} />
+      <MyRoadmapCardFooter roadmap={roadmap} />
     </Card>
   );
 }

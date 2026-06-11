@@ -20,7 +20,7 @@ export async function getMyRoadmaps() {
 
   const { data, error: roadmapsError } = await supabase
     .from('roadmaps')
-    .select('*')
+    .select('*, roadmap_likes(count), roadmap_comments(count)')
     .eq('user_id', sub)
     .order('created_at', { ascending: false });
 

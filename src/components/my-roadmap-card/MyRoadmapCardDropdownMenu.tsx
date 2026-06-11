@@ -2,21 +2,20 @@
 
 import { useState } from 'react';
 
-import { MoreHorizontal, Pencil, Share, Trash } from 'lucide-react';
+import {
+  Eye,
+  EyeOff,
+  MoreHorizontal,
+  Pencil,
+  Share,
+  Trash,
+} from 'lucide-react';
 
 import { useDeleteRoadmap } from '@/hooks/useDeleteRoadmap';
+import { useUpdateRoadmapVisibility } from '@/hooks/useUpdateRoadmapVisibility';
 
+import { CustomAlertDialog } from '../custom-alert-dialog';
 import { ManageMyRoadmapDialog } from '../manage-my-roadmap-dialog';
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from '../ui/AlertDialog';
 import { Button } from '../ui/Button';
 import {
   DropdownMenu,
@@ -39,49 +38,41 @@ export function MyRoadmapCardDropdownMenu({
 }: MyRoadmapCardDropdownMenuProps) {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-  const { mutate: deleteRoadmap } = useDeleteRoadmap();
+  const [isVisibilityOpen, setIsVisibilityOpen] = useState(false);
 
-  const { id, title, description } = roadmap;
+  const { mutate: deleteRoadmap } = useDeleteRoadmap();
+  const { mutate: updateVisibility } = useUpdateRoadmapVisibility();
+
+  const { id, title, description, isPublic } = roadmap;
 
   const handleEditOpen = () => setIsEditOpen(true);
   const handleDeleteOpen = () => setIsDeleteOpen(true);
+  const handleVisibilityOpen = () => setIsVisibilityOpen(true);
 
   const handleDeleteRoadmap = () => {
     deleteRoadmap({ id });
   };
 
+  const handleToggleVisibility = () => {
+    updateVisibility({
+      id,
+      isPublic: !isPublic,
+    });
+  };
+
+  const visibilityTitle = isPublic
+    ? `Сделать ${title} приватным?`
+    : `Сделать ${title} публичным?`;
+
+  const visibilityDescription = isPublic
+    ? 'После этого roadmap будет доступен только вам.'
+    : 'После этого roadmap будет виден всем пользователям.';
+
+  const visibilityIcon = isPublic ? <EyeOff /> : <Eye />;
+  const visibilityLabel = isPublic ? 'Приватный' : 'Публичный';
+
   return (
     <>
-      <ManageMyRoadmapDialog
-        mode="update"
-        roadmapId={id}
-        initialValues={{ title, description }}
-        title="Изменить Roadmap"
-        description="Тут вы можете изменить свой Roadmap"
-        open={isEditOpen}
-        onOpenChange={setIsEditOpen}
-      />
-      <AlertDialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
-        <AlertDialogContent>
-          <AlertDialogHeader>
-            <AlertDialogTitle>{`Вы уверены, что хотите удалить ${title}?`}</AlertDialogTitle>
-            <AlertDialogDescription>
-              Это действие нельзя будет отменить! Ваш Roadmap будет безвозвратно
-              удален!
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel>Отмена</AlertDialogCancel>
-            <AlertDialogAction
-              variant="destructive"
-              onClick={handleDeleteRoadmap}
-            >
-              Продолжить
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
-
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="outline" size="icon">
@@ -112,12 +103,41 @@ export function MyRoadmapCardDropdownMenu({
 
           <DropdownMenuGroup>
             <DropdownMenuLabel>Основное</DropdownMenuLabel>
-            <DropdownMenuItem className="text-accent-foreground">
-              <Share /> Поделиться
+            <DropdownMenuItem onClick={handleVisibilityOpen}>
+              {visibilityIcon}
+              {visibilityLabel}
             </DropdownMenuItem>
           </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>
+
+      <ManageMyRoadmapDialog
+        mode="update"
+        roadmapId={id}
+        initialValues={{ title, description }}
+        title="Изменить Roadmap"
+        description="Тут вы можете изменить свой Roadmap"
+        open={isEditOpen}
+        onOpenChange={setIsEditOpen}
+      />
+      {/* DELETE */}
+      <CustomAlertDialog
+        open={isDeleteOpen}
+        onOpenChange={setIsDeleteOpen}
+        title={`Удалить ${title}?`}
+        description="Это действие нельзя будет отменить!"
+        onConfirm={handleDeleteRoadmap}
+        confirmText="Удалить"
+      />
+
+      {/* VISIBILITY */}
+      <CustomAlertDialog
+        open={isVisibilityOpen}
+        onOpenChange={setIsVisibilityOpen}
+        title={visibilityTitle}
+        description={visibilityDescription}
+        onConfirm={handleToggleVisibility}
+      />
     </>
   );
 }

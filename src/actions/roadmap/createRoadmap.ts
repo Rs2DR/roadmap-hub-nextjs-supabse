@@ -30,12 +30,14 @@ export const createRoadmap = async ({
         user_id: sub,
       },
     ])
-    .select()
+    .select('*, roadmap_likes(count), roadmap_comments(count)')
     .single();
+
+  console.log(data);
 
   if (createdRoadmapError) throw new Error(createdRoadmapError.message);
 
-  const parsedCreatedRoadmap = RoadmapSchema.parse(data);
+  const parsed = RoadmapSchema.parse(data);
 
-  return { success: true, data: parsedCreatedRoadmap };
+  return { success: true, data: parsed };
 };

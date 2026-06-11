@@ -64,7 +64,9 @@ export const useUpdateRoadmap = () => {
           if (!old) return old;
 
           return {
-            roadmaps: old.roadmaps.map((r) => (r.id === data.id ? data : r)),
+            roadmaps: old.roadmaps.map((roadmap) =>
+              roadmap.id === data.id ? data : roadmap,
+            ),
           };
         },
       );

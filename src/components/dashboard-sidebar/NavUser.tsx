@@ -2,6 +2,7 @@
 
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { BadgeCheck, ChevronsUpDown, LogOut } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/Avatar';
 import {
@@ -19,15 +20,22 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/Sidebar';
+import { APP_ROUTES } from '@/constants/routes';
 import { useSignOut } from '@/hooks/useSignOut';
 import { getUserQueryOptions } from '@/queries/getUserQueryOptions';
 
 export function NavUser() {
+  const router = useRouter();
   const { isMobile } = useSidebar();
   const { data: user } = useSuspenseQuery(getUserQueryOptions());
   const { mutate: signOut } = useSignOut();
 
-  const handleSignOut = () => signOut();
+  const handleSignOut = () =>
+    signOut(undefined, {
+      onSuccess: () => {
+        router.push(APP_ROUTES.ROOT);
+      },
+    });
 
   if (!user) return null;
 

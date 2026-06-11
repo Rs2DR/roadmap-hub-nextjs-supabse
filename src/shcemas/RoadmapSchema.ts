@@ -1,12 +1,23 @@
-import z from 'zod';
+import { RoadmapBaseSchema } from './RoadmapBaseSchema';
 
-export const RoadmapSchema = z.object({
-  id: z.uuid(),
-  title: z.string().nonempty(),
-  description: z.string(),
-  is_public: z.boolean(),
-  created_at: z.string(),
-  updated_at: z.string(),
-});
+import type z from 'zod';
+
+export const RoadmapSchema = RoadmapBaseSchema.transform(
+  ({
+    roadmap_comments,
+    roadmap_likes,
+    is_public,
+    created_at,
+    updated_at,
+    ...rest
+  }) => ({
+    ...rest,
+    isPublic: is_public,
+    createdAt: created_at,
+    updatedAt: updated_at,
+    likesCount: roadmap_likes[0].count,
+    commentsCount: roadmap_comments[0].count,
+  }),
+);
 
 export type Roadmap = z.infer<typeof RoadmapSchema>;

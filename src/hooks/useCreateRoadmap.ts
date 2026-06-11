@@ -25,9 +25,11 @@ export const useCreateRoadmap = () => {
       const optimisticRoadmap: Roadmap = {
         id: crypto.randomUUID(),
         ...newRoadmap,
-        is_public: false,
-        created_at: Date.now().toString(),
-        updated_at: Date.now().toString(),
+        isPublic: false,
+        likesCount: 0,
+        commentsCount: 0,
+        createdAt: Date.now().toString(),
+        updatedAt: Date.now().toString(),
       };
 
       queryClient.setQueryData(

@@ -11,8 +11,6 @@ export function MyRoadmapsList() {
     data: { roadmaps },
   } = useSuspenseQuery(getMyRoadmapsQueryOptions());
 
-  console.log(roadmaps);
-
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
       {roadmaps.map((roadmap) => (
