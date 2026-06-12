@@ -2,7 +2,7 @@
 
 import { createServerSupabase } from '@/lib/supabase/server';
 
-import type { ResetPasswordInput } from '@/shcemas/resetPasswordSchema';
+import type { ResetPasswordInput } from '@/shcemas/ResetPasswordSchema';
 
 export const updatePassword = async ({ password }: ResetPasswordInput) => {
   const supabase = await createServerSupabase();

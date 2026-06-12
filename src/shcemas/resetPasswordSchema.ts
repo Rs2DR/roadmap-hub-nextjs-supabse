@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const resetPasswordSchema = z
+export const ResetPasswordSchema = z
   .object({
     password: z.string().min(8, 'Пароль должен быть минимум 8 символов'),
     confirmPassword: z.string().min(8, 'Подтвердите пароль'),
@@ -10,4 +10,4 @@ export const resetPasswordSchema = z
     path: ['confirmPassword'],
   });
 
-export type ResetPasswordInput = z.infer<typeof resetPasswordSchema>;
+export type ResetPasswordInput = z.infer<typeof ResetPasswordSchema>;

@@ -2,7 +2,7 @@
 
 import { createServerSupabase } from '@/lib/supabase/server';
 
-import type { SignInInput } from '@/shcemas/signInSchema';
+import type { SignInInput } from '@/shcemas/SignInSchema';
 
 export const signInWithEmail = async ({ email, password }: SignInInput) => {
   const supabase = await createServerSupabase();

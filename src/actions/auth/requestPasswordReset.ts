@@ -3,7 +3,7 @@
 import { API_ROUTES } from '@/constants/api';
 import { createServerSupabase } from '@/lib/supabase/server';
 
-import type { RequestResetPasswordInput } from '@/shcemas/requestResetPasswordSchema';
+import type { RequestResetPasswordInput } from '@/shcemas/RequestResetPasswordSchema';
 
 export const requestPasswordReset = async ({
   email,

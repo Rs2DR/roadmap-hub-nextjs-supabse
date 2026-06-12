@@ -5,6 +5,7 @@ import { Controller, useForm } from 'react-hook-form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import { Button } from '@/components/ui/Button';
 import {
@@ -18,20 +19,23 @@ import { Input } from '@/components/ui/Input';
 import { AUTH_ROUTES } from '@/constants/routes';
 import { useSignUpNewUser } from '@/hooks/useSignUpNewUser';
 import { cn } from '@/lib/utils';
-import { signUpSchema } from '@/shcemas/signUpSchema';
+import { SignUpSchema } from '@/shcemas/SignUpSchema';
 
 import { SocialProviders } from '../social-providers';
 
-import type { SignUpInput } from '@/shcemas/signUpSchema';
+import type { SignUpInput } from '@/shcemas/SignUpSchema';
 
 export function SignUpForm({ className, ...props }: ComponentProps<'form'>) {
+  const router = useRouter();
+
   const { mutate: signUp, isPending } = useSignUpNewUser();
+
   const {
     handleSubmit,
     control,
     formState: { isSubmitting, isValid },
   } = useForm<SignUpInput>({
-    resolver: zodResolver(signUpSchema),
+    resolver: zodResolver(SignUpSchema),
     defaultValues: {
       name: '',
       email: '',
@@ -41,7 +45,11 @@ export function SignUpForm({ className, ...props }: ComponentProps<'form'>) {
   });
 
   const onSubmit = async (data: SignUpInput) => {
-    signUp(data);
+    signUp(data, {
+      onSuccess: () => {
+        router.push(AUTH_ROUTES.CONFIRM_EMAIL);
+      },
+    });
   };
 
   return (

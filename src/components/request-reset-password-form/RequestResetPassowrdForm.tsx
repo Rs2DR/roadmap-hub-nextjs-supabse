@@ -4,35 +4,43 @@ import type { ComponentProps } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { useRouter } from 'next/router';
 
+import { AUTH_ROUTES } from '@/constants/routes';
 import { useRequestPasswordReset } from '@/hooks/useRequestPasswordReset';
 import { cn } from '@/lib/utils';
-import { requestResetPasswordSchema } from '@/shcemas/requestResetPasswordSchema';
+import { RequestResetPasswordSchema } from '@/shcemas/RequestResetPasswordSchema';
 
 import { Button } from '../ui/Button';
 import { Field, FieldError, FieldGroup, FieldLabel } from '../ui/Field';
 import { Input } from '../ui/Input';
 
-import type { RequestResetPasswordInput } from '@/shcemas/requestResetPasswordSchema';
+import type { RequestResetPasswordInput } from '@/shcemas/RequestResetPasswordSchema';
 
 export function RequestResetPasswordForm({
   className,
   ...props
 }: ComponentProps<'form'>) {
+  const router = useRouter();
+
   const { mutate: resetPassowrd, isPending } = useRequestPasswordReset();
   const {
     handleSubmit,
     control,
     formState: { isSubmitting, isValid },
   } = useForm<RequestResetPasswordInput>({
-    resolver: zodResolver(requestResetPasswordSchema),
+    resolver: zodResolver(RequestResetPasswordSchema),
     defaultValues: {
       email: '',
     },
   });
 
   const onSubmit = async (data: RequestResetPasswordInput) => {
-    resetPassowrd(data);
+    resetPassowrd(data, {
+      onSuccess: () => {
+        router.push(AUTH_ROUTES.SIGN_IN);
+      },
+    });
   };
 
   return (
