@@ -101,8 +101,9 @@ const MyRoadmapNode = ({ id, data, selected }: NodeProps<NodeLabel>) => {
                   Здесь вы можете оформить узел Roadmap и добавить нужную
                   информацию
                 </SheetDescription>
-
-                <FieldGroup className="py-8">
+              </SheetHeader>
+              <div className="px-4">
+                <FieldGroup>
                   <Field>
                     <FieldLabel htmlFor="node-title">Название</FieldLabel>
                     <FieldDescription>
@@ -201,15 +202,9 @@ const MyRoadmapNode = ({ id, data, selected }: NodeProps<NodeLabel>) => {
                     </div>
                   </Field>
                 </FieldGroup>
-              </SheetHeader>
+              </div>
               <SheetFooter>
-                <div className="inline-flex justify-between">
-                  <Button variant="destructive">
-                    <Trash />
-                    Удалить
-                  </Button>
-                  <Button>Сохранить</Button>
-                </div>
+                <Button>Сохранить</Button>
               </SheetFooter>
             </SheetContent>
           </Sheet>

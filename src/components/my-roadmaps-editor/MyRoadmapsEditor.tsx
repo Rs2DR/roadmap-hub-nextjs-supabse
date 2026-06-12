@@ -18,14 +18,17 @@ import {
   ConnectionLineType,
 } from '@xyflow/react';
 
+import MyRoadmapEdge from './MyRoadmapEdge';
 import ResizableNodeSelected from './MyRoadmapNode';
 
 import type {
   Edge,
+  EdgeTypes,
   Node,
   NodeTypes,
   OnConnect,
   OnConnectEnd,
+  OnConnectStart,
   OnEdgesChange,
   OnNodesChange,
   OnNodesDelete,
@@ -37,14 +40,14 @@ import '@xyflow/react/dist/style.css';
 const initialNodes: Node[] = [
   {
     id: 'root',
-    position: { x: 0, y: 0 },
+    position: { x: 700, y: 1000 },
     data: { label: 'Node 1' },
 
     type: 'ResizableNodeSelected',
   },
   {
     id: 'n2',
-    position: { x: 100, y: 100 },
+    position: { x: 800, y: 1100 },
     data: { label: 'Node 2' },
     type: 'ResizableNodeSelected',
   },
@@ -55,12 +58,16 @@ const initialEdges: Edge[] = [
     id: 'n1-n2',
     source: 'root',
     target: 'n2',
-    type: 'smoothstep',
+    type: 'MyRoadmapEdge',
   },
 ];
 
 const nodeTypes: NodeTypes = {
   ResizableNodeSelected,
+};
+
+const edgeTypes: EdgeTypes = {
+  MyRoadmapEdge,
 };
 
 export function MyRoadmapsEditor() {
@@ -76,6 +83,10 @@ export function MyRoadmapsEditor() {
   } | null>(null);
 
   const { screenToFlowPosition, getNodes, getEdges } = useReactFlow();
+
+  const onConnectStart: OnConnectStart = () => {
+    setNodes((nds) => nds.map((n) => ({ ...n, selected: false })));
+  };
 
   const onReconnect: OnReconnect = useCallback(
     (oldEdge, newConnection) =>
@@ -121,6 +132,7 @@ export function MyRoadmapsEditor() {
           id,
           source: connectionState.fromNode!.id,
           target: id,
+          type: 'MyRoadmapEdge',
         };
 
         setNodes((nds) => nds.concat(newNode));
@@ -217,14 +229,23 @@ export function MyRoadmapsEditor() {
         nodes={nodes}
         edges={edges}
         nodeTypes={nodeTypes}
+        edgeTypes={edgeTypes}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         onConnectEnd={onConnectEnd}
         onReconnect={onReconnect}
         onNodesDelete={onNodesDelete}
-        defaultEdgeOptions={{ type: 'smoothstep' }}
-        connectionLineType={ConnectionLineType.SmoothStep}
+        onConnectStart={onConnectStart}
+        defaultEdgeOptions={{ type: 'MyRoadmapEdge' }}
+        translateExtent={[
+          [0, 0],
+          [2000, 2000],
+        ]}
+        nodeExtent={[
+          [0, 0],
+          [2000, 2000],
+        ]}
         fitView
       >
         <Background />
