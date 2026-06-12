@@ -27,6 +27,7 @@ import type {
   OnConnectEnd,
   OnEdgesChange,
   OnNodesChange,
+  OnNodesDelete,
   OnReconnect,
 } from '@xyflow/react';
 
@@ -34,19 +35,16 @@ import '@xyflow/react/dist/style.css';
 
 const initialNodes: Node[] = [
   {
-    id: 'n1',
+    id: 'root',
     position: { x: 0, y: 0 },
     data: { label: 'Node 1' },
-    width: 130,
-    height: 40,
+
     type: 'ResizableNodeSelected',
   },
   {
     id: 'n2',
     position: { x: 100, y: 100 },
     data: { label: 'Node 2' },
-    width: 130,
-    height: 40,
     type: 'ResizableNodeSelected',
   },
 ];
@@ -54,7 +52,7 @@ const initialNodes: Node[] = [
 const initialEdges: Edge[] = [
   {
     id: 'n1-n2',
-    source: 'n1',
+    source: 'root',
     target: 'n2',
     type: 'smoothstep',
   },
@@ -110,8 +108,6 @@ export function MyRoadmapsEditor() {
           }),
           data: { label: `Node ${id}` },
           origin: [0.5, 0.0],
-          width: 130,
-          height: 40,
         };
 
         const newEdge: Edge = {
@@ -127,6 +123,24 @@ export function MyRoadmapsEditor() {
     [screenToFlowPosition],
   );
 
+  const onNodesDelete: OnNodesDelete = useCallback((deleted) => {
+    const hasRoot = deleted.some((node) => node.id === 'root');
+
+    if (hasRoot) {
+      console.warn('Root node нельзя удалить');
+      return;
+    }
+
+    setEdges((eds) =>
+      eds.filter(
+        (edge) =>
+          !deleted.some(
+            (node) => node.id === edge.source || node.id === edge.target,
+          ),
+      ),
+    );
+  }, []);
+
   return (
     <div style={{ height: '100%', width: '100%' }} ref={reactFlowWrapper}>
       <ReactFlow
@@ -138,6 +152,7 @@ export function MyRoadmapsEditor() {
         onConnect={onConnect}
         onConnectEnd={onConnectEnd}
         onReconnect={onReconnect}
+        onNodesDelete={onNodesDelete}
         defaultEdgeOptions={{ type: 'smoothstep' }}
         connectionLineType={ConnectionLineType.SmoothStep}
         fitView

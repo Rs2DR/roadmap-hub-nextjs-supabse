@@ -6,7 +6,7 @@ import {
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
-} from '../ui/empty';
+} from '../ui/Empty';
 
 export function MyRoadmapsListEmptyState() {
   return (

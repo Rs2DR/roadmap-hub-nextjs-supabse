@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import { DASHBOARD_ROUTES } from '@/constants/routes';
 import { cn } from '@/lib/utils';
 
-import { Badge } from '../ui/badge';
+import { Badge } from '../ui/Badge';
 import { Button } from '../ui/Button';
 import { CardFooter } from '../ui/Card';
 
