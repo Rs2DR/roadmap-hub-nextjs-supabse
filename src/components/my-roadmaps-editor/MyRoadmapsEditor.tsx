@@ -15,11 +15,11 @@ import {
   useEdgesState,
   useReactFlow,
   reconnectEdge,
-  ConnectionLineType,
 } from '@xyflow/react';
 
+import CustomRoadmapNode from '../custom-roadmap-node/CustomRoadmapNode';
+
 import MyRoadmapEdge from './MyRoadmapEdge';
-import ResizableNodeSelected from './MyRoadmapNode';
 
 import type {
   Edge,
@@ -35,21 +35,35 @@ import type {
   OnReconnect,
 } from '@xyflow/react';
 
+import type { NodeFormInput } from '@/shcemas/NodeFormSchema';
+
 import '@xyflow/react/dist/style.css';
 
 const initialNodes: Node[] = [
   {
     id: 'root',
     position: { x: 700, y: 1000 },
-    data: { label: 'Node 1' },
+    data: {
+      label: 'Node 1',
+      color: '#3b82f6',
+      description: '',
+      links: [],
+      timeToLearn: '',
+    },
 
-    type: 'ResizableNodeSelected',
+    type: 'CustomRoadmapNode',
   },
   {
     id: 'n2',
     position: { x: 800, y: 1100 },
-    data: { label: 'Node 2' },
-    type: 'ResizableNodeSelected',
+    data: {
+      label: 'Node 2',
+      color: '#3b82f6',
+      description: '',
+      links: [],
+      timeToLearn: '',
+    },
+    type: 'CustomRoadmapNode',
   },
 ];
 
@@ -63,7 +77,7 @@ const initialEdges: Edge[] = [
 ];
 
 const nodeTypes: NodeTypes = {
-  ResizableNodeSelected,
+  CustomRoadmapNode,
 };
 
 const edgeTypes: EdgeTypes = {
@@ -72,11 +86,11 @@ const edgeTypes: EdgeTypes = {
 
 export function MyRoadmapsEditor() {
   const reactFlowWrapper = useRef(null);
+  const mousePosRef = useRef({ x: 0, y: 0 });
 
   const [nodes, setNodes] = useNodesState(initialNodes);
   const [edges, setEdges] = useEdgesState(initialEdges);
 
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [clipboard, setClipboard] = useState<{
     nodes: Node[];
     edges: Edge[];
@@ -117,14 +131,20 @@ export function MyRoadmapsEditor() {
         const { clientX, clientY } =
           'changedTouches' in event ? event.changedTouches[0] : event;
 
-        const newNode: Node = {
+        const newNode: Node<NodeFormInput> = {
           id,
-          type: 'ResizableNodeSelected',
+          type: 'CustomRoadmapNode',
           position: screenToFlowPosition({
             x: clientX,
             y: clientY,
           }),
-          data: { label: `Node ${id}` },
+          data: {
+            label: `Node ${id}`,
+            color: '#3b82f6',
+            description: '',
+            links: [],
+            timeToLearn: '',
+          },
           origin: [0.5, 0.0],
         };
 
@@ -132,7 +152,6 @@ export function MyRoadmapsEditor() {
           id,
           source: connectionState.fromNode!.id,
           target: id,
-          type: 'MyRoadmapEdge',
         };
 
         setNodes((nds) => nds.concat(newNode));
@@ -162,10 +181,14 @@ export function MyRoadmapsEditor() {
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
+      mousePosRef.current = {
+        x: e.clientX,
+        y: e.clientY,
+      };
     };
 
-    window.addEventListener('mousemove', handler);
+    window.addEventListener('mousemove', handler, { passive: true });
+
     return () => window.removeEventListener('mousemove', handler);
   }, []);
 
@@ -186,7 +209,7 @@ export function MyRoadmapsEditor() {
   useHotkeys('ctrl+v', () => {
     if (!clipboard) return;
 
-    const cursorFlow = screenToFlowPosition(mousePos);
+    const cursorFlow = screenToFlowPosition(mousePosRef.current);
 
     const minX = Math.min(...clipboard.nodes.map((n) => n.position.x));
     const minY = Math.min(...clipboard.nodes.map((n) => n.position.y));
@@ -238,14 +261,6 @@ export function MyRoadmapsEditor() {
         onNodesDelete={onNodesDelete}
         onConnectStart={onConnectStart}
         defaultEdgeOptions={{ type: 'MyRoadmapEdge' }}
-        translateExtent={[
-          [0, 0],
-          [2000, 2000],
-        ]}
-        nodeExtent={[
-          [0, 0],
-          [2000, 2000],
-        ]}
         fitView
       >
         <Background />

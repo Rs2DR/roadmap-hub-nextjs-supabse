@@ -5,6 +5,7 @@ import {
   EdgeLabelRenderer,
   getBezierPath,
   useReactFlow,
+  useStore,
 } from '@xyflow/react';
 import { Pencil, Trash } from 'lucide-react';
 
@@ -46,6 +47,10 @@ const MyRoadmapEdge = ({
     targetY,
   });
 
+  const selectedEdgesCount = useStore(
+    (state) => state.edges.filter((e) => e.selected).length,
+  );
+
   const handleDelete = () => {
     deleteElements({ edges: [{ id }] });
   };
@@ -69,7 +74,7 @@ const MyRoadmapEdge = ({
       />
 
       {/* label + sheet */}
-      {selected && (
+      {selected && selectedEdgesCount === 1 && (
         <EdgeLabelRenderer>
           <div
             style={{
