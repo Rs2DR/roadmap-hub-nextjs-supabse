@@ -2,14 +2,7 @@
 
 import { useState } from 'react';
 
-import {
-  Eye,
-  EyeOff,
-  MoreHorizontal,
-  Pencil,
-  Share,
-  Trash,
-} from 'lucide-react';
+import { Eye, EyeOff, MoreHorizontal, Pencil, Trash } from 'lucide-react';
 
 import { useDeleteRoadmap } from '@/hooks/useDeleteRoadmap';
 import { useUpdateRoadmapVisibility } from '@/hooks/useUpdateRoadmapVisibility';
@@ -111,6 +104,7 @@ export function MyRoadmapCardDropdownMenu({
         </DropdownMenuContent>
       </DropdownMenu>
 
+      {/* MANAGE */}
       <ManageMyRoadmapDialog
         mode="update"
         roadmapId={id}

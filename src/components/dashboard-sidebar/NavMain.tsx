@@ -3,7 +3,6 @@ import {
   ChartAreaIcon,
   ChevronRight,
   FolderBookmark,
-  GitCompareArrows,
   Heart,
   House,
   Rotate3DIcon,

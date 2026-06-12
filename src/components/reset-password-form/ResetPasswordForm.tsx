@@ -6,7 +6,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 
-import { APP_ROUTES, AUTH_ROUTES } from '@/constants/routes';
+import { APP_ROUTES } from '@/constants/routes';
 import { useUpdatePassword } from '@/hooks/useUpdatePassword';
 import { cn } from '@/lib/utils';
 import { ResetPasswordSchema } from '@/shcemas/ResetPasswordSchema';
