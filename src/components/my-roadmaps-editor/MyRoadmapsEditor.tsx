@@ -1,6 +1,7 @@
 'use client';
 
-import { useCallback, useRef } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useHotkeys } from 'react-hotkeys-hook';
 
 import {
   ReactFlow,
@@ -68,7 +69,13 @@ export function MyRoadmapsEditor() {
   const [nodes, setNodes] = useNodesState(initialNodes);
   const [edges, setEdges] = useEdgesState(initialEdges);
 
-  const { screenToFlowPosition } = useReactFlow();
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [clipboard, setClipboard] = useState<{
+    nodes: Node[];
+    edges: Edge[];
+  } | null>(null);
+
+  const { screenToFlowPosition, getNodes, getEdges } = useReactFlow();
 
   const onReconnect: OnReconnect = useCallback(
     (oldEdge, newConnection) =>
@@ -140,6 +147,66 @@ export function MyRoadmapsEditor() {
       ),
     );
   }, []);
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      setMousePos({ x: e.clientX, y: e.clientY });
+    };
+
+    window.addEventListener('mousemove', handler);
+    return () => window.removeEventListener('mousemove', handler);
+  }, []);
+
+  useHotkeys('ctrl+c', () => {
+    const selectedNodes = getNodes().filter((n) => n.selected);
+    const selectedIds = new Set(selectedNodes.map((n) => n.id));
+
+    const selectedEdges = getEdges().filter(
+      (e) => selectedIds.has(e.source) && selectedIds.has(e.target),
+    );
+
+    setClipboard({
+      nodes: selectedNodes,
+      edges: selectedEdges,
+    });
+  });
+
+  useHotkeys('ctrl+v', () => {
+    if (!clipboard) return;
+
+    const cursorFlow = screenToFlowPosition(mousePos);
+
+    const minX = Math.min(...clipboard.nodes.map((n) => n.position.x));
+    const minY = Math.min(...clipboard.nodes.map((n) => n.position.y));
+
+    const idMap = new Map<string, string>();
+
+    const newNodes = clipboard.nodes.map((node) => {
+      const newId = crypto.randomUUID();
+      idMap.set(node.id, newId);
+
+      return {
+        ...node,
+        id: newId,
+        position: {
+          x: node.position.x - minX + cursorFlow.x,
+          y: node.position.y - minY + cursorFlow.y,
+        },
+        data: { ...node.data },
+        selected: true,
+      };
+    });
+
+    const newEdges = clipboard.edges.map((edge) => ({
+      ...edge,
+      id: crypto.randomUUID(),
+      source: idMap.get(edge.source)!,
+      target: idMap.get(edge.target)!,
+    }));
+
+    setNodes((nds) => [...nds, ...newNodes]);
+    setEdges((eds) => [...eds, ...newEdges]);
+  });
 
   return (
     <div style={{ height: '100%', width: '100%' }} ref={reactFlowWrapper}>
