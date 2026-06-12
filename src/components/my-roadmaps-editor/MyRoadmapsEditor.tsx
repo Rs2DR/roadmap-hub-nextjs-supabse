@@ -204,7 +204,10 @@ export function MyRoadmapsEditor() {
       target: idMap.get(edge.target)!,
     }));
 
-    setNodes((nds) => [...nds, ...newNodes]);
+    setNodes((nds) => [
+      ...nds.map((n) => ({ ...n, selected: false })),
+      ...newNodes.map((n) => ({ ...n, selected: true })),
+    ]);
     setEdges((eds) => [...eds, ...newEdges]);
   });
 

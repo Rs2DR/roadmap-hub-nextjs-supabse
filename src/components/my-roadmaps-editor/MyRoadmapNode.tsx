@@ -3,7 +3,13 @@ import { memo, useEffect, useState } from 'react';
 import { HexColorPicker } from 'react-colorful';
 import { useHotkeys } from 'react-hotkeys-hook';
 
-import { Handle, Position, NodeToolbar, useReactFlow } from '@xyflow/react';
+import {
+  Handle,
+  Position,
+  NodeToolbar,
+  useReactFlow,
+  useStore,
+} from '@xyflow/react';
 import { Copy, Link, Pencil, Plus, Trash, X } from 'lucide-react';
 
 import { Button } from '../ui/Button';
@@ -29,9 +35,13 @@ type NodeLabel = Node<{ label: string }, 'text'>;
 
 const MyRoadmapNode = ({ id, data, selected }: NodeProps<NodeLabel>) => {
   const [color, setColor] = useState('#aabbcc');
+  const [isOpen, setIsOpen] = useState(false);
 
   const { deleteElements, getNode, setNodes } = useReactFlow();
 
+  const selectedNodesCount = useStore(
+    (state) => state.nodes.filter((n) => n.selected).length,
+  );
   const isRootNode = id === 'root';
 
   const handleDelete = () => {
@@ -69,10 +79,16 @@ const MyRoadmapNode = ({ id, data, selected }: NodeProps<NodeLabel>) => {
   };
 
   return (
-    <div className="react-flow__node-default">
-      <NodeToolbar isVisible={selected} position={Position.Right}>
+    <div
+      className="react-flow__node-default"
+      onDoubleClick={() => setIsOpen(true)}
+    >
+      <NodeToolbar
+        isVisible={selected && selectedNodesCount === 1}
+        position={Position.Right}
+      >
         <ButtonGroup orientation="vertical">
-          <Sheet>
+          <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
               <Button variant="outline" size="icon">
                 <Pencil />
