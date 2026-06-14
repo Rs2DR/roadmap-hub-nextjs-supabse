@@ -60,6 +60,7 @@ const initialNodes: Node<NodeData>[] = [
       description: '',
       links: [],
       timeToLearn: '',
+      emoji: '😃',
     },
 
     type: 'CustomRoadmapNode',
@@ -73,6 +74,7 @@ const initialNodes: Node<NodeData>[] = [
       description: '',
       links: [],
       timeToLearn: '',
+      emoji: '😃',
     },
     type: 'CustomRoadmapNode',
   },
@@ -169,6 +171,7 @@ export function RoadmapEditor() {
             description: '',
             links: [],
             timeToLearn: '',
+            emoji: '😃',
           },
           origin: [0.5, 0.0],
         };

@@ -98,10 +98,10 @@ const RoadmapNode = ({ id, data, selected }: NodeProps<RoadmapNodeData>) => {
       {!isRootNode && <Handle type="target" position={Position.Top} />}
       <div className="flex items-center justify-between gap-4 text-left w-full max-w-80">
         <div
-          className="border p-2 rounded-full"
+          className="border flex justify-center items-center size-10 text-2xl rounded-full shrink-0"
           style={{ borderColor: border, backgroundColor: icon }}
         >
-          <BookOpen className="shrink-0" style={{ color: border }} size={20} />
+          {data.emoji}
         </div>
         <div className="flex flex-col overflow-hidden">
           <div className=" inline-flex items-center gap-2">

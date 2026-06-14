@@ -1,8 +1,10 @@
+import { useState } from 'react';
 import { HexColorPicker } from 'react-colorful';
 import { useForm, Controller, useFieldArray } from 'react-hook-form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useReactFlow } from '@xyflow/react';
+import EmojiPicker from 'emoji-picker-react';
 import { Link as LinkIcon, Plus, Trash } from 'lucide-react';
 
 import { NodeDataSchema } from '@/shcemas/NodeDataSchema';
@@ -35,12 +37,15 @@ export const NodeEditorForm = ({
   onClose,
 }: NodeEditorFormProps) => {
   const { setNodes } = useReactFlow();
+  const [isEmojiOpen, setIsEmojiOpen] = useState(false);
+  const [isColorOpen, setIsColorOpen] = useState(false);
 
   const form = useForm<NodeData>({
     resolver: zodResolver(NodeDataSchema),
     defaultValues: {
       label: defaultValues.label || '',
       description: defaultValues.description || '',
+      emoji: defaultValues.emoji || '😃',
       color: defaultValues.color || '#aabbcc',
       timeToLearn: defaultValues.timeToLearn || '',
       links: defaultValues.links || [],
@@ -71,7 +76,6 @@ export const NodeEditorForm = ({
     >
       <div className="px-4 flex-1 overflow-y-auto">
         <FieldGroup>
-          {/* Название */}
           <Controller
             name="label"
             control={form.control}
@@ -120,6 +124,60 @@ export const NodeEditorForm = ({
             )}
           />
 
+          {/* Эмодзи */}
+          <Controller
+            name="emoji"
+            control={form.control}
+            render={({ field, fieldState }) => (
+              <Field
+                orientation="horizontal"
+                className="items-center border p-3 rounded-lg gap-4"
+                data-invalid={fieldState.invalid}
+              >
+                <Popover
+                  open={isEmojiOpen}
+                  onOpenChange={setIsEmojiOpen}
+                  modal={true}
+                >
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant="outline"
+                      id="node-emoji"
+                      className="size-14 text-3xl"
+                    >
+                      {field.value}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent
+                    align="start"
+                    className="p-0 border-none w-fit"
+                  >
+                    <EmojiPicker
+                      onEmojiClick={(emojiData) => {
+                        field.onChange(emojiData.emoji);
+                        setIsEmojiOpen(false);
+                      }}
+                      lazyLoadEmojis={true}
+                      searchDisabled
+                      skinTonesDisabled
+                      height={380}
+                      width={324}
+                    />
+                  </PopoverContent>
+                </Popover>
+                <div>
+                  <FieldLabel htmlFor="node-emoji">Иконка</FieldLabel>
+                  <FieldDescription>
+                    Будет отображаться в заголовке узла на карте
+                  </FieldDescription>
+                </div>
+                {fieldState.invalid && (
+                  <FieldError errors={[fieldState.error]} />
+                )}
+              </Field>
+            )}
+          />
+
           {/* Цвет */}
           <Controller
             name="color"
@@ -129,7 +187,7 @@ export const NodeEditorForm = ({
                 <FieldLabel htmlFor="node-color">Цвет</FieldLabel>
                 <FieldDescription>Выбери цвет для этого узла</FieldDescription>
                 <div className="inline-flex gap-2">
-                  <Popover>
+                  <Popover modal={true}>
                     <PopoverTrigger asChild>
                       <Button
                         type="button"
