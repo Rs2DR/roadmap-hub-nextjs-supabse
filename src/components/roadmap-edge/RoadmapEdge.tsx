@@ -11,25 +11,18 @@ import {
 } from '@xyflow/react';
 import { Pencil, Trash } from 'lucide-react';
 
+import { useFlowStore } from '@/store/useFlowStore';
+
 import { Button } from '../ui/Button';
 import { ButtonGroup } from '../ui/ButtonGroup';
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-} from '../ui/Sheet';
-
-import { EdgeEditorForm } from './MyRoadmapEdgeEditorForm';
 
 import type { Edge, EdgeProps } from '@xyflow/react';
 
-import type { EdgeData } from '@/shcemas/EdgeFormSchema';
+import type { EdgeData } from '@/shcemas/EdgeDataSchema';
 
-type RoadmapEdgeData = Edge<EdgeData, 'custom'>;
+type RoadmapEdgeData = Edge<EdgeData>;
 
-const MyRoadmapEdge = ({
+const RoadmapEdge = ({
   id,
   sourceX,
   sourceY,
@@ -40,8 +33,8 @@ const MyRoadmapEdge = ({
   selected,
   data,
 }: EdgeProps<RoadmapEdgeData>) => {
-  const [open, setOpen] = useState(false);
   const { deleteElements } = useReactFlow();
+  const openSidebar = useFlowStore((store) => store.openSidebar);
 
   const selectedEdgesCount = useStore(
     (state) => state.edges.filter((e) => e.selected).length,
@@ -131,7 +124,6 @@ const MyRoadmapEdge = ({
         fill="none"
         stroke="transparent"
         strokeWidth={12}
-        onDoubleClick={() => setOpen(true)}
         style={{ cursor: 'pointer' }}
       />
 
@@ -146,17 +138,11 @@ const MyRoadmapEdge = ({
             }}
             className="flex flex-col items-center gap-1"
           >
-            {data?.label && (
-              <div className="bg-background px-2 py-0.5 rounded border text-[10px] shadow-sm font-medium">
-                {data.label}
-              </div>
-            )}
-
             <ButtonGroup>
               <Button
                 variant="outline"
                 size="icon-xs"
-                onClick={() => setOpen(true)}
+                onClick={() => openSidebar({ type: 'edge', id, data })}
               >
                 <Pencil size={12} />
               </Button>
@@ -172,26 +158,8 @@ const MyRoadmapEdge = ({
           </div>
         </EdgeLabelRenderer>
       )}
-
-      {/* Сайдбар */}
-      <Sheet open={open} onOpenChange={setOpen}>
-        <SheetContent>
-          <SheetHeader>
-            <SheetTitle>Редактор связи</SheetTitle>
-            <SheetDescription>
-              Настрой визуальные параметры отображения стрелки на дорожной карте
-            </SheetDescription>
-          </SheetHeader>
-
-          <EdgeEditorForm
-            edgeId={id}
-            defaultValues={data || {}}
-            onClose={() => setOpen(false)}
-          />
-        </SheetContent>
-      </Sheet>
     </>
   );
 };
 
-export default memo(MyRoadmapEdge);
+export default memo(RoadmapEdge);

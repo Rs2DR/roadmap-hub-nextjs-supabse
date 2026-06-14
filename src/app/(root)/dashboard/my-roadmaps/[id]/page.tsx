@@ -1,6 +1,6 @@
 import { ReactFlowProvider } from '@xyflow/react';
 
-import { MyRoadmapsEditor } from '@/components/my-roadmaps-editor';
+import { RoadmapEditor } from '@/components/roadmap-editor';
 
 export default async function MyRoadmapPage({
   params,
@@ -10,7 +10,7 @@ export default async function MyRoadmapPage({
   return (
     <div style={{ height: '100%', width: '100%' }}>
       <ReactFlowProvider>
-        <MyRoadmapsEditor />
+        <RoadmapEditor />
       </ReactFlowProvider>
     </div>
   );

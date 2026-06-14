@@ -10,31 +10,20 @@ import {
 import { BookOpen, Copy, Pencil, Trash } from 'lucide-react';
 import { lighten, darken } from 'polished';
 
+import { useFlowStore } from '@/store/useFlowStore';
+
 import { Button } from '../ui/Button';
 import { ButtonGroup } from '../ui/ButtonGroup';
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-} from '../ui/Sheet';
-
-import { NodeEditorForm } from './NodeEditorForm';
 
 import type { Node, NodeProps } from '@xyflow/react';
 
 import type { NodeData } from '@/shcemas/NodeDataSchema';
 
-type RoadmapNodeData = Node<NodeData, 'custom'>;
+type RoadmapNodeData = Node<NodeData>;
 
-const CustomRoadmapNode = ({
-  id,
-  data,
-  selected,
-}: NodeProps<RoadmapNodeData>) => {
-  const [isSheetOpen, setIsSheetOpen] = useState(false);
+const RoadmapNode = ({ id, data, selected }: NodeProps<RoadmapNodeData>) => {
   const { deleteElements, getNode, setNodes } = useReactFlow();
+  const openSidebar = useFlowStore((store) => store.openSidebar);
 
   const selectedNodesCount = useStore(
     (state) => state.nodes.filter((n) => n.selected).length,
@@ -74,7 +63,6 @@ const CustomRoadmapNode = ({
   return (
     <div
       className="border rounded-md px-4 py-2"
-      onDoubleClick={() => setIsSheetOpen(true)}
       style={{ borderColor: border, backgroundColor: background }}
     >
       <NodeToolbar
@@ -85,7 +73,7 @@ const CustomRoadmapNode = ({
           <Button
             variant="outline"
             size="icon"
-            onClick={() => setIsSheetOpen(true)}
+            onClick={() => openSidebar({ type: 'node', id, data })}
           >
             <Pencil />
           </Button>
@@ -106,23 +94,6 @@ const CustomRoadmapNode = ({
           )}
         </ButtonGroup>
       </NodeToolbar>
-
-      <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-        <SheetContent>
-          <SheetHeader>
-            <SheetTitle>Редактор узла</SheetTitle>
-            <SheetDescription>
-              Здесь вы можете оформить узел Roadmap и добавить нужную информацию
-            </SheetDescription>
-          </SheetHeader>
-
-          <NodeEditorForm
-            nodeId={id}
-            defaultValues={data}
-            onClose={() => setIsSheetOpen(false)}
-          />
-        </SheetContent>
-      </Sheet>
 
       {!isRootNode && <Handle type="target" position={Position.Top} />}
       <div className="flex items-center justify-between gap-4 text-left w-full max-w-80">
@@ -151,4 +122,4 @@ const CustomRoadmapNode = ({
   );
 };
 
-export default memo(CustomRoadmapNode);
+export default memo(RoadmapNode);

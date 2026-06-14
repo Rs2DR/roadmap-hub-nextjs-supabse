@@ -6,6 +6,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 
+import { FORM_MODE } from '@/constants/form';
 import { DASHBOARD_ROUTES } from '@/constants/routes';
 import { useCreateRoadmap } from '@/hooks/useCreateRoadmap';
 import { useUpdateRoadmap } from '@/hooks/useUpdateRoadmap';
@@ -18,17 +19,17 @@ import { Input } from '../ui/Input';
 import { Textarea } from '../ui/Textarea';
 
 import type { ManageMyRoadmapInput } from '@/shcemas/ManageMyRoadmapSchema';
-import type { FormModeType } from '@/types/FormModeType';
+import type { FormMode } from '@/types/FormMode';
 
 interface ManageMyRoadmapFormProps extends ComponentProps<'form'> {
-  mode?: FormModeType;
+  mode?: FormMode;
   roadmapId?: string;
   initialValues?: ManageMyRoadmapInput;
   onSuccess?: () => void;
 }
 
 export function ManageMyRoadmapForm({
-  mode = 'create',
+  mode = FORM_MODE.CREATE,
   roadmapId,
   initialValues,
   onSuccess,
@@ -55,7 +56,7 @@ export function ManageMyRoadmapForm({
   });
 
   const onSubmit = async (data: ManageMyRoadmapInput) => {
-    if (mode === 'create') {
+    if (mode === FORM_MODE.CREATE) {
       createRoadmap(data, {
         onSuccess: ({ data: { id } }) => {
           reset();
@@ -65,7 +66,7 @@ export function ManageMyRoadmapForm({
       });
     }
 
-    if (mode === 'update') {
+    if (mode === FORM_MODE.UPDATE) {
       if (!roadmapId) {
         throw new Error('roadmapId is required for update');
       }
@@ -130,7 +131,7 @@ export function ManageMyRoadmapForm({
             disabled={!isValid}
             loading={isPending || isSubmitting}
           >
-            {mode === 'create' ? 'Создать' : 'Сохранить'}
+            {mode === FORM_MODE.CREATE ? 'Создать' : 'Сохранить'}
           </Button>
         </Field>
       </FieldGroup>

@@ -17,9 +17,19 @@ import {
   reconnectEdge,
 } from '@xyflow/react';
 
-import CustomRoadmapNode from '../custom-roadmap-node/CustomRoadmapNode';
+import { useFlowStore } from '@/store/useFlowStore';
 
-import MyRoadmapEdge from './MyRoadmapEdge';
+import MyRoadmapEdge from '../roadmap-edge/RoadmapEdge';
+import CustomRoadmapNode from '../roadmap-node/RoadmapNode';
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+} from '../ui/Sheet';
+
+import { FlowSheetContentSwitcher } from './FlowSheetContentSwitcher';
 
 import type {
   Edge,
@@ -35,11 +45,12 @@ import type {
   OnReconnect,
 } from '@xyflow/react';
 
+import type { EdgeData } from '@/shcemas/EdgeDataSchema';
 import type { NodeData } from '@/shcemas/NodeDataSchema';
 
 import '@xyflow/react/dist/style.css';
 
-const initialNodes: Node[] = [
+const initialNodes: Node<NodeData>[] = [
   {
     id: 'root',
     position: { x: 700, y: 1000 },
@@ -67,11 +78,17 @@ const initialNodes: Node[] = [
   },
 ];
 
-const initialEdges: Edge[] = [
+const initialEdges: Edge<EdgeData>[] = [
   {
     id: 'n1-n2',
     source: 'root',
     target: 'n2',
+    data: {
+      routingType: 'bezier',
+      color: '#999999',
+      lineStyle: 'solid',
+      animated: false,
+    },
     type: 'MyRoadmapEdge',
   },
 ];
@@ -84,36 +101,44 @@ const edgeTypes: EdgeTypes = {
   MyRoadmapEdge,
 };
 
-export function MyRoadmapsEditor() {
+export function RoadmapEditor() {
   const reactFlowWrapper = useRef(null);
   const mousePosRef = useRef({ x: 0, y: 0 });
 
   const [nodes, setNodes] = useNodesState(initialNodes);
   const [edges, setEdges] = useEdgesState(initialEdges);
 
+  const activeElement = useFlowStore((state) => state.activeElement);
+  const mode = useFlowStore((state) => state.mode);
+  const openSidebar = useFlowStore((state) => state.openSidebar);
+  const closeSidebar = useFlowStore((state) => state.closeSidebar);
+
   const [clipboard, setClipboard] = useState<{
-    nodes: Node[];
-    edges: Edge[];
+    nodes: Node<NodeData>[];
+    edges: Edge<EdgeData>[];
   } | null>(null);
 
-  const { screenToFlowPosition, getNodes, getEdges } = useReactFlow();
+  const { screenToFlowPosition, getNodes, getEdges } = useReactFlow<
+    Node<NodeData>,
+    Edge<EdgeData>
+  >();
 
   const onConnectStart: OnConnectStart = () => {
     setNodes((nds) => nds.map((n) => ({ ...n, selected: false })));
   };
 
-  const onReconnect: OnReconnect = useCallback(
+  const onReconnect: OnReconnect<Edge<EdgeData>> = useCallback(
     (oldEdge, newConnection) =>
       setEdges((els) => reconnectEdge(oldEdge, newConnection, els)),
     [],
   );
 
-  const onNodesChange: OnNodesChange = useCallback(
+  const onNodesChange: OnNodesChange<Node<NodeData>> = useCallback(
     (changes) =>
       setNodes((nodesSnapshot) => applyNodeChanges(changes, nodesSnapshot)),
     [],
   );
-  const onEdgesChange: OnEdgesChange = useCallback(
+  const onEdgesChange: OnEdgesChange<Edge<EdgeData>> = useCallback(
     (changes) =>
       setEdges((edgesSnapshot) => applyEdgeChanges(changes, edgesSnapshot)),
     [],
@@ -148,10 +173,16 @@ export function MyRoadmapsEditor() {
           origin: [0.5, 0.0],
         };
 
-        const newEdge: Edge = {
+        const newEdge: Edge<EdgeData> = {
           id,
           source: connectionState.fromNode!.id,
           target: id,
+          data: {
+            routingType: 'bezier',
+            color: '#999999',
+            lineStyle: 'solid',
+            animated: false,
+          },
         };
 
         setNodes((nds) => nds.concat(newNode));
@@ -216,7 +247,7 @@ export function MyRoadmapsEditor() {
 
     const idMap = new Map<string, string>();
 
-    const newNodes = clipboard.nodes.map((node) => {
+    const newNodes: Node<NodeData>[] = clipboard.nodes.map((node) => {
       const newId = crypto.randomUUID();
       idMap.set(node.id, newId);
 
@@ -232,11 +263,17 @@ export function MyRoadmapsEditor() {
       };
     });
 
-    const newEdges = clipboard.edges.map((edge) => ({
+    const newEdges: Edge<EdgeData>[] = clipboard.edges.map((edge) => ({
       ...edge,
       id: crypto.randomUUID(),
       source: idMap.get(edge.source)!,
       target: idMap.get(edge.target)!,
+      data: {
+        routingType: 'bezier',
+        color: '#999999',
+        lineStyle: 'solid',
+        animated: false,
+      },
     }));
 
     setNodes((nds) => [
@@ -260,6 +297,12 @@ export function MyRoadmapsEditor() {
         onReconnect={onReconnect}
         onNodesDelete={onNodesDelete}
         onConnectStart={onConnectStart}
+        onNodeDoubleClick={(_, node) =>
+          openSidebar({ type: 'node', id: node.id, data: node.data })
+        }
+        onEdgeDoubleClick={(_, edge) =>
+          openSidebar({ type: 'edge', id: edge.id, data: edge.data })
+        }
         defaultEdgeOptions={{ type: 'MyRoadmapEdge' }}
         fitView
       >
@@ -267,6 +310,27 @@ export function MyRoadmapsEditor() {
         <Controls />
         <MiniMap nodeStrokeWidth={3} />
       </ReactFlow>
+      <Sheet
+        open={!!activeElement}
+        onOpenChange={(isOpen) => !isOpen && closeSidebar()}
+      >
+        <SheetContent>
+          <SheetHeader>
+            <SheetTitle>
+              {mode === 'edit' ? 'Редактирование' : 'Информация'}
+            </SheetTitle>
+            <SheetDescription>
+              {activeElement?.type === 'node'
+                ? 'Параметры узла карты'
+                : 'Параметры связи'}
+            </SheetDescription>
+          </SheetHeader>
+
+          <div className="mt-4 h-full">
+            <FlowSheetContentSwitcher />
+          </div>
+        </SheetContent>
+      </Sheet>
     </div>
   );
 }

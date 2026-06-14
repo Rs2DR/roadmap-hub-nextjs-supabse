@@ -4,10 +4,11 @@ import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useReactFlow } from '@xyflow/react';
 
-import { EdgeDataSchema } from '@/shcemas/EdgeFormSchema';
+import { EdgeDataSchema } from '@/shcemas/EdgeDataSchema';
 
 import { Button } from '../ui/Button';
 import { ButtonGroup } from '../ui/ButtonGroup';
+import { Checkbox } from '../ui/Checkbox';
 import {
   Field,
   FieldDescription,
@@ -15,16 +16,15 @@ import {
   FieldGroup,
   FieldLabel,
 } from '../ui/Field';
-import { Input } from '../ui/Input';
 import { InputGroup, InputGroupAddon, InputGroupInput } from '../ui/InputGroup';
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/Popover';
 import { SheetFooter } from '../ui/Sheet';
 
-import type { EdgeData } from '@/shcemas/EdgeFormSchema';
+import type { EdgeData } from '@/shcemas/EdgeDataSchema';
 
 interface EdgeEditorFormProps {
   edgeId: string;
-  defaultValues: Partial<EdgeData>;
+  defaultValues: Partial<EdgeData> | undefined;
   onClose: () => void;
 }
 
@@ -38,11 +38,10 @@ export const EdgeEditorForm = ({
   const form = useForm<EdgeData>({
     resolver: zodResolver(EdgeDataSchema),
     defaultValues: {
-      label: defaultValues.label || '',
-      routingType: defaultValues.routingType || 'bezier',
-      lineStyle: defaultValues.lineStyle || 'solid',
-      color: defaultValues.color || '#999999',
-      animated: defaultValues.animated || false,
+      routingType: defaultValues?.routingType || 'bezier',
+      lineStyle: defaultValues?.lineStyle || 'solid',
+      color: defaultValues?.color || '#999999',
+      animated: defaultValues?.animated || false,
     },
   });
 
@@ -65,27 +64,6 @@ export const EdgeEditorForm = ({
     >
       <div className="px-4 flex-1 overflow-y-auto">
         <FieldGroup>
-          {/* Текст на связи (Текст трека) */}
-          <Controller
-            name="label"
-            control={form.control}
-            render={({ field, fieldState }) => (
-              <Field data-invalid={fieldState.invalid}>
-                <FieldLabel htmlFor="edge-label">Текст связи</FieldLabel>
-                <Input
-                  {...field}
-                  id="edge-label"
-                  autoComplete="off"
-                  placeholder="Например: после изучения основ"
-                  aria-invalid={fieldState.invalid}
-                />
-                {fieldState.invalid && (
-                  <FieldError errors={[fieldState.error]} />
-                )}
-              </Field>
-            )}
-          />
-
           {/* Тип маршрутизации (React Flow типы) */}
           <Controller
             name="routingType"
@@ -103,7 +81,7 @@ export const EdgeEditorForm = ({
                     variant={field.value === 'bezier' ? 'default' : 'outline'}
                     onClick={() => field.onChange('bezier')}
                   >
-                    Smooth (Bezier)
+                    Волна
                   </Button>
                   <Button
                     type="button"
@@ -113,7 +91,7 @@ export const EdgeEditorForm = ({
                     }
                     onClick={() => field.onChange('smoothstep')}
                   >
-                    SmoothStep
+                    Ступенька
                   </Button>
                   <Button
                     type="button"
@@ -121,7 +99,7 @@ export const EdgeEditorForm = ({
                     variant={field.value === 'straight' ? 'default' : 'outline'}
                     onClick={() => field.onChange('straight')}
                   >
-                    Straight
+                    Прямая
                   </Button>
                 </ButtonGroup>
               </Field>
@@ -227,12 +205,11 @@ export const EdgeEditorForm = ({
                     Включает движение линии/пунктира
                   </FieldDescription>
                 </div>
-                <input
-                  type="checkbox"
+                <Checkbox
                   id="edge-animated"
+                  name="edge-animated"
                   checked={field.value}
-                  onChange={(e) => field.onChange(e.target.checked)}
-                  className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                  onCheckedChange={(checked) => field.onChange(checked)}
                 />
               </Field>
             )}
@@ -242,9 +219,6 @@ export const EdgeEditorForm = ({
 
       <SheetFooter className="p-4 border-t mt-4">
         <Field orientation="horizontal" className="w-full justify-end">
-          <Button type="button" variant="outline" onClick={() => form.reset()}>
-            Сбросить
-          </Button>
           <Button type="submit" form={`edge-form-${edgeId}`}>
             Сохранить
           </Button>
