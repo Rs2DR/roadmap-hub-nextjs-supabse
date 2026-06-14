@@ -4,6 +4,8 @@ import {
   BaseEdge,
   EdgeLabelRenderer,
   getBezierPath,
+  getSmoothStepPath,
+  getStraightPath,
   useReactFlow,
   useStore,
 } from '@xyflow/react';
@@ -11,20 +13,21 @@ import { Pencil, Trash } from 'lucide-react';
 
 import { Button } from '../ui/Button';
 import { ButtonGroup } from '../ui/ButtonGroup';
-import { Input } from '../ui/Input';
 import {
   Sheet,
   SheetContent,
+  SheetDescription,
   SheetHeader,
   SheetTitle,
-  SheetDescription,
-  SheetFooter,
-  SheetTrigger,
 } from '../ui/Sheet';
+
+import { EdgeEditorForm } from './MyRoadmapEdgeEditorForm';
 
 import type { Edge, EdgeProps } from '@xyflow/react';
 
-type EdgeLabel = Edge<{ label: string }, 'text'>;
+import type { EdgeData } from '@/shcemas/EdgeFormSchema';
+
+type RoadmapEdgeData = Edge<EdgeData, 'custom'>;
 
 const MyRoadmapEdge = ({
   id,
@@ -32,96 +35,161 @@ const MyRoadmapEdge = ({
   sourceY,
   targetX,
   targetY,
+  sourcePosition,
+  targetPosition,
   selected,
   data,
-}: EdgeProps<EdgeLabel>) => {
+}: EdgeProps<RoadmapEdgeData>) => {
   const [open, setOpen] = useState(false);
-  const [label, setLabel] = useState(data?.label || '');
-
   const { deleteElements } = useReactFlow();
-
-  const [edgePath, labelX, labelY] = getBezierPath({
-    sourceX,
-    sourceY,
-    targetX,
-    targetY,
-  });
 
   const selectedEdgesCount = useStore(
     (state) => state.edges.filter((e) => e.selected).length,
   );
 
+  // 1. Расчет пути в зависимости от routingType
+  const routingType = data?.routingType || 'bezier';
+  const pathParams = {
+    sourceX,
+    sourceY,
+    targetX,
+    targetY,
+    sourcePosition,
+    targetPosition,
+  };
+
+  let edgePath = '';
+  let labelX = 0;
+  let labelY = 0;
+
+  switch (routingType) {
+    case 'smoothstep':
+      [edgePath, labelX, labelY] = getSmoothStepPath(pathParams);
+      break;
+    case 'straight':
+      [edgePath, labelX, labelY] = getStraightPath({
+        sourceX,
+        sourceY,
+        targetX,
+        targetY,
+      });
+      break;
+    case 'bezier':
+    default:
+      [edgePath, labelX, labelY] = getBezierPath(pathParams);
+      break;
+  }
+
   const handleDelete = () => {
     deleteElements({ edges: [{ id }] });
   };
 
+  // 2. Стилизация линии
+  const defaultColor = data?.color || '#999999';
+  const isDashed = data?.lineStyle === 'dashed';
+  const isAnimated = data?.animated;
+
+  const edgeStyle: React.CSSProperties = {
+    stroke: selected ? '#111111' : defaultColor,
+    strokeWidth: selected ? 2 : 1.5,
+    // Если линия пунктирная, задаем паттерн (длина штриха, длина пробела)
+    strokeDasharray: isDashed ? '6, 6' : undefined,
+    transition: 'stroke 0.2s, stroke-width 0.2s',
+  };
+
+  // Формируем имя класса для анимации
+  const edgeClassName = isAnimated ? 'roadmap-edge-animated' : '';
+
   return (
     <>
-      {/* сама линия */}
+      {/* Внедряем ключевые кадры анимации прямо в компонент, чтобы код был независимым */}
+      <style>{`
+        @keyframes roadmapDash {
+          from {
+            stroke-dashoffset: 24;
+          }
+          to {
+            stroke-dashoffset: 0;
+          }
+        }
+        .roadmap-edge-animated {
+          animation: roadmapDash 1s linear infinite;
+        }
+      `}</style>
+
+      {/* Рендер линии */}
       <BaseEdge
+        id={id}
         path={edgePath}
-        style={{ stroke: selected ? '#333' : '#999', strokeWidth: 1 }}
+        style={edgeStyle}
+        className={edgeClassName}
       />
 
-      {/* кликабельная зона */}
+      {/* Интерактивная зона для кликов */}
       <path
         d={edgePath}
         fill="none"
         stroke="transparent"
-        strokeWidth={10}
+        strokeWidth={12}
         onDoubleClick={() => setOpen(true)}
         style={{ cursor: 'pointer' }}
       />
 
-      {/* label + sheet */}
+      {/* Панель управления кнопками (Edit/Delete) */}
       {selected && selectedEdgesCount === 1 && (
         <EdgeLabelRenderer>
           <div
             style={{
               position: 'absolute',
-              transform: `translate(25%, -50%) translate(${labelX}px, ${labelY}px)`,
+              transform: `translate(-50%, -50%) translate(${labelX}px, ${labelY}px)`,
               pointerEvents: 'all',
             }}
+            className="flex flex-col items-center gap-1"
           >
-            <ButtonGroup>
-              <Sheet open={open} onOpenChange={setOpen}>
-                <SheetTrigger asChild>
-                  <Button variant="outline" size="icon-xs">
-                    <Pencil />
-                  </Button>
-                </SheetTrigger>
-                <SheetContent>
-                  <SheetHeader>
-                    <SheetTitle>Редактор связи</SheetTitle>
-                    <SheetDescription>
-                      Настрой параметры связи между узлами
-                    </SheetDescription>
-                  </SheetHeader>
+            {data?.label && (
+              <div className="bg-background px-2 py-0.5 rounded border text-[10px] shadow-sm font-medium">
+                {data.label}
+              </div>
+            )}
 
-                  <div className="px-4">
-                    <Input
-                      value={label}
-                      onChange={(e) => setLabel(e.target.value)}
-                      placeholder="Название связи"
-                    />
-                  </div>
-                  <SheetFooter>
-                    <Button>Сохранить</Button>
-                  </SheetFooter>
-                </SheetContent>
-              </Sheet>
+            <ButtonGroup>
+              <Button
+                variant="outline"
+                size="icon-xs"
+                onClick={() => setOpen(true)}
+              >
+                <Pencil size={12} />
+              </Button>
               <Button
                 variant="destructive"
                 className="border-border"
                 size="icon-xs"
                 onClick={handleDelete}
               >
-                <Trash />
+                <Trash size={12} />
               </Button>
             </ButtonGroup>
           </div>
         </EdgeLabelRenderer>
       )}
+
+      {/* Сайдбар */}
+      <Sheet open={open} onOpenChange={setOpen}>
+        <SheetContent>
+          <SheetHeader>
+            <SheetTitle>Редактор связи</SheetTitle>
+            <SheetDescription>
+              Настрой визуальные параметры отображения стрелки на дорожной карте
+            </SheetDescription>
+          </SheetHeader>
+
+          <EdgeEditorForm
+            edgeId={id}
+            defaultValues={data || {}}
+            onClose={() => setOpen(false)}
+          />
+        </SheetContent>
+      </Sheet>
     </>
   );
 };

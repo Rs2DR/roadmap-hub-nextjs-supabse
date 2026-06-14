@@ -24,11 +24,15 @@ import { NodeEditorForm } from './NodeEditorForm';
 
 import type { Node, NodeProps } from '@xyflow/react';
 
-import type { NodeFormInput } from '@/shcemas/NodeFormSchema';
+import type { NodeData } from '@/shcemas/NodeDataSchema';
 
-type RoadmapNode = Node<NodeFormInput, 'text'>;
+type RoadmapNodeData = Node<NodeData, 'custom'>;
 
-const CustomRoadmapNode = ({ id, data, selected }: NodeProps<RoadmapNode>) => {
+const CustomRoadmapNode = ({
+  id,
+  data,
+  selected,
+}: NodeProps<RoadmapNodeData>) => {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const { deleteElements, getNode, setNodes } = useReactFlow();
 

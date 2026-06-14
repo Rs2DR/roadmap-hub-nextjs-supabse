@@ -35,7 +35,7 @@ import type {
   OnReconnect,
 } from '@xyflow/react';
 
-import type { NodeFormInput } from '@/shcemas/NodeFormSchema';
+import type { NodeData } from '@/shcemas/NodeDataSchema';
 
 import '@xyflow/react/dist/style.css';
 
@@ -131,7 +131,7 @@ export function MyRoadmapsEditor() {
         const { clientX, clientY } =
           'changedTouches' in event ? event.changedTouches[0] : event;
 
-        const newNode: Node<NodeFormInput> = {
+        const newNode: Node<NodeData> = {
           id,
           type: 'CustomRoadmapNode',
           position: screenToFlowPosition({

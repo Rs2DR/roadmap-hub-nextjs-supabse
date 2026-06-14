@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useReactFlow } from '@xyflow/react';
 import { Link as LinkIcon, Plus, Trash } from 'lucide-react';
 
-import { NodeFormSchema } from '@/shcemas/NodeFormSchema';
+import { NodeDataSchema } from '@/shcemas/NodeDataSchema';
 
 import { Button } from '../ui/Button';
 import {
@@ -21,11 +21,11 @@ import { Popover, PopoverContent, PopoverTrigger } from '../ui/Popover';
 import { SheetFooter } from '../ui/Sheet';
 import { Textarea } from '../ui/Textarea';
 
-import type { NodeFormInput } from '@/shcemas/NodeFormSchema';
+import type { NodeData } from '@/shcemas/NodeDataSchema';
 
 interface NodeEditorFormProps {
   nodeId: string;
-  defaultValues: Partial<NodeFormInput>;
+  defaultValues: Partial<NodeData>;
   onClose: () => void;
 }
 
@@ -36,8 +36,8 @@ export const NodeEditorForm = ({
 }: NodeEditorFormProps) => {
   const { setNodes } = useReactFlow();
 
-  const form = useForm<NodeFormInput>({
-    resolver: zodResolver(NodeFormSchema),
+  const form = useForm<NodeData>({
+    resolver: zodResolver(NodeDataSchema),
     defaultValues: {
       label: defaultValues.label || '',
       description: defaultValues.description || '',
@@ -52,7 +52,7 @@ export const NodeEditorForm = ({
     name: 'links',
   });
 
-  const onSubmit = (data: NodeFormInput) => {
+  const onSubmit = (data: NodeData) => {
     setNodes((nds) =>
       nds.map((node) =>
         node.id === nodeId
