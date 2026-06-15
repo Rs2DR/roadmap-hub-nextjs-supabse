@@ -1,0 +1,12 @@
+@theme {
+  --animate-roadmap-dash: roadmapDash 1s linear infinite;
+
+  @keyframes roadmapDash {
+    from {
+      stroke-dashoffset: 24;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+}

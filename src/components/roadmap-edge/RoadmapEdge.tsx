@@ -10,7 +10,10 @@ import {
   useStore,
 } from '@xyflow/react';
 import { Pencil, Trash } from 'lucide-react';
+import { darken } from 'polished';
 
+import { useEdgeStyles } from '@/hooks/useEdgeStyles';
+import { cn } from '@/lib/utils';
 import { useFlowStore } from '@/store/useFlowStore';
 
 import { Button } from '../ui/Button';
@@ -22,95 +25,20 @@ import type { EdgeData } from '@/shcemas/EdgeDataSchema';
 
 type RoadmapEdgeData = Edge<EdgeData>;
 
-const RoadmapEdge = ({
-  id,
-  sourceX,
-  sourceY,
-  targetX,
-  targetY,
-  sourcePosition,
-  targetPosition,
-  selected,
-  data,
-}: EdgeProps<RoadmapEdgeData>) => {
+const RoadmapEdge = (props: EdgeProps<RoadmapEdgeData>) => {
+  const { id, selected, data } = props;
   const { deleteElements } = useReactFlow();
-  const openSidebar = useFlowStore((store) => store.openSidebar);
-
+  const openSidebar = useFlowStore((s) => s.openSidebar);
   const selectedEdgesCount = useStore(
     (state) => state.edges.filter((e) => e.selected).length,
   );
 
-  // 1. Расчет пути в зависимости от routingType
-  const routingType = data?.routingType || 'bezier';
-  const pathParams = {
-    sourceX,
-    sourceY,
-    targetX,
-    targetY,
-    sourcePosition,
-    targetPosition,
-  };
-
-  let edgePath = '';
-  let labelX = 0;
-  let labelY = 0;
-
-  switch (routingType) {
-    case 'smoothstep':
-      [edgePath, labelX, labelY] = getSmoothStepPath(pathParams);
-      break;
-    case 'straight':
-      [edgePath, labelX, labelY] = getStraightPath({
-        sourceX,
-        sourceY,
-        targetX,
-        targetY,
-      });
-      break;
-    case 'bezier':
-    default:
-      [edgePath, labelX, labelY] = getBezierPath(pathParams);
-      break;
-  }
-
-  const handleDelete = () => {
-    deleteElements({ edges: [{ id }] });
-  };
-
-  // 2. Стилизация линии
-  const defaultColor = data?.color || '#999999';
-  const isDashed = data?.lineStyle === 'dashed';
-  const isAnimated = data?.animated;
-
-  const edgeStyle: React.CSSProperties = {
-    stroke: selected ? '#111111' : defaultColor,
-    strokeWidth: selected ? 2 : 1.5,
-    // Если линия пунктирная, задаем паттерн (длина штриха, длина пробела)
-    strokeDasharray: isDashed ? '6, 6' : undefined,
-    transition: 'stroke 0.2s, stroke-width 0.2s',
-  };
-
-  // Формируем имя класса для анимации
-  const edgeClassName = isAnimated ? 'roadmap-edge-animated' : '';
+  const { edgePath, labelX, labelY, edgeClassName, edgeStyle } =
+    useEdgeStyles(props);
 
   return (
     <>
-      {/* Внедряем ключевые кадры анимации прямо в компонент, чтобы код был независимым */}
-      <style>{`
-        @keyframes roadmapDash {
-          from {
-            stroke-dashoffset: 24;
-          }
-          to {
-            stroke-dashoffset: 0;
-          }
-        }
-        .roadmap-edge-animated {
-          animation: roadmapDash 1s linear infinite;
-        }
-      `}</style>
-
-      {/* Рендер линии */}
+      {/* Основная линия */}
       <BaseEdge
         id={id}
         path={edgePath}
@@ -123,20 +51,18 @@ const RoadmapEdge = ({
         d={edgePath}
         fill="none"
         stroke="transparent"
-        strokeWidth={12}
-        style={{ cursor: 'pointer' }}
+        className="stroke-2 cursor-pointer"
       />
 
-      {/* Панель управления кнопками (Edit/Delete) */}
+      {/* Тулбар управления */}
       {selected && selectedEdgesCount === 1 && (
         <EdgeLabelRenderer>
           <div
             style={{
               position: 'absolute',
               transform: `translate(-50%, -50%) translate(${labelX}px, ${labelY}px)`,
-              pointerEvents: 'all',
             }}
-            className="flex flex-col items-center gap-1"
+            className="flex flex-col items-center gap-1 pointer-events-all"
           >
             <ButtonGroup>
               <Button
@@ -150,7 +76,7 @@ const RoadmapEdge = ({
                 variant="destructive"
                 className="border-border"
                 size="icon-xs"
-                onClick={handleDelete}
+                onClick={() => deleteElements({ edges: [{ id }] })}
               >
                 <Trash size={12} />
               </Button>

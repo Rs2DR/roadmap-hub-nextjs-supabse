@@ -1,14 +1,8 @@
 'use client';
 
-import {
-  ReactFlow,
-  Background,
-  Controls,
-  MiniMap,
-  useNodesState,
-  useEdgesState,
-} from '@xyflow/react';
+import { ReactFlow, Background, Controls, MiniMap } from '@xyflow/react';
 
+import { RoadmapConnectionLine } from '@/components/roadmap-connection-line';
 import { RoadmapEdge } from '@/components/roadmap-edge';
 import { FlowSheetContentSwitcher } from '@/components/roadmap-editor/FlowSheetContentSwitcher';
 import { RoadmapNode } from '@/components/roadmap-node';
@@ -19,11 +13,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from '@/components/ui/Sheet';
-import {
-  INITIAL_EDGES,
-  INITIAL_NODES,
-  ROADMAP_TYPES,
-} from '@/constants/roadmap';
+import { ROADMAP_TYPES } from '@/constants/roadmap';
 import { useFlowClipboard } from '@/hooks/useFlowClipboard';
 import { useMousePosition } from '@/hooks/useMousePosition';
 import { useRoadmap } from '@/hooks/useRoadmap';
@@ -42,34 +32,17 @@ export function RoadmapEditor() {
 
   const mousePosRef = useMousePosition();
 
-  const {
-    edges,
-    nodes,
-    onConnect,
-    onConnectEnd,
-    onConnectStart,
-    onEdgesChange,
-    onNodesChange,
-    onNodesDelete,
-    onReconnect,
-  } = useRoadmap();
+  const roadmap = useRoadmap();
 
   useFlowClipboard({ mousePosRef });
 
   return (
     <div style={{ height: '100%', width: '100%' }}>
       <ReactFlow
-        nodes={nodes}
-        edges={edges}
+        {...roadmap}
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
-        onConnect={onConnect}
-        onConnectEnd={onConnectEnd}
-        onConnectStart={onConnectStart}
-        onEdgesChange={onEdgesChange}
-        onNodesChange={onNodesChange}
-        onNodesDelete={onNodesDelete}
-        onReconnect={onReconnect}
+        connectionLineComponent={RoadmapConnectionLine}
         onNodeDoubleClick={(_, node) =>
           openSidebar({ type: 'node', id: node.id, data: node.data })
         }

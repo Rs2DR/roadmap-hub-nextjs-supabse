@@ -1,3 +1,4 @@
+import type { MouseEvent } from 'react';
 import { useCallback } from 'react';
 
 import {
@@ -17,6 +18,7 @@ import {
   INITIAL_NODES,
   ROADMAP_TYPES,
 } from '@/constants/roadmap';
+import { useReconnectStore } from '@/store/useReconnectStore';
 
 import type {
   Edge,
@@ -40,6 +42,10 @@ export function useRoadmap() {
     Node<NodeData>,
     Edge<EdgeData>
   >();
+
+  const setReconnectingEdgeId = useReconnectStore(
+    (s) => s.setReconnectingEdgeId,
+  );
 
   const onNodesChange: OnNodesChange<Node<NodeData>> = useCallback(
     (changes) => {
@@ -66,11 +72,22 @@ export function useRoadmap() {
     setNodes((nds) => nds.map((n) => ({ ...n, selected: false })));
   }, [setNodes]);
 
+  const onReconnectStart = useCallback(
+    (_: MouseEvent, edge: Edge<EdgeData>) => {
+      setReconnectingEdgeId(edge.id);
+    },
+    [setReconnectingEdgeId],
+  );
+
   const onReconnect: OnReconnect<Edge<EdgeData>> = useCallback(
     (oldEdge, newConnection) =>
       setEdges((els) => reconnectEdge(oldEdge, newConnection, els)),
     [setEdges],
   );
+
+  const onReconnectEnd = useCallback(() => {
+    setReconnectingEdgeId(null);
+  }, [setReconnectingEdgeId]);
 
   const onConnectEnd: OnConnectEnd = useCallback(
     (event, connectionState) => {
@@ -124,5 +141,7 @@ export function useRoadmap() {
     onReconnect,
     onConnectEnd,
     onNodesDelete,
+    onReconnectStart,
+    onReconnectEnd,
   };
 }

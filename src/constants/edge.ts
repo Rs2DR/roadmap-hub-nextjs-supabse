@@ -1,7 +1,7 @@
 export const EDGE_ROUTING_TYPES = {
   bezier: 'Волна',
   smoothstep: 'Ступенька',
-  straight: 'Пмямая',
+  straight: 'Прямая',
 } as const;
 
 export const EDGE_LINE_STYLES = {
