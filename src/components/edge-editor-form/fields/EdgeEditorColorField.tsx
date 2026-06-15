@@ -28,7 +28,7 @@ export const EdgeEditorColorField = ({ control }: FieldProps<EdgeData>) => (
       <Field data-invalid={invalid}>
         <FieldLabel htmlFor={`edge-${name}`}>Цвет стрелки</FieldLabel>
         <div className="inline-flex gap-2 w-full">
-          <Popover>
+          <Popover modal={true}>
             <PopoverTrigger asChild>
               <Button
                 type="button"

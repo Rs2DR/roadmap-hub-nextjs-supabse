@@ -71,11 +71,9 @@ export const NodeEditorForm = ({
       </div>
 
       <SheetFooter className="p-4 border-t mt-4">
-        <Field orientation="horizontal" className="w-full justify-end">
-          <Button type="submit" form={`node-form-${nodeId}`}>
-            Сохранить
-          </Button>
-        </Field>
+        <Button type="submit" form={`node-form-${nodeId}`}>
+          Сохранить
+        </Button>
       </SheetFooter>
     </form>
   );

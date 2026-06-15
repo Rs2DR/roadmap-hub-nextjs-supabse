@@ -1,1 +1,1 @@
-export * from './RoadmapNode';
+export { default as RoadmapNode } from './RoadmapNode';

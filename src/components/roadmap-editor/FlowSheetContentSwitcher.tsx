@@ -14,9 +14,9 @@ const NodeViewDetails = ({ data }: { data: NodeData }) => (
 );
 
 export const FlowSheetContentSwitcher = () => {
-  const activeElement = useFlowStore((state) => state.activeElement);
-  const mode = useFlowStore((state) => state.mode);
-  const closeSidebar = useFlowStore((state) => state.closeSidebar);
+  const activeElement = useFlowStore((s) => s.activeElement);
+  const mode = useFlowStore((s) => s.mode);
+  const closeSidebar = useFlowStore((s) => s.closeSidebar);
 
   if (!activeElement) return null;
 

@@ -1,4 +1,4 @@
-import { memo, useState } from 'react';
+import { memo } from 'react';
 
 import {
   Handle,
@@ -7,7 +7,7 @@ import {
   useReactFlow,
   useStore,
 } from '@xyflow/react';
-import { BookOpen, Copy, Pencil, Trash } from 'lucide-react';
+import { Copy, Pencil, Trash } from 'lucide-react';
 import { lighten, darken } from 'polished';
 
 import { useFlowStore } from '@/store/useFlowStore';

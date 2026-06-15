@@ -66,11 +66,9 @@ export const EdgeEditorForm = ({
       </div>
 
       <SheetFooter className="p-4 border-t mt-4">
-        <Field orientation="horizontal" className="w-full justify-end">
-          <Button type="submit" form={`edge-form-${edgeId}`}>
-            Сохранить
-          </Button>
-        </Field>
+        <Button type="submit" form={`edge-form-${edgeId}`}>
+          Сохранить
+        </Button>
       </SheetFooter>
     </form>
   );

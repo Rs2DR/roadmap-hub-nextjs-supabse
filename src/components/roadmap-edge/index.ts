@@ -1,1 +1,1 @@
-export * from './RoadmapEdge';
+export { default as RoadmapEdge } from './RoadmapEdge';
