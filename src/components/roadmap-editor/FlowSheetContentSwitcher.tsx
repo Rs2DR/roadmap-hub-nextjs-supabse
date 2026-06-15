@@ -1,10 +1,9 @@
+import { NodeEditorForm } from '@/components/node-editor-form';
 import { FLOW_MODE } from '@/constants/flow';
 import { useFlowStore } from '@/store/useFlowStore';
 
-import { EdgeEditorForm } from '../roadmap-edge/EdgeEditorForm';
-import { NodeEditorForm } from '../roadmap-node/NodeEditorForm';
+import { EdgeEditorForm } from '../edge-editor-form/EdgeEditorForm';
 
-import type { EdgeData } from '@/shcemas/EdgeDataSchema';
 import type { NodeData } from '@/shcemas/NodeDataSchema';
 
 const NodeViewDetails = ({ data }: { data: NodeData }) => (
