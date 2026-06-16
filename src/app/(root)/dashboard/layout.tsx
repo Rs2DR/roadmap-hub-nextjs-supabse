@@ -33,9 +33,7 @@ export default async function DashboardLayout({
               />
             </div>
           </header>
-          <div className="p-4 pt-0" style={{ height: '100%', width: '100%' }}>
-            {children}
-          </div>
+          <div className="w-full h-full">{children}</div>
         </SidebarInset>
       </SidebarProvider>
     </HydrationBoundary>

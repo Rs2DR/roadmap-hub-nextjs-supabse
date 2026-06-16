@@ -1,18 +1,20 @@
 'use server';
 
+import { actionClient } from '@/lib/next-safe-actions/actionClient';
 import { createServerSupabase } from '@/lib/supabase/server';
+import { SignInSchema } from '@/shcemas/SignInSchema';
 
-import type { SignInInput } from '@/shcemas/SignInSchema';
+export const signInWithEmail = actionClient
+  .inputSchema(SignInSchema)
+  .action(async ({ parsedInput }) => {
+    const supabase = await createServerSupabase();
 
-export const signInWithEmail = async ({ email, password }: SignInInput) => {
-  const supabase = await createServerSupabase();
+    const { error } = await supabase.auth.signInWithPassword({
+      email: parsedInput.email,
+      password: parsedInput.password,
+    });
 
-  const { error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
+    if (error) throw new Error('Неверный email или пароль');
+
+    return { success: true };
   });
-
-  if (error) throw new Error(error.message);
-
-  return { success: true };
-};

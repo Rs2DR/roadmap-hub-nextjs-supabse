@@ -1,33 +1,78 @@
 'use client';
 
-import { ReactFlow, Background, Controls, MiniMap } from '@xyflow/react';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import {
+  ReactFlow,
+  Background,
+  Controls,
+  MiniMap,
+  useReactFlow,
+} from '@xyflow/react';
+import { notFound } from 'next/navigation';
 
 import { FlowSheet } from '@/components/flow-sheet';
 import { RoadmapConnectionLine } from '@/components/roadmap-connection-line';
 import { RoadmapEdge } from '@/components/roadmap-edge';
 import { RoadmapNode } from '@/components/roadmap-node';
+import { Button } from '@/components/ui/Button';
 import { ROADMAP_TYPES } from '@/constants/roadmap';
 import { useFlowClipboard } from '@/hooks/useFlowClipboard';
 import { useMousePosition } from '@/hooks/useMousePosition';
 import { useRoadmap } from '@/hooks/useRoadmap';
+import { useSaveRoadmapGraph } from '@/hooks/useSaveRoadmapGraph';
+import { getFullRoadmapQueryOptions } from '@/queries/getRoadmapForEditQueryOptions';
 
 import '@xyflow/react/dist/style.css';
 
 const nodeTypes = { RoadmapNode };
 const edgeTypes = { RoadmapEdge };
 
-export function RoadmapEditor() {
-  const roadmap = useRoadmap();
+interface RoadmapEditorProps {
+  id: string;
+}
+
+export function RoadmapEditor({ id }: RoadmapEditorProps) {
+  const { data } = useSuspenseQuery(getFullRoadmapQueryOptions({ id }));
+  const { mutate, isPending } = useSaveRoadmapGraph();
+  const { getViewport } = useReactFlow();
+
+  if (!data) {
+    notFound();
+  }
+
+  const { nodes, edges, ...handlers } = useRoadmap({
+    initialNodes: data.nodes,
+    initialEdges: data.edges,
+  });
   const mousePosRef = useMousePosition();
 
   useFlowClipboard({ mousePosRef });
 
+  const handleSave = () => {
+    mutate({
+      id,
+      nodes,
+      edges,
+      viewport: getViewport(),
+    });
+  };
+
   return (
-    <div style={{ height: '100%', width: '100%' }}>
+    <div className="relative w-full h-full">
+      <Button
+        className="absolute z-50 right-2 top-2"
+        onClick={handleSave}
+        disabled={isPending}
+        loading={isPending}
+      >
+        Сохранить
+      </Button>
       <ReactFlow
-        {...roadmap}
+        nodes={nodes}
+        edges={edges}
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
+        {...handlers}
         connectionLineComponent={RoadmapConnectionLine}
         defaultEdgeOptions={{ type: ROADMAP_TYPES.edge }}
         fitView

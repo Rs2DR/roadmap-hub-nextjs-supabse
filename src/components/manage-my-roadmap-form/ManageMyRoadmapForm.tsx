@@ -9,7 +9,7 @@ import { useRouter } from 'next/navigation';
 import { FORM_MODE } from '@/constants/form';
 import { DASHBOARD_ROUTES } from '@/constants/routes';
 import { useCreateRoadmap } from '@/hooks/useCreateRoadmap';
-import { useUpdateRoadmap } from '@/hooks/useUpdateRoadmap';
+import { useUpdateRoadmapInfo } from '@/hooks/useUpdateRoadmapInfo';
 import { cn } from '@/lib/utils';
 import { ManageMyRoadmapSchema } from '@/shcemas/ManageMyRoadmapSchema';
 
@@ -39,7 +39,8 @@ export function ManageMyRoadmapForm({
   const router = useRouter();
 
   const { mutate: createRoadmap, isPending: isCreating } = useCreateRoadmap();
-  const { mutate: updateRoadmap, isPending: isUpdating } = useUpdateRoadmap();
+  const { mutate: updateRoadmap, isPending: isUpdating } =
+    useUpdateRoadmapInfo();
 
   const {
     handleSubmit,

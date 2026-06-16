@@ -14,8 +14,6 @@ import {
 import {
   DEFAULT_EDGE_DATA,
   DEFAULT_NODE_DATA,
-  INITIAL_EDGES,
-  INITIAL_NODES,
   ROADMAP_TYPES,
 } from '@/constants/roadmap';
 import { useFlowStore } from '@/store/useFlowStore';
@@ -38,9 +36,14 @@ import type {
 import type { EdgeData } from '@/shcemas/EdgeDataSchema';
 import type { NodeData } from '@/shcemas/NodeDataSchema';
 
-export function useRoadmap() {
-  const [nodes, setNodes] = useNodesState(INITIAL_NODES);
-  const [edges, setEdges] = useEdgesState(INITIAL_EDGES);
+interface UseRoadmapParams {
+  initialNodes: Node<NodeData>[];
+  initialEdges: Edge<EdgeData>[];
+}
+
+export function useRoadmap({ initialEdges, initialNodes }: UseRoadmapParams) {
+  const [nodes, setNodes] = useNodesState(initialNodes);
+  const [edges, setEdges] = useEdgesState(initialEdges);
   const { screenToFlowPosition } = useReactFlow<
     Node<NodeData>,
     Edge<EdgeData>

@@ -5,6 +5,7 @@ import { toast } from 'sonner';
 
 import { createRoadmap } from '@/actions/roadmap/createRoadmap';
 import { MY_ROADMAPS_KEY } from '@/constants/queries';
+import { unwrapAction } from '@/lib/next-safe-actions/unwrapAction';
 
 import type { ManageMyRoadmapInput } from '@/shcemas/ManageMyRoadmapSchema';
 import type { Roadmap } from '@/shcemas/RoadmapSchema';
@@ -13,7 +14,8 @@ export const useCreateRoadmap = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (data: ManageMyRoadmapInput) => createRoadmap(data),
+    mutationFn: (data: ManageMyRoadmapInput) =>
+      unwrapAction(createRoadmap(data)),
 
     onMutate: async (newRoadmap) => {
       await queryClient.cancelQueries({ queryKey: [MY_ROADMAPS_KEY] });
@@ -42,9 +44,7 @@ export const useCreateRoadmap = () => {
       return { previousRoadmaps };
     },
 
-    onSuccess: ({ success }) => {
-      if (!success) return;
-
+    onSuccess: () => {
       toast.success('Roadmap успешно создана');
 
       queryClient.invalidateQueries({

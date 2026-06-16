@@ -11,7 +11,7 @@ import {
   NodeEditorLinksField,
 } from '@/components/node-editor-form/fields';
 import { Button } from '@/components/ui/Button';
-import { Field, FieldGroup } from '@/components/ui/Field';
+import { FieldGroup } from '@/components/ui/Field';
 import { SheetFooter } from '@/components/ui/Sheet';
 import { NodeDataSchema } from '@/shcemas/NodeDataSchema';
 

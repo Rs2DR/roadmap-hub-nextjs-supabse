@@ -5,7 +5,7 @@ import { useMemo } from 'react';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { useQueryState } from 'nuqs';
 
-import { getMyRoadmapsQueryOptions } from '@/queries/getMyRoadmapQueryOptions';
+import { getMyRoadmapsInfoQueryOptions } from '@/queries/getMyRoadmapsInfoQueryOptions';
 import { filterRoadmaps } from '@/utils/filterRoadmaps';
 
 import { MyRoadmapCard } from '../my-roadmap-card';
@@ -17,13 +17,11 @@ export function MyRoadmapsList() {
   const [filterValue] = useQueryState('filter', {
     defaultValue: '',
   });
-  const {
-    data: { roadmaps },
-  } = useSuspenseQuery(getMyRoadmapsQueryOptions());
+  const { data } = useSuspenseQuery(getMyRoadmapsInfoQueryOptions());
 
   const filteredRoadmaps = useMemo(
-    () => filterRoadmaps(roadmaps, filterValue),
-    [roadmaps, filterValue],
+    () => filterRoadmaps(data, filterValue),
+    [data, filterValue],
   );
 
   if (filteredRoadmaps.length === 0 && !filterValue)

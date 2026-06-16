@@ -1,6 +1,7 @@
-import { ReactFlowProvider } from '@xyflow/react';
+import { Suspense } from 'react';
 
-import { RoadmapEditor } from '@/components/roadmap-editor';
+import { RoadmapContent } from '@/components/roadmap-content';
+import { Spinner } from '@/components/ui/Spinner';
 
 export default async function MyRoadmapPage({
   params,
@@ -8,10 +9,8 @@ export default async function MyRoadmapPage({
   const { id } = await params;
 
   return (
-    <div style={{ height: '100%', width: '100%' }}>
-      <ReactFlowProvider>
-        <RoadmapEditor />
-      </ReactFlowProvider>
-    </div>
+    <Suspense fallback={<Spinner />}>
+      <RoadmapContent id={id} />
+    </Suspense>
   );
 }

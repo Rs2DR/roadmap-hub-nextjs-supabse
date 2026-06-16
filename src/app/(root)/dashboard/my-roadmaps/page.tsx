@@ -8,12 +8,12 @@ import { ManageMyRoadmapDialog } from '@/components/manage-my-roadmap-dialog';
 import { MyRoadmapsList } from '@/components/my-roadmaps-list';
 import { Button } from '@/components/ui/Button';
 import { getQueryClient } from '@/lib/tanstack-query/getQueryClient';
-import { getMyRoadmapsQueryOptions } from '@/queries/getMyRoadmapQueryOptions';
+import { getMyRoadmapsInfoQueryOptions } from '@/queries/getMyRoadmapsInfoQueryOptions';
 
 export default async function MyRoadmapsPage() {
   const queryClient = getQueryClient();
 
-  await queryClient.prefetchQuery(getMyRoadmapsQueryOptions());
+  await queryClient.prefetchQuery(getMyRoadmapsInfoQueryOptions());
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

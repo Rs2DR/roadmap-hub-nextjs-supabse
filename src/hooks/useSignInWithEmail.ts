@@ -4,12 +4,13 @@ import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { signInWithEmail } from '@/actions/auth/signInWithEmail';
+import { unwrapAction } from '@/lib/next-safe-actions/unwrapAction';
 
 import type { SignInInput } from '@/shcemas/SignInSchema';
 
 export const useSignInWithEmail = () => {
   return useMutation({
-    mutationFn: (data: SignInInput) => signInWithEmail(data),
+    mutationFn: (data: SignInInput) => unwrapAction(signInWithEmail(data)),
 
     onSuccess: ({ success }) => {
       if (!success) return;

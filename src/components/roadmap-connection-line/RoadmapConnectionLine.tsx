@@ -12,16 +12,7 @@ import type { EdgeData } from '@/shcemas/EdgeDataSchema';
 import type { NodeData } from '@/shcemas/NodeDataSchema';
 
 const RoadmapConnectionLine = (props: ConnectionLineComponentProps) => {
-  const {
-    fromHandle,
-    toHandle,
-    fromX,
-    fromY,
-    toX,
-    toY,
-    fromPosition,
-    toPosition,
-  } = props;
+  const { fromX, fromY, toX, toY, fromPosition, toPosition } = props;
   const { getEdge } = useReactFlow<Node<NodeData>, Edge<EdgeData>>();
   const edgeId = useReconnectStore((s) => s.reconnectingEdgeId);
 

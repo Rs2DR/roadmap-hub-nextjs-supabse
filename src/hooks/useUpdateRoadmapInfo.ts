@@ -3,17 +3,19 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
-import { updateRoadmap } from '@/actions/roadmap/updateRoadmap';
+import { updateRoadmapInfo } from '@/actions/roadmap/updateRoadmapInfo';
 import { MY_ROADMAPS_KEY } from '@/constants/queries';
+import { unwrapAction } from '@/lib/next-safe-actions/unwrapAction';
 
 import type { Roadmap } from '@/shcemas/RoadmapSchema';
 import type { UpdateRoadmapInput } from '@/shcemas/UpdateRoadmapSchema';
 
-export const useUpdateRoadmap = () => {
+export const useUpdateRoadmapInfo = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (data: UpdateRoadmapInput) => updateRoadmap(data),
+    mutationFn: (data: UpdateRoadmapInput) =>
+      unwrapAction(updateRoadmapInfo(data)),
 
     onMutate: async (updatedRoadmap) => {
       await queryClient.cancelQueries({ queryKey: [MY_ROADMAPS_KEY] });
@@ -53,9 +55,7 @@ export const useUpdateRoadmap = () => {
       toast.error(error.message);
     },
 
-    onSuccess: ({ success, data }) => {
-      if (!success) return;
-
+    onSuccess: (data) => {
       toast.success('Roadmap успешно обновлена');
 
       queryClient.setQueryData(

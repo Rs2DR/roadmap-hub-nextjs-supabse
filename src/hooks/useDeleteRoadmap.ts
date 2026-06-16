@@ -5,18 +5,16 @@ import { toast } from 'sonner';
 
 import { deleteRoadmap } from '@/actions/roadmap/deleteRoadmap';
 import { MY_ROADMAPS_KEY } from '@/constants/queries';
+import { unwrapAction } from '@/lib/next-safe-actions/unwrapAction';
 
 import type { Roadmap } from '@/shcemas/RoadmapSchema';
-
-type DeleteRoadmapInput = {
-  id: Roadmap['id'];
-};
 
 export const useDeleteRoadmap = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (data: DeleteRoadmapInput) => deleteRoadmap(data),
+    mutationFn: (data: { id: Roadmap['id'] }) =>
+      unwrapAction(deleteRoadmap(data)),
 
     onMutate: async ({ id }) => {
       await queryClient.cancelQueries({ queryKey: [MY_ROADMAPS_KEY] });
