@@ -1,12 +1,8 @@
+'use client';
+
 import { memo } from 'react';
 
-import {
-  BaseEdge,
-  EdgeLabelRenderer,
-  useReactFlow,
-  useStore,
-} from '@xyflow/react';
-import { Pencil, Trash } from 'lucide-react';
+import { BaseEdge } from '@xyflow/react';
 
 import { RoadmapEdgeToolbar } from '@/components/roadmap-edge/RoadmapEdgeToolbar';
 import { useEdgeStyles } from '@/hooks/useEdgeStyles';

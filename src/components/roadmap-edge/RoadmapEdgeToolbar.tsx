@@ -1,3 +1,7 @@
+'use client';
+
+import type { CSSProperties } from 'react';
+
 import { EdgeLabelRenderer, useReactFlow, useStore } from '@xyflow/react';
 import { Pencil, Trash } from 'lucide-react';
 
@@ -24,19 +28,22 @@ export function RoadmapEdgeToolbar({
 }: RoadmapEdgeToolbarProps) {
   const { deleteElements } = useReactFlow();
   const openSidebar = useFlowStore((s) => s.openSidebar);
+
   const selectedEdgesCount = useStore(
     (state) => state.edges.filter((e) => e.selected).length,
   );
 
-  if (selected && selectedEdgesCount === 1) return null;
+  const toolbarStyles: CSSProperties = {
+    position: 'absolute',
+    transform: `translate(-50%, -50%) translate(${labelX}px, ${labelY}px)`,
+  };
+
+  if (!selected && selectedEdgesCount !== 1) return null;
 
   return (
     <EdgeLabelRenderer>
       <div
-        style={{
-          position: 'absolute',
-          transform: `translate(-50%, -50%) translate(${labelX}px, ${labelY}px)`,
-        }}
+        style={toolbarStyles}
         className="flex flex-col items-center gap-1 pointer-events-auto"
       >
         <ButtonGroup>

@@ -18,11 +18,14 @@ import {
   INITIAL_NODES,
   ROADMAP_TYPES,
 } from '@/constants/roadmap';
+import { useFlowStore } from '@/store/useFlowStore';
 import { useReconnectStore } from '@/store/useReconnectStore';
 
 import type {
   Edge,
+  EdgeMouseHandler,
   Node,
+  NodeMouseHandler,
   OnConnect,
   OnConnectEnd,
   OnConnectStart,
@@ -42,6 +45,8 @@ export function useRoadmap() {
     Node<NodeData>,
     Edge<EdgeData>
   >();
+
+  const openSidebar = useFlowStore((s) => s.openSidebar);
 
   const setReconnectingEdgeId = useReconnectStore(
     (s) => s.setReconnectingEdgeId,
@@ -131,6 +136,16 @@ export function useRoadmap() {
     [setEdges],
   );
 
+  const onNodeDoubleClick: NodeMouseHandler<Node<NodeData>> = useCallback(
+    (_, { id, data }) => openSidebar({ type: 'node', id, data }),
+    [openSidebar],
+  );
+
+  const onEdgeDoubleClick: EdgeMouseHandler<Edge<EdgeData>> = useCallback(
+    (_, { id, data }) => openSidebar({ type: 'edge', id, data }),
+    [openSidebar],
+  );
+
   return {
     edges,
     nodes,
@@ -143,5 +158,7 @@ export function useRoadmap() {
     onNodesDelete,
     onReconnectStart,
     onReconnectEnd,
+    onNodeDoubleClick,
+    onEdgeDoubleClick,
   };
 }

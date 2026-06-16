@@ -1,3 +1,5 @@
+'use client';
+
 import { NodeEditorForm } from '@/components/node-editor-form';
 import { FLOW_MODE } from '@/constants/flow';
 import { useFlowStore } from '@/store/useFlowStore';
