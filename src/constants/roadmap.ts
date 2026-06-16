@@ -9,7 +9,7 @@ export const ROADMAP_TYPES = {
 } as const;
 
 export const DEFAULT_NODE_DATA: NodeData = {
-  label: '',
+  label: 'Без названия',
   color: '#3b82f6',
   description: '',
   links: [],
