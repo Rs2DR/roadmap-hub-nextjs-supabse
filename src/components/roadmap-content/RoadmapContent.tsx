@@ -5,12 +5,12 @@ import { ReactFlowProvider } from '@xyflow/react';
 
 import { RoadmapEditor } from '@/components/roadmap-editor';
 import { getQueryClient } from '@/lib/tanstack-query/getQueryClient';
-import { getFullRoadmapQueryOptions } from '@/queries/getRoadmapForEditQueryOptions';
+import { getRoadmapForEditQueryOptions } from '@/queries/getRoadmapForEditQueryOptions';
 
 export async function RoadmapContent({ id }: { id: string }) {
   const queryClient = getQueryClient();
 
-  await queryClient.prefetchQuery(getFullRoadmapQueryOptions({ id }));
+  await queryClient.prefetchQuery(getRoadmapForEditQueryOptions({ id }));
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>

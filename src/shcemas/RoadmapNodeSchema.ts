@@ -4,7 +4,7 @@ import { NodeDataSchema } from '@/shcemas/NodeDataSchema';
 
 export const RoadmapNodeSchema = z.object({
   id: z.string(),
-  type: z.string(),
+  type: z.string().optional(),
   position: z.object({
     x: z.number(),
     y: z.number(),

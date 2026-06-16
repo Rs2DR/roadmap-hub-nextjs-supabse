@@ -20,7 +20,7 @@ import { useFlowClipboard } from '@/hooks/useFlowClipboard';
 import { useMousePosition } from '@/hooks/useMousePosition';
 import { useRoadmap } from '@/hooks/useRoadmap';
 import { useSaveRoadmapGraph } from '@/hooks/useSaveRoadmapGraph';
-import { getFullRoadmapQueryOptions } from '@/queries/getRoadmapForEditQueryOptions';
+import { getRoadmapForEditQueryOptions } from '@/queries/getRoadmapForEditQueryOptions';
 
 import '@xyflow/react/dist/style.css';
 
@@ -32,7 +32,7 @@ interface RoadmapEditorProps {
 }
 
 export function RoadmapEditor({ id }: RoadmapEditorProps) {
-  const { data } = useSuspenseQuery(getFullRoadmapQueryOptions({ id }));
+  const { data } = useSuspenseQuery(getRoadmapForEditQueryOptions({ id }));
   const { mutate, isPending } = useSaveRoadmapGraph();
   const { getViewport } = useReactFlow();
 
