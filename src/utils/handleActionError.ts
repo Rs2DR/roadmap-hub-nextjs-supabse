@@ -1,54 +1,61 @@
-import { ActionMutationError } from '@next-safe-action/adapter-tanstack-query';
-import { toast } from 'sonner';
+import {
+  isActionMutationError,
+  hasServerError,
+  hasValidationErrors,
+} from '@next-safe-action/adapter-tanstack-query';
+
+import type { ActionMutationError } from '@next-safe-action/adapter-tanstack-query';
 
 import type { DefaultValidationErrors } from '@/types/DefaultValidationErrors';
 
-type SafeActionError = ActionMutationError<string, DefaultValidationErrors>;
+const getValidationErrorMessage = (
+  error: ActionMutationError<unknown, unknown>,
+): string | null => {
+  if (!hasValidationErrors(error)) return null;
 
-const handleValidationError = (validationErrors: DefaultValidationErrors) => {
-  const { fieldErrors, formErrors } = validationErrors;
-  if (fieldErrors && Object.keys(fieldErrors).length > 0) {
-    const firstField = Object.keys(fieldErrors)[0];
-    const firstMessage = fieldErrors[firstField]?.[0];
+  const vErrors = error.validationErrors as DefaultValidationErrors;
+  const fieldKeys = Object.keys(vErrors.fieldErrors ?? {});
 
-    if (firstMessage) {
-      toast.error(`Ошибка в поле "${firstField}": ${firstMessage}`);
-      return;
+  if (fieldKeys.length > 0) {
+    const firstField = fieldKeys[0];
+    const messages = vErrors.fieldErrors?.[firstField];
+    if (messages?.[0]) {
+      return `Ошибка в поле "${firstField}": ${messages[0]}`;
     }
   }
 
-  if (formErrors && formErrors.length > 0) {
-    toast.error(formErrors[0]);
-    return;
+  if (vErrors.formErrors?.[0]) {
+    return vErrors.formErrors[0];
   }
 
-  toast.error('Ошибка валидации данных');
+  return 'Ошибка валидации данных';
 };
 
-const handleSafeActionError = (error: SafeActionError) => {
-  if (error.validationErrors) {
-    handleValidationError(error.validationErrors);
-    return;
-  }
+const getServerErrorMessage = (
+  error: ActionMutationError<unknown, unknown>,
+): string | null => {
+  if (!hasServerError(error)) return null;
+  return String(error.serverError);
+};
 
-  if (error.serverError) {
-    toast.error(error.serverError);
-    return;
+const getNativeErrorMessage = (error: unknown): string | null => {
+  if (error instanceof Error) {
+    return error.message;
   }
-
-  toast.error('Произошла ошибка при выполнении операции на сервере');
+  return null;
 };
 
 export const handleActionError = (error: unknown) => {
-  if (error instanceof ActionMutationError) {
-    handleSafeActionError(error as SafeActionError);
-    return;
+  if (isActionMutationError(error)) {
+    const validationError = getValidationErrorMessage(error);
+    if (validationError) return validationError;
+
+    const serverError = getServerErrorMessage(error);
+    if (serverError) return serverError;
   }
 
-  if (error instanceof Error) {
-    toast.error(error.message);
-    return;
-  }
+  const nativeError = getNativeErrorMessage(error);
+  if (nativeError) return nativeError;
 
-  toast.error('Произошла непредвиденная ошибка');
+  return 'Произошла непредвиденная ошибка';
 };

@@ -14,7 +14,9 @@ export const useUpdatePassword = () => {
         toast.success('Пароль успешно обновлен');
       },
 
-      onError: handleActionError,
+      onError: (error) => {
+        toast.error(handleActionError(error));
+      },
     }),
   );
 };

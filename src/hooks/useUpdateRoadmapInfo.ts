@@ -51,7 +51,7 @@ export const useUpdateRoadmapInfo = () => {
           );
         }
 
-        handleActionError(error);
+        toast.error(handleActionError(error));
       },
 
       onSuccess: (data) => {

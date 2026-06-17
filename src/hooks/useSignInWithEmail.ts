@@ -14,7 +14,9 @@ export const useSignInWithEmail = () => {
         toast.success('Вы успешно вошли в аккаунт');
       },
 
-      onError: handleActionError,
+      onError: (error) => {
+        toast.error(handleActionError(error));
+      },
     }),
   );
 };

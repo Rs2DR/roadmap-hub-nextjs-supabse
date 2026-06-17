@@ -14,7 +14,9 @@ export const useSignOut = () => {
         toast.success('Вы успешно вышли из аккаунта');
       },
 
-      onError: handleActionError,
+      onError: (error) => {
+        toast.error(handleActionError(error));
+      },
     }),
   );
 };

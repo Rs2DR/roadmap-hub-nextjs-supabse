@@ -14,7 +14,9 @@ export const useRequestPasswordReset = () => {
         toast.info('Мы отправили письмо вам на почту');
       },
 
-      onError: handleActionError,
+      onError: (error) => {
+        toast.error(handleActionError(error));
+      },
     }),
   );
 };

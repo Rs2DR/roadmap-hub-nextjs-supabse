@@ -1,5 +1,3 @@
-import { parseEnv } from 'node:util';
-
 import { z } from 'zod';
 
 import { RoadmapSchema } from '@/shcemas/RoadmapSchema';

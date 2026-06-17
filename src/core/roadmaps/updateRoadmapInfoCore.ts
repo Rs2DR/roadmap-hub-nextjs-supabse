@@ -1,5 +1,3 @@
-// services/roadmaps/core/updateRoadmapInfo.ts
-
 import { RoadmapSchema } from '@/shcemas/RoadmapSchema';
 
 import type { SupabaseClient } from '@supabase/supabase-js';
@@ -22,8 +20,6 @@ export const updateRoadmapInfoCore = async (
     .eq('user_id', userId)
     .select('*, roadmap_likes(count), roadmap_comments(count)')
     .single();
-
-  console.log(data);
 
   if (error) {
     throw new Error('Не удалось обновить roadmap');

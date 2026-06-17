@@ -22,7 +22,9 @@ export const useSaveRoadmapGraph = () => {
         );
       },
 
-      onError: handleActionError,
+      onError: (error) => {
+        toast.error(handleActionError(error));
+      },
     }),
   );
 };

@@ -63,7 +63,7 @@ export const useCreateRoadmap = () => {
           );
         }
 
-        handleActionError(error);
+        toast.error(handleActionError(error));
       },
     }),
   );

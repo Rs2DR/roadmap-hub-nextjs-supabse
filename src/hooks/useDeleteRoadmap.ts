@@ -42,7 +42,7 @@ export const useDeleteRoadmap = () => {
           );
         }
 
-        handleActionError(error);
+        toast.error(handleActionError(error));
       },
 
       onSuccess: () => {
