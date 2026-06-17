@@ -38,32 +38,33 @@ export function RoadmapEdgeToolbar({
     transform: `translate(-50%, -50%) translate(${labelX}px, ${labelY}px)`,
   };
 
-  if (!selected && selectedEdgesCount !== 1) return null;
-
   return (
-    <EdgeLabelRenderer>
-      <div
-        style={toolbarStyles}
-        className="flex flex-col items-center gap-1 pointer-events-auto"
-      >
-        <ButtonGroup>
-          <Button
-            variant="outline"
-            size="icon-xs"
-            onClick={() => openSidebar({ type: 'edge', id, data })}
-          >
-            <Pencil size={12} />
-          </Button>
-          <Button
-            variant="destructive"
-            className="border-border"
-            size="icon-xs"
-            onClick={() => deleteElements({ edges: [{ id }] })}
-          >
-            <Trash size={12} />
-          </Button>
-        </ButtonGroup>
-      </div>
-    </EdgeLabelRenderer>
+    selected &&
+    selectedEdgesCount === 1 && (
+      <EdgeLabelRenderer>
+        <div
+          style={toolbarStyles}
+          className="flex flex-col items-center gap-1 pointer-events-auto"
+        >
+          <ButtonGroup>
+            <Button
+              variant="outline"
+              size="icon-xs"
+              onClick={() => openSidebar({ type: 'edge', id, data })}
+            >
+              <Pencil size={12} />
+            </Button>
+            <Button
+              variant="destructive"
+              className="border-border"
+              size="icon-xs"
+              onClick={() => deleteElements({ edges: [{ id }] })}
+            >
+              <Trash size={12} />
+            </Button>
+          </ButtonGroup>
+        </div>
+      </EdgeLabelRenderer>
+    )
   );
 }

@@ -5,19 +5,16 @@ import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { signInWithEmail } from '@/actions/auth/signInWithEmail';
+import { handleActionError } from '@/utils/handleActionError';
 
 export const useSignInWithEmail = () => {
   return useMutation(
     mutationOptions(signInWithEmail, {
-      onSuccess: ({ success }) => {
-        if (!success) return;
-
+      onSuccess: () => {
         toast.success('Вы успешно вошли в аккаунт');
       },
 
-      onError: ({ message }) => {
-        toast.error(message);
-      },
+      onError: handleActionError,
     }),
   );
 };

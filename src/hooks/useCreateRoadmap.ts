@@ -6,6 +6,7 @@ import { toast } from 'sonner';
 
 import { createRoadmap } from '@/actions/roadmap/createRoadmap';
 import { MY_ROADMAPS_KEY } from '@/constants/queries';
+import { handleActionError } from '@/utils/handleActionError';
 
 import type { ManageMyRoadmapInput } from '@/shcemas/ManageMyRoadmapSchema';
 import type { Roadmap } from '@/shcemas/RoadmapSchema';
@@ -32,38 +33,37 @@ export const useCreateRoadmap = () => {
       onMutate: async (newRoadmap) => {
         await queryClient.cancelQueries({ queryKey: [MY_ROADMAPS_KEY] });
 
-        const previousRoadmaps = queryClient.getQueryData([
+        const previousRoadmaps = queryClient.getQueryData<Roadmap[]>([
           MY_ROADMAPS_KEY,
-        ]) as {
-          roadmaps: Roadmap[];
-        };
+        ]);
 
         const optimisticRoadmap = createOptimisticRoadmap(newRoadmap);
 
-        queryClient.setQueryData(
-          [MY_ROADMAPS_KEY],
-          (old: { roadmaps: Roadmap[] } | undefined) => ({
-            roadmaps: [optimisticRoadmap, ...(old?.roadmaps ?? [])],
-          }),
-        );
+        queryClient.setQueryData<Roadmap[]>([MY_ROADMAPS_KEY], (oldRoadmap) => [
+          optimisticRoadmap,
+          ...(oldRoadmap ?? []),
+        ]);
 
         return { previousRoadmaps };
       },
 
       onSuccess: () => {
-        toast.success('Roadmap успешно создана');
-
         queryClient.invalidateQueries({
           queryKey: [MY_ROADMAPS_KEY],
         });
+
+        toast.success('Roadmap успешно создана');
       },
 
-      onError: ({ message }, _vars, context) => {
+      onError: (error, _vars, context) => {
         if (context?.previousRoadmaps) {
-          queryClient.setQueryData([MY_ROADMAPS_KEY], context.previousRoadmaps);
+          queryClient.setQueryData<Roadmap[]>(
+            [MY_ROADMAPS_KEY],
+            context.previousRoadmaps,
+          );
         }
 
-        toast.error(message);
+        handleActionError(error);
       },
     }),
   );

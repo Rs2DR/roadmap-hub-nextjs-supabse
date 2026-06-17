@@ -115,6 +115,7 @@ export function useRoadmap({ initialEdges, initialNodes }: UseRoadmapParams) {
 
       const newEdge: Edge<EdgeData> = {
         id,
+        type: ROADMAP_TYPES.edge,
         source: connectionState.fromNode!.id,
         target: id,
         data: { ...DEFAULT_EDGE_DATA },

@@ -6,6 +6,7 @@ import { toast } from 'sonner';
 
 import { deleteRoadmap } from '@/actions/roadmap/deleteRoadmap';
 import { MY_ROADMAPS_KEY } from '@/constants/queries';
+import { handleActionError } from '@/utils/handleActionError';
 
 import type { Roadmap } from '@/shcemas/RoadmapSchema';
 
@@ -17,20 +18,16 @@ export const useDeleteRoadmap = () => {
       onMutate: async ({ id }) => {
         await queryClient.cancelQueries({ queryKey: [MY_ROADMAPS_KEY] });
 
-        const previousRoadmaps = queryClient.getQueryData([
+        const previousRoadmaps = queryClient.getQueryData<Roadmap[]>([
           MY_ROADMAPS_KEY,
-        ]) as {
-          roadmaps: Roadmap[];
-        };
+        ]);
 
-        queryClient.setQueryData(
+        queryClient.setQueryData<Roadmap[]>(
           [MY_ROADMAPS_KEY],
-          (old: { roadmaps: Roadmap[] } | undefined) => {
-            if (!old) return old;
+          (oldRoadmaps) => {
+            if (!oldRoadmaps) return oldRoadmaps;
 
-            return {
-              roadmaps: old.roadmaps.filter((roadmap) => roadmap.id !== id),
-            };
+            return oldRoadmaps.filter((roadmap) => roadmap.id !== id);
           },
         );
 
@@ -39,15 +36,16 @@ export const useDeleteRoadmap = () => {
 
       onError: (error, _vars, context) => {
         if (context?.previousRoadmaps) {
-          queryClient.setQueryData([MY_ROADMAPS_KEY], context.previousRoadmaps);
+          queryClient.setQueryData<Roadmap[]>(
+            [MY_ROADMAPS_KEY],
+            context.previousRoadmaps,
+          );
         }
 
-        toast.error(error.message);
+        handleActionError(error);
       },
 
-      onSuccess: ({ success }) => {
-        if (!success) return;
-
+      onSuccess: () => {
         queryClient.invalidateQueries({
           queryKey: [MY_ROADMAPS_KEY],
         });

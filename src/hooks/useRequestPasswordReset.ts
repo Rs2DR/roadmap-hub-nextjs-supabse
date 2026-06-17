@@ -5,19 +5,16 @@ import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { requestPasswordReset } from '@/actions/auth/requestPasswordReset';
+import { handleActionError } from '@/utils/handleActionError';
 
 export const useRequestPasswordReset = () => {
   return useMutation(
     mutationOptions(requestPasswordReset, {
-      onSuccess: ({ success }) => {
-        if (!success) return;
-
+      onSuccess: () => {
         toast.info('Мы отправили письмо вам на почту');
       },
 
-      onError: ({ message }) => {
-        toast.error(message);
-      },
+      onError: handleActionError,
     }),
   );
 };

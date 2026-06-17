@@ -5,19 +5,16 @@ import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { updatePassword } from '@/actions/auth/updatePassword';
+import { handleActionError } from '@/utils/handleActionError';
 
 export const useUpdatePassword = () => {
   return useMutation(
     mutationOptions(updatePassword, {
-      onSuccess: ({ success }) => {
-        if (!success) return;
-
+      onSuccess: () => {
         toast.success('Пароль успешно обновлен');
       },
 
-      onError: ({ message }) => {
-        toast.error(message);
-      },
+      onError: handleActionError,
     }),
   );
 };

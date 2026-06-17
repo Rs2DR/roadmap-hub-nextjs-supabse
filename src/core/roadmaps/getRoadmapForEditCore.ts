@@ -4,8 +4,10 @@ import type { SupabaseClient } from '@supabase/supabase-js';
 
 export const getRoadmapForEditCore = async (
   supabase: SupabaseClient,
-  id: { id: string },
+  params: { id: string },
 ) => {
+  const { id } = params;
+
   const { data, error } = await supabase
     .from('roadmaps')
     .select(

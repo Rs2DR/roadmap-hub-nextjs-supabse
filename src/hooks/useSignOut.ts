@@ -5,19 +5,16 @@ import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { signOut } from '@/actions/auth/signOut';
+import { handleActionError } from '@/utils/handleActionError';
 
 export const useSignOut = () => {
   return useMutation(
     mutationOptions(signOut, {
-      onSuccess: ({ success }) => {
-        if (!success) return;
-
+      onSuccess: () => {
         toast.success('Вы успешно вышли из аккаунта');
       },
 
-      onError: ({ message }) => {
-        toast.error(message);
-      },
+      onError: handleActionError,
     }),
   );
 };

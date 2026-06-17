@@ -20,8 +20,10 @@ export const updateRoadmapInfoCore = async (
     })
     .eq('id', id)
     .eq('user_id', userId)
-    .select()
+    .select('*, roadmap_likes(count), roadmap_comments(count)')
     .single();
+
+  console.log(data);
 
   if (error) {
     throw new Error('Не удалось обновить roadmap');

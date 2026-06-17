@@ -4,8 +4,10 @@ import type { SupabaseClient } from '@supabase/supabase-js';
 
 export const getRoadmapForViewCore = async (
   supabase: SupabaseClient,
-  id: { id: string },
+  params: { id: string },
 ) => {
+  const { id } = params;
+
   const { data, error } = await supabase
     .from('roadmaps')
     .select(
@@ -26,9 +28,7 @@ export const getRoadmapForViewCore = async (
     .eq('is_public', true)
     .maybeSingle();
 
-  if (error) {
-    throw new Error('Не удалось загрузить Roadmap');
-  }
+  if (error) throw new Error('Не удалось загрузить Roadmap');
 
   if (!data) return null;
 

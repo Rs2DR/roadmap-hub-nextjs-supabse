@@ -4,21 +4,25 @@ import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { ReactFlowProvider } from '@xyflow/react';
 
 import { RoadmapEditor } from '@/components/roadmap-editor';
+import { MY_ROADMAPS_KEY } from '@/constants/queries';
 import { getQueryClient } from '@/lib/tanstack-query/getQueryClient';
-import { getRoadmapForEditQueryOptions } from '@/queries/getRoadmapForEditQueryOptions';
+import { getRoadmapForEditServer } from '@/services/roadmaps/getRoadmapForEditServer';
 
 export async function RoadmapContent({ id }: { id: string }) {
   const queryClient = getQueryClient();
 
-  await queryClient.prefetchQuery(getRoadmapForEditQueryOptions({ id }));
+  await queryClient.prefetchQuery({
+    queryKey: [MY_ROADMAPS_KEY, id],
+    queryFn: () => getRoadmapForEditServer({ id }),
+  });
 
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <div style={{ height: '100%', width: '100%' }}>
+    <div className="w-full h-full">
+      <HydrationBoundary state={dehydrate(queryClient)}>
         <ReactFlowProvider>
           <RoadmapEditor id={id} />
         </ReactFlowProvider>
-      </div>
-    </HydrationBoundary>
+      </HydrationBoundary>
+    </div>
   );
 }

@@ -9,15 +9,19 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from '@/components/ui/Sidebar';
+import { USER_QUERY_KEY } from '@/constants/queries';
 import { getQueryClient } from '@/lib/tanstack-query/getQueryClient';
-import { getUserQueryOptions } from '@/queries/getUserQueryOptions';
+import { getUserServer } from '@/services/roadmaps/getUserServer';
 
 export default async function DashboardLayout({
   children,
 }: PropsWithChildren<unknown>) {
   const queryClient = getQueryClient();
 
-  await queryClient.prefetchQuery(getUserQueryOptions());
+  await queryClient.prefetchQuery({
+    queryKey: [USER_QUERY_KEY],
+    queryFn: () => getUserServer(),
+  });
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
