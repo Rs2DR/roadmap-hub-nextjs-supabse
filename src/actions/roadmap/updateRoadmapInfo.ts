@@ -1,7 +1,7 @@
 'use server';
 
 import { updateRoadmapInfoCore } from '@/core/roadmaps';
-import { authActionClient } from '@/lib/next-safe-actions/authActionClient';
+import { authActionClient } from '@/lib/next-safe-actions';
 import { ManageMyRoadmapSchema } from '@/shcemas/ManageMyRoadmapSchema';
 import { RoadmapBaseSchema } from '@/shcemas/RoadmapBaseSchema';
 

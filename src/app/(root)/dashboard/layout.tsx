@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/Sidebar';
 import { USER_QUERY_KEY } from '@/constants/queries';
 import { getQueryClient } from '@/lib/tanstack-query/getQueryClient';
-import { getUserServer } from '@/services/roadmaps/getUserServer';
+import { getUserServer } from '@/services/user/getUserServer';
 
 export default async function DashboardLayout({
   children,

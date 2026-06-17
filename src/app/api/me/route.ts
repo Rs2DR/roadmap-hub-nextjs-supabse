@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-import { getUserCore } from '@/core/user';
+import { getUserCore } from '@/dal/core/user';
 import { createServerSupabase } from '@/lib/supabase/server';
 
 export async function GET() {

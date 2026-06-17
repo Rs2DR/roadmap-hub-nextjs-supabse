@@ -1,16 +1,12 @@
 import { actionClient } from '@/lib/next-safe-actions/actionClient';
-import { createServerSupabase } from '@/lib/supabase/server';
+import { requireAuth } from '@/lib/supabase/requireAuth';
 
 export const authActionClient = actionClient.use(async ({ next }) => {
-  const supabase = await createServerSupabase();
-
-  const { data } = await supabase.auth.getClaims();
-
-  if (!data) throw new Error('Пользователь не авторизован');
+  const { userId, supabase } = await requireAuth();
 
   return next({
     ctx: {
-      userId: data.claims.sub,
+      userId,
       supabase,
     },
   });

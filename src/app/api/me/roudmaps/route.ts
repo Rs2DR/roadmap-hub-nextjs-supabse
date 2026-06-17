@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-import { getMyRoadmapsInfoCore } from '@/core/roadmaps';
+import { getMyRoadmapsInfoCore } from '@/dal/core/roadmaps';
 import { createServerSupabase } from '@/lib/supabase/server';
 
 export async function GET() {

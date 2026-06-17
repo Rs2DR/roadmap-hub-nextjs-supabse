@@ -1,7 +1,7 @@
 'use server';
 
 import { saveRoadmapGraphCore } from '@/core/roadmaps';
-import { authActionClient } from '@/lib/next-safe-actions/authActionClient';
+import { authActionClient } from '@/lib/next-safe-actions';
 import { SaveRoadmapGraphSchema } from '@/shcemas/SaveRoadmapGraphSchema';
 
 export const saveRoadmapGraph = authActionClient

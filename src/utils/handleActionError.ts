@@ -10,7 +10,7 @@ import type { DefaultValidationErrors } from '@/types/DefaultValidationErrors';
 
 const getValidationErrorMessage = (
   error: ActionMutationError<unknown, unknown>,
-): string | null => {
+) => {
   if (!hasValidationErrors(error)) return null;
 
   const vErrors = error.validationErrors as DefaultValidationErrors;
@@ -33,12 +33,12 @@ const getValidationErrorMessage = (
 
 const getServerErrorMessage = (
   error: ActionMutationError<unknown, unknown>,
-): string | null => {
+) => {
   if (!hasServerError(error)) return null;
   return String(error.serverError);
 };
 
-const getNativeErrorMessage = (error: unknown): string | null => {
+const getNativeErrorMessage = (error: unknown) => {
   if (error instanceof Error) {
     return error.message;
   }

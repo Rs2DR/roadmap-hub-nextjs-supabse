@@ -1,8 +1,8 @@
 'use server';
 
 import { updatePasswordCore } from '@/core/auth';
-import { actionClient } from '@/lib/next-safe-actions/actionClient';
-import { createServerSupabase } from '@/lib/supabase/server';
+import { actionClient } from '@/lib/next-safe-actions';
+import { createServerSupabase } from '@/lib/supabase';
 import { ResetPasswordSchema } from '@/shcemas/ResetPasswordSchema';
 
 export const updatePassword = actionClient

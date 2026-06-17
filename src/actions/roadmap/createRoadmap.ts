@@ -1,7 +1,7 @@
 'use server';
 
 import { createRoadmapCore } from '@/core/roadmaps';
-import { authActionClient } from '@/lib/next-safe-actions/authActionClient';
+import { authActionClient } from '@/lib/next-safe-actions';
 import { ManageMyRoadmapSchema } from '@/shcemas/ManageMyRoadmapSchema';
 
 export const createRoadmap = authActionClient
