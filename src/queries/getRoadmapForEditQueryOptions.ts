@@ -1,8 +1,7 @@
 import { queryOptions } from '@tanstack/react-query';
 
-import { getRoadmapForEdit } from '@/actions/roadmap/getRoadmapForEdit';
 import { MY_ROADMAPS_KEY } from '@/constants/queries';
-import { unwrapAction } from '@/lib/next-safe-actions/unwrapAction';
+import { getRoadmapForEditService } from '@/services/roadmaps';
 
 import type { Roadmap } from '@/shcemas/RoadmapSchema';
 
@@ -15,5 +14,5 @@ export const getRoadmapForEditQueryOptions = ({
 }: GetRoadmapForEditQueryOptionsParams) =>
   queryOptions({
     queryKey: [MY_ROADMAPS_KEY, id],
-    queryFn: () => unwrapAction(getRoadmapForEdit({ id })),
+    queryFn: () => getRoadmapForEditService({ id }),
   });

@@ -5,7 +5,6 @@ import { useState } from 'react';
 import { Eye, EyeOff, MoreHorizontal, Pencil, Trash } from 'lucide-react';
 
 import { useDeleteRoadmap } from '@/hooks/useDeleteRoadmap';
-import { useUpdateRoadmapVisibility } from '@/hooks/useUpdateRoadmapVisibility';
 
 import { CustomAlertDialog } from '../custom-alert-dialog';
 import { ManageMyRoadmapDialog } from '../manage-my-roadmap-dialog';
@@ -34,7 +33,6 @@ export function MyRoadmapCardDropdownMenu({
   const [isVisibilityOpen, setIsVisibilityOpen] = useState(false);
 
   const { mutate: deleteRoadmap } = useDeleteRoadmap();
-  const { mutate: updateVisibility } = useUpdateRoadmapVisibility();
 
   const { id, title, description, isPublic } = roadmap;
 
@@ -46,12 +44,7 @@ export function MyRoadmapCardDropdownMenu({
     deleteRoadmap({ id });
   };
 
-  const handleToggleVisibility = () => {
-    updateVisibility({
-      id,
-      isPublic: !isPublic,
-    });
-  };
+  const handleToggleVisibility = () => {};
 
   const visibilityTitle = isPublic
     ? `Сделать ${title} приватным?`

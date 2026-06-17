@@ -2,17 +2,11 @@
 
 import { FaGithub } from 'react-icons/fa6';
 
-import { useSignInWithGitHub } from '@/hooks/useSignInWithGitHub';
-
 import { Button } from '../ui/Button';
 import { Field } from '../ui/Field';
 
 export function GitHubProvider() {
-  const { mutate } = useSignInWithGitHub();
-
-  const handleSignIn = () => {
-    mutate();
-  };
+  const handleSignIn = () => {};
 
   return (
     <Field>

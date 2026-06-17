@@ -59,7 +59,7 @@ export function ManageMyRoadmapForm({
   const onSubmit = async (data: ManageMyRoadmapInput) => {
     if (mode === FORM_MODE.CREATE) {
       createRoadmap(data, {
-        onSuccess: ({ data: { id } }) => {
+        onSuccess: ({ id }) => {
           reset();
           onSuccess?.();
           router.push(`${DASHBOARD_ROUTES.MY_ROADMAPS}/${id}`);
