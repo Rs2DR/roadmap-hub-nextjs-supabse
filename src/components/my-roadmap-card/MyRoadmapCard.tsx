@@ -20,18 +20,22 @@ export function MyRoadmapCard({ roadmap }: MyRoadmapCardProps) {
   const { title, description } = roadmap;
 
   return (
-    <Card className="relative mx-auto w-full">
-      <CardHeader>
-        <CardAction>
-          <MyRoadmapCardDropdownMenu roadmap={roadmap} />
-        </CardAction>
-        <div className="inline-flex items-center gap-4">
-          <Avatar>
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-          <CardTitle>{title}</CardTitle>
+    <Card className="flex w-full">
+      <CardHeader className="flex flex-col grow">
+        <div className="inline-flex justify-between w-full">
+          <div className="inline-flex items-center gap-4">
+            <Avatar>
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+            <CardTitle>{title}</CardTitle>
+          </div>
+          <CardAction>
+            <MyRoadmapCardDropdownMenu roadmap={roadmap} />
+          </CardAction>
         </div>
-        <CardDescription className="mt-2">{description}</CardDescription>
+        <CardDescription className="mt-2 line-clamp-3 ">
+          {description}
+        </CardDescription>
       </CardHeader>
       <MyRoadmapCardFooter roadmap={roadmap} />
     </Card>

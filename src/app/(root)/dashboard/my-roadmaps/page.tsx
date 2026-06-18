@@ -23,9 +23,11 @@ export default async function MyRoadmapsPage() {
   });
 
   return (
-    <div className="flex flex-col gap-4 px-4">
+    <div className="flex flex-col gap-4 px-4 pt-2">
       <div className="inline-flex w-full items-end gap-4">
-        <FilterInput />
+        <Suspense>
+          <FilterInput />
+        </Suspense>
         <ManageMyRoadmapDialog
           title="Создать roadmap"
           description="Тут вы можете создать свой Roadmap"

@@ -26,26 +26,32 @@ export function MyRoadmapCardFooter({ roadmap }: MyRoadmapCardFooterProps) {
   const handleNavigateToMyRoadmap = () =>
     router.push(`${DASHBOARD_ROUTES.MY_ROADMAPS}/${id}`);
 
-  const visibilityLabel = isPublic ? 'Публичный' : 'Приватный';
-
-  const visibilityBadgeClass = isPublic
-    ? 'bg-green-50 text-green-700 dark:bg-green-950 dark:text-green-300'
-    : 'bg-red-50 text-red-700 dark:bg-red-950 dark:text-red-300';
+  const visibilityLabel = 'Опубликован';
 
   return (
     <CardFooter className="inline-flex items-center justify-between py-2">
       <div className="inline-flex gap-2 text-muted-foreground">
         <div className="inline-flex items-center gap-1.5">
           <MessageSquare size={18} />
-          <span className="trext-lg">{commentsCount}</span>
+          <span>{commentsCount}</span>
         </div>
         <div className="inline-flex items-center gap-1.5">
-          <Heart size={18} />
-          <span className="trext-lg">{likesCount}</span>
+          <Heart className="text-red-500" size={18} />
+          <span>{likesCount}</span>
         </div>
       </div>
-      <div className="inline-flex items-center gap-2">
-        <Badge className={cn(visibilityBadgeClass)}>{visibilityLabel}</Badge>
+      <div className="inline-flex items-center gap-4">
+        {visibilityLabel && (
+          <div className="inline-flex items-center gap-2">
+            <div className="relative size-2">
+              <span className="absolute size-1.5 bg-green-300 rounded-full animate-ping" />
+              <span className="absolute size-2 bg-green-300 rounded-full" />
+            </div>
+            <span className="text-xs text-muted-foreground">
+              {visibilityLabel}
+            </span>
+          </div>
+        )}
         <Button onClick={handleNavigateToMyRoadmap}>Открыть</Button>
       </div>
     </CardFooter>
