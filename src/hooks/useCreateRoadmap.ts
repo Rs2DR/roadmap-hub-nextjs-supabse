@@ -9,9 +9,11 @@ import { MY_ROADMAPS_KEY } from '@/constants/queries';
 import { handleActionError } from '@/utils/handleActionError';
 
 import type { ManageMyRoadmapInput } from '@/shcemas/ManageMyRoadmapSchema';
-import type { Roadmap } from '@/shcemas/RoadmapSchema';
+import type { MyRoadmap } from '@/shcemas/MyRoadmapSchema';
 
-const createOptimisticRoadmap = (newRoadmap: ManageMyRoadmapInput): Roadmap => {
+const createOptimisticRoadmap = (
+  newRoadmap: ManageMyRoadmapInput,
+): MyRoadmap => {
   const timestamp = Date.now().toString();
 
   return {
@@ -33,16 +35,16 @@ export const useCreateRoadmap = () => {
       onMutate: async (newRoadmap) => {
         await queryClient.cancelQueries({ queryKey: [MY_ROADMAPS_KEY] });
 
-        const previousRoadmaps = queryClient.getQueryData<Roadmap[]>([
+        const previousRoadmaps = queryClient.getQueryData<MyRoadmap[]>([
           MY_ROADMAPS_KEY,
         ]);
 
         const optimisticRoadmap = createOptimisticRoadmap(newRoadmap);
 
-        queryClient.setQueryData<Roadmap[]>([MY_ROADMAPS_KEY], (oldRoadmap) => [
-          optimisticRoadmap,
-          ...(oldRoadmap ?? []),
-        ]);
+        queryClient.setQueryData<MyRoadmap[]>(
+          [MY_ROADMAPS_KEY],
+          (oldRoadmap) => [optimisticRoadmap, ...(oldRoadmap ?? [])],
+        );
 
         return { previousRoadmaps };
       },
@@ -57,7 +59,7 @@ export const useCreateRoadmap = () => {
 
       onError: (error, _vars, context) => {
         if (context?.previousRoadmaps) {
-          queryClient.setQueryData<Roadmap[]>(
+          queryClient.setQueryData<MyRoadmap[]>(
             [MY_ROADMAPS_KEY],
             context.previousRoadmaps,
           );

@@ -8,7 +8,7 @@ import { deleteRoadmap } from '@/actions/roadmap/deleteRoadmap';
 import { MY_ROADMAPS_KEY } from '@/constants/queries';
 import { handleActionError } from '@/utils/handleActionError';
 
-import type { Roadmap } from '@/shcemas/RoadmapSchema';
+import type { MyRoadmap } from '@/shcemas/MyRoadmapSchema';
 
 export const useDeleteRoadmap = () => {
   const queryClient = useQueryClient();
@@ -18,11 +18,11 @@ export const useDeleteRoadmap = () => {
       onMutate: async ({ id }) => {
         await queryClient.cancelQueries({ queryKey: [MY_ROADMAPS_KEY] });
 
-        const previousRoadmaps = queryClient.getQueryData<Roadmap[]>([
+        const previousRoadmaps = queryClient.getQueryData<MyRoadmap[]>([
           MY_ROADMAPS_KEY,
         ]);
 
-        queryClient.setQueryData<Roadmap[]>(
+        queryClient.setQueryData<MyRoadmap[]>(
           [MY_ROADMAPS_KEY],
           (oldRoadmaps) => {
             if (!oldRoadmaps) return oldRoadmaps;
@@ -36,7 +36,7 @@ export const useDeleteRoadmap = () => {
 
       onError: (error, _vars, context) => {
         if (context?.previousRoadmaps) {
-          queryClient.setQueryData<Roadmap[]>(
+          queryClient.setQueryData<MyRoadmap[]>(
             [MY_ROADMAPS_KEY],
             context.previousRoadmaps,
           );

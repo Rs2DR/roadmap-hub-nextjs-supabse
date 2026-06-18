@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-import { Eye, EyeOff, MoreHorizontal, Pencil, Trash } from 'lucide-react';
+import { MoreHorizontal, Pencil, Trash } from 'lucide-react';
 
 import { useDeleteRoadmap } from '@/hooks/useDeleteRoadmap';
 
@@ -17,12 +17,11 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from '../ui/DropdownMenu';
-import { Separator } from '../ui/Separator';
 
-import type { Roadmap } from '@/shcemas/RoadmapSchema';
+import type { MyRoadmap } from '@/shcemas/MyRoadmapSchema';
 
 interface MyRoadmapCardDropdownMenuProps {
-  roadmap: Roadmap;
+  roadmap: MyRoadmap;
 }
 
 export function MyRoadmapCardDropdownMenu({

@@ -1,4 +1,4 @@
-import { RoadmapSchema } from '@/shcemas/RoadmapSchema';
+import { MyRoadmapSchema } from '@/shcemas/MyRoadmapSchema';
 
 import type { SupabaseClient } from '@supabase/supabase-js';
 
@@ -26,5 +26,5 @@ export const createRoadmapCore = async (
     throw new Error('Не удалось создать roadmap');
   }
 
-  return RoadmapSchema.parse(data);
+  return MyRoadmapSchema.parse(data);
 };

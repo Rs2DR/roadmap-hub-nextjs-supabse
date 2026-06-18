@@ -6,16 +6,14 @@ import { Heart, MessageSquare } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 import { DASHBOARD_ROUTES } from '@/constants/routes';
-import { cn } from '@/lib/utils';
 
-import { Badge } from '../ui/Badge';
 import { Button } from '../ui/Button';
 import { CardFooter } from '../ui/Card';
 
-import type { Roadmap } from '@/shcemas/RoadmapSchema';
+import type { MyRoadmap } from '@/shcemas/MyRoadmapSchema';
 
 interface MyRoadmapCardFooterProps extends ComponentProps<typeof CardFooter> {
-  roadmap: Roadmap;
+  roadmap: MyRoadmap;
 }
 
 export function MyRoadmapCardFooter({ roadmap }: MyRoadmapCardFooterProps) {

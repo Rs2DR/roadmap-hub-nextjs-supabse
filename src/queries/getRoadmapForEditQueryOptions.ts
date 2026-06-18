@@ -3,7 +3,7 @@ import { queryOptions } from '@tanstack/react-query';
 import { getRoadmapForEditApiClient } from '@/api-client/roadmaps';
 import { MY_ROADMAPS_KEY } from '@/constants/queries';
 
-import type { Roadmap } from '@/shcemas/RoadmapSchema';
+import type { Roadmap } from '@/shcemas/MyRoadmapSchema';
 
 interface GetRoadmapForEditQueryOptionsParams {
   id: Roadmap['id'];

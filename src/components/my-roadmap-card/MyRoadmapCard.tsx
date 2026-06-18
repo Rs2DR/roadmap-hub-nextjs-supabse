@@ -10,10 +10,10 @@ import {
 import { MyRoadmapCardDropdownMenu } from './MyRoadmapCardDropdownMenu';
 import { MyRoadmapCardFooter } from './MyRoadmapCardFooter';
 
-import type { Roadmap } from '@/shcemas/RoadmapSchema';
+import type { MyRoadmap } from '@/shcemas/MyRoadmapSchema';
 
 interface MyRoadmapCardProps {
-  roadmap: Roadmap;
+  roadmap: MyRoadmap;
 }
 
 export function MyRoadmapCard({ roadmap }: MyRoadmapCardProps) {

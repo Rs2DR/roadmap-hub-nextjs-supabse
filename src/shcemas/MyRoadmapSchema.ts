@@ -1,8 +1,10 @@
+import z from 'zod';
+
 import { RoadmapBaseSchema } from './RoadmapBaseSchema';
 
-import type z from 'zod';
-
-export const RoadmapSchema = RoadmapBaseSchema.transform(
+export const MyRoadmapSchema = RoadmapBaseSchema.extend({
+  is_public: z.boolean(),
+}).transform(
   ({
     roadmap_comments,
     roadmap_likes,
@@ -20,4 +22,4 @@ export const RoadmapSchema = RoadmapBaseSchema.transform(
   }),
 );
 
-export type Roadmap = z.infer<typeof RoadmapSchema>;
+export type MyRoadmap = z.infer<typeof MyRoadmapSchema>;

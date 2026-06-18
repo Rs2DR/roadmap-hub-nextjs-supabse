@@ -1,4 +1,5 @@
 import { FilterInput } from '@/components/filter-input';
+import { PublicRoadmapCard } from '@/components/public-roadmap-card';
 import {
   Select,
   SelectContent,
@@ -16,7 +17,7 @@ export default async function DashboardPage() {
           Изучай, сохраняй и проходи лучшие дорожные карты
         </p>
       </div>
-      <div className="inline-flex items-end gap-4 w-full">
+      <div className="inline-flex items-end gap-4 w-full mb-4">
         <FilterInput />
         <Select defaultValue="new">
           <SelectTrigger className="w-full max-w-48">
@@ -27,6 +28,9 @@ export default async function DashboardPage() {
             <SelectItem value="old">Сначала старые</SelectItem>
           </SelectContent>
         </Select>
+      </div>
+      <div className="grid xl:grid-cols-4">
+        <PublicRoadmapCard />
       </div>
     </div>
   );
