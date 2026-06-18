@@ -18,7 +18,6 @@ export const PublicRoadmapSchema = RoadmapBaseSchema.extend({
     updatedAt: updated_at,
     likesCount: roadmap_likes[0].count,
     commentsCount: roadmap_comments[0].count,
-
     isBookmarked: is_bookmarked.length > 0,
   }),
 );

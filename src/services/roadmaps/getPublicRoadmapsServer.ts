@@ -9,8 +9,6 @@ export const getPublicRoadmapsServer = async (
   const { search, orderBy } = params;
   const { supabase, userId } = await requireAuth();
 
-  console.log(userId);
-
   return getPublicRoadmapsCore(supabase, {
     search,
     orderBy,

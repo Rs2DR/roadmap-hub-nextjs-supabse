@@ -11,8 +11,8 @@ import { MyRoadmapsList } from '@/components/my-roadmaps-list';
 import { Button } from '@/components/ui/Button';
 import { Spinner } from '@/components/ui/Spinner';
 import { MY_ROADMAPS_KEY } from '@/constants/queries';
-import { getQueryClient } from '@/lib/tanstack-query/getQueryClient';
-import { getMyRoadmapsInfoServer } from '@/services/roadmaps/getMyRoadmapsInfoServer';
+import { getQueryClient } from '@/lib/tanstack-query';
+import { getMyRoadmapsInfoServer } from '@/services/roadmaps';
 
 export default async function MyRoadmapsPage() {
   const queryClient = getQueryClient();

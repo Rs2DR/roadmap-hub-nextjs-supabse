@@ -5,6 +5,5 @@ export * from './createRoadmapCore';
 export * from './deleteRoadmapCore';
 export * from './saveRoadmapGraphCore';
 export * from './updateRoadmapInfoCore';
-export * from './bookmarkRoadmapCore';
-export * from './unbookmarkRoadmapCore';
+export * from './toggleRoadmapBookmarkCore';
 export * from './getPublicRoadmapsCore';

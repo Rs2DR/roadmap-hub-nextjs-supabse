@@ -13,7 +13,7 @@ type GetPublicRoadmapsQueryOptionsParams = Omit<
 export const getPublicRoadmapsQueryOptions = (
   params?: GetPublicRoadmapsQueryOptionsParams,
 ) => {
-  const search = params?.search ?? '';
+  const search = params?.search;
   const orderBy = params?.orderBy ?? 'newest';
 
   return queryOptions({

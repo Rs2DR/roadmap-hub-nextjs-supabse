@@ -1,53 +1,43 @@
-import { useEffect, useMemo } from 'react';
+import { mutationOptions } from '@next-safe-action/adapter-tanstack-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-import { useQueryClient } from '@tanstack/react-query';
-import { debounce } from 'lodash-es';
-
+import { toggleBookmarkAction } from '@/actions/roadmap/toggleBookmark';
 import { ROADMAPS } from '@/constants/queries';
-import { useBookmarkRoadmap } from '@/hooks/useBookmarkRoadmap';
-import { useUnbookmarkRoadmap } from '@/hooks/useUnbookmarkRoadmap';
 
 import type { PublicRoadmap } from '@/shcemas/PublicRoadmapSchema';
 
-interface UseToggleBookmarkParams {
-  id: string;
-}
-
-export const useToggleBookmark = ({ id }: UseToggleBookmarkParams) => {
+export const useToggleBookmark = () => {
   const queryClient = useQueryClient();
 
-  const bookmarkMutation = useBookmarkRoadmap();
-  const unbookmarkMutation = useUnbookmarkRoadmap();
+  return useMutation(
+    mutationOptions(toggleBookmarkAction, {
+      onMutate: async ({ id }) => {
+        await queryClient.cancelQueries({ queryKey: [ROADMAPS] });
+        const previousQueries = queryClient.getQueriesData<PublicRoadmap[]>({
+          queryKey: [ROADMAPS],
+        });
 
-  const debouncedToggle = useMemo(
-    () =>
-      debounce((currentStatus: boolean) => {
-        if (currentStatus) {
-          unbookmarkMutation.mutate({ id });
-        } else {
-          bookmarkMutation.mutate({ id });
+        queryClient.setQueriesData<PublicRoadmap[]>(
+          { queryKey: [ROADMAPS] },
+          (oldData) => {
+            if (!oldData) return oldData;
+            return oldData.map((item) =>
+              item.id === id
+                ? { ...item, isBookmarked: !item.isBookmarked }
+                : item,
+            );
+          },
+        );
+
+        return { previousQueries };
+      },
+      onError: (_error, _vars, context) => {
+        if (context?.previousQueries) {
+          context.previousQueries.forEach(([key, data]) =>
+            queryClient.setQueryData(key, data),
+          );
         }
-      }, 300),
-    [id, bookmarkMutation, unbookmarkMutation],
+      },
+    }),
   );
-
-  useEffect(() => {
-    return () => {
-      debouncedToggle.cancel();
-    };
-  }, [debouncedToggle]);
-
-  const toggleBookmark = (isBookmarked: boolean) => {
-    queryClient.setQueryData<PublicRoadmap>([ROADMAPS, id], (oldRoadmap) => {
-      if (!oldRoadmap) return oldRoadmap;
-      return { ...oldRoadmap, isBookmarked: !isBookmarked };
-    });
-
-    debouncedToggle(isBookmarked);
-  };
-
-  return {
-    toggleBookmark,
-    isPending: bookmarkMutation.isPending || unbookmarkMutation.isPending,
-  };
 };

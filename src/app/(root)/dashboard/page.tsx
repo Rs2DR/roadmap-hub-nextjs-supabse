@@ -22,7 +22,7 @@ export default async function DashboardPage() {
   const queryClient = getQueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: [ROADMAPS],
+    queryKey: [ROADMAPS, { search: undefined, orderBy: 'newest' }],
     queryFn: () =>
       getPublicRoadmapsServer({ search: undefined, orderBy: 'newest' }),
   });
