@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-import { getRoadmapForEditCore } from '@/dal/core/roadmaps';
+import { getRoadmapForEditCore } from '@/core/roadmaps';
 import { createServerSupabase } from '@/lib/supabase/server';
 
 import type { NextRequest } from 'next/server';
