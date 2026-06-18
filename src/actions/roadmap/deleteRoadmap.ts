@@ -1,34 +1,19 @@
 'use server';
 
-import { createServerSupabase } from '@/lib/supabase/server';
+import z from 'zod';
 
-import type { Roadmap } from '@/shcemas/RoadmapSchema';
+import { deleteRoadmapCore } from '@/core/roadmaps';
+import { authActionClient } from '@/lib/next-safe-actions';
+import { RoadmapBaseSchema } from '@/shcemas/RoadmapBaseSchema';
 
-interface DeleteRoadmapParams {
-  id: Roadmap['id'];
-}
+export const deleteRoadmap = authActionClient
+  .inputSchema(z.object({ id: RoadmapBaseSchema.shape.id }))
+  .action(async ({ parsedInput, ctx }) => {
+    const { supabase, userId } = ctx;
+    const { id } = parsedInput;
 
-export const deleteRoadmap = async ({ id }: DeleteRoadmapParams) => {
-  const supabase = await createServerSupabase();
-
-  const { data: claimsData, error: claimsError } =
-    await supabase.auth.getClaims();
-
-  if (claimsError) throw new Error(claimsError.message);
-  if (!claimsData) throw new Error('Пользователь не авторизован');
-
-  const sub = claimsData.claims.sub;
-
-  const { error } = await supabase
-    .from('roadmaps')
-    .delete()
-    .eq('id', id)
-    .eq('user_id', sub);
-
-  if (error) throw new Error(error.message);
-
-  return {
-    success: true,
-    data: { id },
-  };
-};
+    return deleteRoadmapCore(supabase, {
+      id,
+      userId,
+    });
+  });

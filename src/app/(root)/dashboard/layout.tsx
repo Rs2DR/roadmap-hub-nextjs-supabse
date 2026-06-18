@@ -9,22 +9,26 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from '@/components/ui/Sidebar';
+import { USER_QUERY_KEY } from '@/constants/queries';
 import { getQueryClient } from '@/lib/tanstack-query/getQueryClient';
-import { getUserQueryOptions } from '@/queries/getUserQueryOptions';
+import { getUserServer } from '@/services/user/getUserServer';
 
 export default async function DashboardLayout({
   children,
 }: PropsWithChildren<unknown>) {
   const queryClient = getQueryClient();
 
-  await queryClient.prefetchQuery(getUserQueryOptions());
+  await queryClient.prefetchQuery({
+    queryKey: [USER_QUERY_KEY],
+    queryFn: () => getUserServer(),
+  });
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       <SidebarProvider>
         <DashboardSidebar />
         <SidebarInset>
-          <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+          <header className="flex h-12 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
             <div className="flex items-center gap-2 px-4">
               <SidebarTrigger className="-ml-1" />
               <Separator
@@ -33,7 +37,7 @@ export default async function DashboardLayout({
               />
             </div>
           </header>
-          <div className="p-4 pt-0">{children}</div>
+          <div className="w-full h-full">{children}</div>
         </SidebarInset>
       </SidebarProvider>
     </HydrationBoundary>

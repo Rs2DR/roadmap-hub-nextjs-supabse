@@ -1,24 +1,22 @@
 'use client';
 
+import { mutationOptions } from '@next-safe-action/adapter-tanstack-query';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { updatePassword } from '@/actions/auth/updatePassword';
-
-import type { ResetPasswordInput } from '@/shcemas/ResetPasswordSchema';
+import { handleActionError } from '@/utils/handleActionError';
 
 export const useUpdatePassword = () => {
-  return useMutation({
-    mutationFn: (data: ResetPasswordInput) => updatePassword(data),
+  return useMutation(
+    mutationOptions(updatePassword, {
+      onSuccess: () => {
+        toast.success('Пароль успешно обновлен');
+      },
 
-    onSuccess: ({ success }) => {
-      if (!success) return;
-
-      toast.success('Пароль успешно обновлен');
-    },
-
-    onError: ({ message }) => {
-      toast.error(message);
-    },
-  });
+      onError: (error) => {
+        toast.error(handleActionError(error));
+      },
+    }),
+  );
 };

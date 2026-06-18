@@ -1,13 +1,11 @@
 'use server';
 
-import { createServerSupabase } from '@/lib/supabase/server';
+import { signOutCore } from '@/core/auth';
+import { actionClient } from '@/lib/next-safe-actions';
+import { createServerSupabase } from '@/lib/supabase';
 
-export const signOut = async () => {
+export const signOut = actionClient.action(async () => {
   const supabase = await createServerSupabase();
 
-  const { error } = await supabase.auth.signOut();
-
-  if (error) throw new Error(error.message);
-
-  return { success: true };
-};
+  return signOutCore(supabase);
+});

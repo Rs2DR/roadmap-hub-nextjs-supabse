@@ -1,25 +1,23 @@
 'use server';
 
 import { API_ROUTES } from '@/constants/api';
-import { createServerSupabase } from '@/lib/supabase/server';
+import { signUpCore } from '@/core/auth';
+import { actionClient } from '@/lib/next-safe-actions';
+import { createServerSupabase } from '@/lib/supabase';
+import { SignUpSchema } from '@/shcemas/SignUpSchema';
 
-import type { SignUpInput } from '@/shcemas/SignUpSchema';
+export const signUpNewUser = actionClient
+  .inputSchema(SignUpSchema)
+  .action(async ({ parsedInput }) => {
+    const supabase = await createServerSupabase();
 
-export const signUpNewUser = async ({ name, email, password }: SignUpInput) => {
-  const supabase = await createServerSupabase();
+    const { email, password, name } = parsedInput;
+    const emailRedirectTo = `${process.env.NEXT_PUBLIC_SITE_URL}${API_ROUTES.CONFIRM_PASSWORD}?next=/dashboard`;
 
-  const { error } = await supabase.auth.signUp({
-    email,
-    password,
-    options: {
-      data: {
-        firstName: name,
-      },
-      emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}${API_ROUTES.CONFIRM_PASSWORD}?next=/dashboard`,
-    },
+    return signUpCore(supabase, {
+      email,
+      password,
+      name,
+      emailRedirectTo,
+    });
   });
-
-  if (error) throw new Error(error.message);
-
-  return { success: true };
-};

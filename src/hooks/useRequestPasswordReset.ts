@@ -1,24 +1,22 @@
 'use client';
 
+import { mutationOptions } from '@next-safe-action/adapter-tanstack-query';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { requestPasswordReset } from '@/actions/auth/requestPasswordReset';
-
-import type { RequestResetPasswordInput } from '@/shcemas/RequestResetPasswordSchema';
+import { handleActionError } from '@/utils/handleActionError';
 
 export const useRequestPasswordReset = () => {
-  return useMutation({
-    mutationFn: (data: RequestResetPasswordInput) => requestPasswordReset(data),
+  return useMutation(
+    mutationOptions(requestPasswordReset, {
+      onSuccess: () => {
+        toast.info('Мы отправили письмо вам на почту');
+      },
 
-    onSuccess: ({ success }) => {
-      if (!success) return;
-
-      toast.info('Мы отправили письмо вам на почту');
-    },
-
-    onError: ({ message }) => {
-      toast.error(message);
-    },
-  });
+      onError: (error) => {
+        toast.error(handleActionError(error));
+      },
+    }),
+  );
 };

@@ -3,7 +3,9 @@
 import type { ComponentProps, PropsWithChildren } from 'react';
 import { useState } from 'react';
 
-import { ManageMyRoadmapForm } from '../manage-my-roadmap-from';
+import { FORM_MODE } from '@/constants/form';
+
+import { ManageMyRoadmapForm } from '../manage-my-roadmap-form';
 import {
   Dialog,
   DialogContent,
@@ -13,13 +15,13 @@ import {
 } from '../ui/Dialog';
 
 import type { ManageMyRoadmapInput } from '@/shcemas/ManageMyRoadmapSchema';
-import type { FormModeType } from '@/types/FormModeType';
+import type { FormMode } from '@/types/FormMode';
 
 interface ManageMyRoadmapDialogProps extends ComponentProps<typeof Dialog> {
   title: string;
   description: string;
 
-  mode?: FormModeType;
+  mode?: FormMode;
   roadmapId?: string;
 
   initialValues?: ManageMyRoadmapInput;
@@ -29,7 +31,7 @@ export function ManageMyRoadmapDialog({
   children,
   title,
   description,
-  mode = 'create',
+  mode = FORM_MODE.CREATE,
   roadmapId,
   initialValues,
   open: controlledOpen,

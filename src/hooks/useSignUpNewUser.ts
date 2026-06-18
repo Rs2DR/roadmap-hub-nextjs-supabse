@@ -1,18 +1,18 @@
 'use client';
 
+import { mutationOptions } from '@next-safe-action/adapter-tanstack-query';
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { signUpNewUser } from '@/actions/auth/signUpNewUser';
-
-import type { SignUpInput } from '@/shcemas/SignUpSchema';
+import { handleActionError } from '@/utils/handleActionError';
 
 export const useSignUpNewUser = () => {
-  return useMutation({
-    mutationFn: (data: SignUpInput) => signUpNewUser(data),
-
-    onError: ({ message }) => {
-      toast.error(message);
-    },
-  });
+  return useMutation(
+    mutationOptions(signUpNewUser, {
+      onError: (error) => {
+        toast.error(handleActionError(error));
+      },
+    }),
+  );
 };

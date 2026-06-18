@@ -1,60 +1,57 @@
 'use client';
 
+import { mutationOptions } from '@next-safe-action/adapter-tanstack-query';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { deleteRoadmap } from '@/actions/roadmap/deleteRoadmap';
 import { MY_ROADMAPS_KEY } from '@/constants/queries';
+import { handleActionError } from '@/utils/handleActionError';
 
 import type { Roadmap } from '@/shcemas/RoadmapSchema';
-
-type DeleteRoadmapInput = {
-  id: Roadmap['id'];
-};
 
 export const useDeleteRoadmap = () => {
   const queryClient = useQueryClient();
 
-  return useMutation({
-    mutationFn: (data: DeleteRoadmapInput) => deleteRoadmap(data),
+  return useMutation(
+    mutationOptions(deleteRoadmap, {
+      onMutate: async ({ id }) => {
+        await queryClient.cancelQueries({ queryKey: [MY_ROADMAPS_KEY] });
 
-    onMutate: async ({ id }) => {
-      await queryClient.cancelQueries({ queryKey: [MY_ROADMAPS_KEY] });
+        const previousRoadmaps = queryClient.getQueryData<Roadmap[]>([
+          MY_ROADMAPS_KEY,
+        ]);
 
-      const previousRoadmaps = queryClient.getQueryData([MY_ROADMAPS_KEY]) as {
-        roadmaps: Roadmap[];
-      };
+        queryClient.setQueryData<Roadmap[]>(
+          [MY_ROADMAPS_KEY],
+          (oldRoadmaps) => {
+            if (!oldRoadmaps) return oldRoadmaps;
 
-      queryClient.setQueryData(
-        [MY_ROADMAPS_KEY],
-        (old: { roadmaps: Roadmap[] } | undefined) => {
-          if (!old) return old;
+            return oldRoadmaps.filter((roadmap) => roadmap.id !== id);
+          },
+        );
 
-          return {
-            roadmaps: old.roadmaps.filter((roadmap) => roadmap.id !== id),
-          };
-        },
-      );
+        return { previousRoadmaps };
+      },
 
-      return { previousRoadmaps };
-    },
+      onError: (error, _vars, context) => {
+        if (context?.previousRoadmaps) {
+          queryClient.setQueryData<Roadmap[]>(
+            [MY_ROADMAPS_KEY],
+            context.previousRoadmaps,
+          );
+        }
 
-    onError: (error, _vars, context) => {
-      if (context?.previousRoadmaps) {
-        queryClient.setQueryData([MY_ROADMAPS_KEY], context.previousRoadmaps);
-      }
+        toast.error(handleActionError(error));
+      },
 
-      toast.error(error.message);
-    },
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: [MY_ROADMAPS_KEY],
+        });
 
-    onSuccess: ({ success }) => {
-      if (!success) return;
-
-      queryClient.invalidateQueries({
-        queryKey: [MY_ROADMAPS_KEY],
-      });
-
-      toast.success('Roadmap удалён');
-    },
-  });
+        toast.success('Roadmap удалён');
+      },
+    }),
+  );
 };

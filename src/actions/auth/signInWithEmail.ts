@@ -1,18 +1,19 @@
 'use server';
 
-import { createServerSupabase } from '@/lib/supabase/server';
+import { signInWithEmailCore } from '@/core/auth';
+import { actionClient } from '@/lib/next-safe-actions';
+import { createServerSupabase } from '@/lib/supabase';
+import { SignInSchema } from '@/shcemas/SignInSchema';
 
-import type { SignInInput } from '@/shcemas/SignInSchema';
+export const signInWithEmail = actionClient
+  .inputSchema(SignInSchema)
+  .action(async ({ parsedInput }) => {
+    const supabase = await createServerSupabase();
 
-export const signInWithEmail = async ({ email, password }: SignInInput) => {
-  const supabase = await createServerSupabase();
+    const { email, password } = parsedInput;
 
-  const { error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
+    return signInWithEmailCore(supabase, {
+      email,
+      password,
+    });
   });
-
-  if (error) throw new Error(error.message);
-
-  return { success: true };
-};

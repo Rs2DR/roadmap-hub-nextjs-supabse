@@ -1,17 +1,18 @@
 'use server';
 
-import { createServerSupabase } from '@/lib/supabase/server';
+import { updatePasswordCore } from '@/core/auth';
+import { actionClient } from '@/lib/next-safe-actions';
+import { createServerSupabase } from '@/lib/supabase';
+import { ResetPasswordSchema } from '@/shcemas/ResetPasswordSchema';
 
-import type { ResetPasswordInput } from '@/shcemas/ResetPasswordSchema';
+export const updatePassword = actionClient
+  .inputSchema(ResetPasswordSchema)
+  .action(async ({ parsedInput }) => {
+    const supabase = await createServerSupabase();
 
-export const updatePassword = async ({ password }: ResetPasswordInput) => {
-  const supabase = await createServerSupabase();
+    const { password } = parsedInput;
 
-  const { error } = await supabase.auth.updateUser({
-    password,
+    return updatePasswordCore(supabase, {
+      password,
+    });
   });
-
-  if (error) throw new Error(error.message);
-
-  return { success: true };
-};

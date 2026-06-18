@@ -4,7 +4,7 @@ import type { ComponentProps } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 import { AUTH_ROUTES } from '@/constants/routes';
 import { useRequestPasswordReset } from '@/hooks/useRequestPasswordReset';
