@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 import { getRoadmapForViewCore } from '@/core/roadmaps';
-import { createServerSupabase } from '@/lib/supabase/server';
+import { requireAuth } from '@/lib/supabase';
 
 import type { NextRequest } from 'next/server';
 
@@ -12,7 +12,7 @@ export async function GET(
   try {
     const { id } = await ctx.params;
 
-    const supabase = await createServerSupabase();
+    const { supabase } = await requireAuth();
 
     const roadmap = await getRoadmapForViewCore(supabase, { id });
 

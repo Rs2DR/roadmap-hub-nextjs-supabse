@@ -1,14 +1,8 @@
 import { getRoadmapForEditCore } from '@/core/roadmaps';
-import { createServerSupabase } from '@/lib/supabase/server';
+import { requireAuth } from '@/lib/supabase';
 
-export const getRoadmapForEditServer = async ({ id }: { id: string }) => {
-  const supabase = await createServerSupabase();
+export const getRoadmapForEditServer = async (params: { id: string }) => {
+  const { supabase } = await requireAuth();
 
-  const { error } = await supabase.auth.getClaims();
-
-  if (error) throw new Error('Пользователь не авторизован');
-
-  return getRoadmapForEditCore(supabase, {
-    id,
-  });
+  return getRoadmapForEditCore(supabase, params);
 };

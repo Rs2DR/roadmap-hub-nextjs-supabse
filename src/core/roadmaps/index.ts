@@ -7,3 +7,4 @@ export * from './saveRoadmapGraphCore';
 export * from './updateRoadmapInfoCore';
 export * from './bookmarkRoadmapCore';
 export * from './unbookmarkRoadmapCore';
+export * from './getPublicRoadmapsCore';

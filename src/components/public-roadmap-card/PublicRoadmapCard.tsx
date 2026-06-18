@@ -12,7 +12,15 @@ import {
   CardTitle,
 } from '@/components/ui/Card';
 
-export function PublicRoadmapCard() {
+import type { PublicRoadmap } from '@/shcemas/PublicRoadmapSchema';
+
+interface PublicRoadmapCardProps {
+  roadmap: PublicRoadmap;
+}
+
+export function PublicRoadmapCard({ roadmap }: PublicRoadmapCardProps) {
+  const { id, title, description, likesCount, commentsCount } = roadmap;
+
   return (
     <Card className="flex w-full">
       <CardHeader className="flex flex-col grow">
@@ -21,7 +29,7 @@ export function PublicRoadmapCard() {
             <Avatar>
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
-            <CardTitle>Основы веб-разработки</CardTitle>
+            <CardTitle>{title}</CardTitle>
           </div>
           <CardAction>
             <Button variant="outline" size="icon">
@@ -30,26 +38,23 @@ export function PublicRoadmapCard() {
           </CardAction>
         </div>
         <CardDescription className="mt-2 line-clamp-3 mb-2">
-          Создайте атмосферу тепла и уюта в вашем доме с этим [название товара].
-          Он идеально подходит для [основное применение, например, вечерних
-          посиделок, создания настроения] и станет прекрасным дополнением к
-          вашему интерьеру. Больше: https://sinonim.org/gen#res
+          {description}
         </CardDescription>
       </CardHeader>
       <CardFooter className="inline-flex items-center justify-between py-2">
         <div className="inline-flex gap-2 text-muted-foreground">
           <div className="inline-flex items-center gap-1.5">
             <MessageSquare size={18} />
-            <span>0</span>
+            <span>{commentsCount}</span>
           </div>
           <div className="inline-flex items-center gap-1.5">
             <Heart className="text-red-500" size={18} />
-            <span>0</span>
+            <span>{likesCount}</span>
           </div>
         </div>
         <div className="inline-flex items-center gap-4">
           <Button asChild>
-            <Link href={`dashboard/view/${1}`}>Просмотреть</Link>
+            <Link href={`dashboard/view/${id}`}>Просмотреть</Link>
           </Button>
         </div>
       </CardFooter>

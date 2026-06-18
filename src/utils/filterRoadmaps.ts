@@ -1,6 +1,6 @@
-import type { Roadmap } from '@/shcemas/MyRoadmapSchema';
+import type { MyRoadmap } from '@/shcemas/MyRoadmapSchema';
 
-export const filterRoadmaps = (roadmaps: Roadmap[], query: string) => {
+export const filterRoadmaps = (roadmaps: MyRoadmap[], query: string) => {
   const q = query.trim().toLowerCase();
 
   if (!q) return roadmaps;
