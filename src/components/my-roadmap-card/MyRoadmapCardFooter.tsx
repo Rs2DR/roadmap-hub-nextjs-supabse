@@ -24,7 +24,7 @@ export function MyRoadmapCardFooter({ roadmap }: MyRoadmapCardFooterProps) {
   const handleNavigateToMyRoadmap = () =>
     router.push(`${DASHBOARD_ROUTES.MY_ROADMAPS}/${id}`);
 
-  const visibilityLabel = 'Опубликован';
+  const visibilityLabel = isPublic ? 'Опубликован' : null;
 
   return (
     <CardFooter className="inline-flex items-center justify-between py-2">

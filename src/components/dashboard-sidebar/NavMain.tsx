@@ -39,7 +39,7 @@ const items = [
   },
   {
     title: 'Избранное',
-    url: DASHBOARD_ROUTES.FAVORITES,
+    url: DASHBOARD_ROUTES.BOOKMARKS,
     icon: Heart,
   },
 ];
