@@ -16,10 +16,12 @@ export default async function BookmarksPage() {
   });
 
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      <Suspense>
-        <BookmarkedRoadmapsList />
-      </Suspense>
-    </HydrationBoundary>
+    <div className="px-4 pt-2">
+      <HydrationBoundary state={dehydrate(queryClient)}>
+        <Suspense>
+          <BookmarkedRoadmapsList />
+        </Suspense>
+      </HydrationBoundary>
+    </div>
   );
 }

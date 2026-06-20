@@ -15,7 +15,7 @@ import { RoadmapConnectionLine } from '@/components/roadmap-connection-line';
 import { RoadmapEdge } from '@/components/roadmap-edge';
 import { RoadmapNode } from '@/components/roadmap-node';
 import { Button } from '@/components/ui/Button';
-import { ROADMAP_TYPES } from '@/constants/roadmap';
+import { DEFAULT_EDGE_DATA, ROADMAP_TYPES } from '@/constants/roadmap';
 import { useFlowClipboard } from '@/hooks/useFlowClipboard';
 import { useMousePosition } from '@/hooks/useMousePosition';
 import { useRoadmap } from '@/hooks/useRoadmap';
@@ -35,10 +35,6 @@ export function RoadmapEditor({ id }: RoadmapEditorProps) {
   const { data } = useSuspenseQuery(getRoadmapForEditQueryOptions({ id }));
   const { mutate, isPending } = useSaveRoadmapGraph();
   const { getViewport } = useReactFlow();
-
-  if (!data) {
-    notFound();
-  }
 
   const { nodes, edges, ...handlers } = useRoadmap({
     initialNodes: data.nodes,
@@ -74,7 +70,10 @@ export function RoadmapEditor({ id }: RoadmapEditorProps) {
         edgeTypes={edgeTypes}
         {...handlers}
         connectionLineComponent={RoadmapConnectionLine}
-        defaultEdgeOptions={{ type: ROADMAP_TYPES.edge }}
+        defaultEdgeOptions={{
+          type: ROADMAP_TYPES.edge,
+          data: { ...DEFAULT_EDGE_DATA },
+        }}
         fitView
       >
         <Background />

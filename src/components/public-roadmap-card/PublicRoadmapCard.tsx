@@ -26,7 +26,7 @@ export function PublicRoadmapCard({ roadmap }: PublicRoadmapCardProps) {
   const { id, title, description, likesCount, commentsCount, isBookmarked } =
     roadmap;
 
-  const { mutate } = useToggleBookmark();
+  const { toggle } = useToggleBookmark();
 
   return (
     <Card className="flex w-full">
@@ -39,11 +39,7 @@ export function PublicRoadmapCard({ roadmap }: PublicRoadmapCardProps) {
             <CardTitle>{title}</CardTitle>
           </div>
           <CardAction>
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={() => mutate({ id })}
-            >
+            <Button variant="outline" size="icon" onClick={() => toggle(id)}>
               <Bookmark
                 className={cn(
                   'stroke-purple-500',
