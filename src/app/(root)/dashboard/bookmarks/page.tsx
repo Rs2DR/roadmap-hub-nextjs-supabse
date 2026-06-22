@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 
 import { BookmarksContent } from '@/components/bookmarks-content';
-import { FilterInput } from '@/components/filter-input';
+import { QueryInput } from '@/components/query-input';
 import { SeactionHeader } from '@/components/section-header';
 import { SpinnerFallback } from '@/components/spinner-fallback';
 
@@ -13,7 +13,7 @@ export default async function BookmarksPage() {
         description="Тут собраны rodmap'ы отложенные тобой"
       />
       <div className="inline-flex items-end w-full mb-4">
-        <FilterInput />
+        <QueryInput />
       </div>
       <Suspense fallback={<SpinnerFallback />}>
         <BookmarksContent />

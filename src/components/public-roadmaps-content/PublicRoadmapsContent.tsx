@@ -10,13 +10,22 @@ import { ROADMAPS } from '@/constants/queries';
 import { getQueryClient } from '@/lib/tanstack-query';
 import { getPublicRoadmapsServer } from '@/services/roadmaps';
 
-export async function PublicRoadmapsContent() {
+import type { RoadmapOrderBy } from '@/types/RoadmapOrderBy';
+
+interface PublicRoadmapsContentProps {
+  search?: string;
+  orderBy?: RoadmapOrderBy;
+}
+
+export async function PublicRoadmapsContent({
+  search,
+  orderBy = 'newest',
+}: PublicRoadmapsContentProps) {
   const queryClient = getQueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: [ROADMAPS, { search: undefined, orderBy: 'newest' }],
-    queryFn: () =>
-      getPublicRoadmapsServer({ search: undefined, orderBy: 'newest' }),
+    queryKey: [ROADMAPS, { search, orderBy }],
+    queryFn: () => getPublicRoadmapsServer({ search, orderBy }),
   });
 
   return (

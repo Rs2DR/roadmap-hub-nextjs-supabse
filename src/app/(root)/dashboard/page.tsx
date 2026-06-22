@@ -2,19 +2,26 @@
 
 import { Suspense } from 'react';
 
-import { FilterInput } from '@/components/filter-input';
 import { PublicRoadmapsContent } from '@/components/public-roadmaps-content';
+import { QueryInput } from '@/components/query-input';
+import { QuerySelect } from '@/components/query-select';
 import { SeactionHeader } from '@/components/section-header';
 import { SpinnerFallback } from '@/components/spinner-fallback';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/Select';
+import { PublicRoadmapsSearchParamsSchema } from '@/shcemas/PublicRoadmapsSearchParamsSchema';
 
-export default async function DashboardPage() {
+import type { PublicRoadmapsSearchParams } from '@/shcemas/PublicRoadmapsSearchParamsSchema';
+
+export default async function DashboardPage({
+  searchParams,
+}: PageProps<'/dashboard'>) {
+  const { success, data } = PublicRoadmapsSearchParamsSchema.safeParse(
+    await searchParams,
+  );
+
+  const { search, orderBy } = success
+    ? data
+    : ({ search: undefined, orderBy: 'newest' } as PublicRoadmapsSearchParams);
+
   return (
     <div className="page-wrapper">
       <SeactionHeader
@@ -23,20 +30,20 @@ export default async function DashboardPage() {
       />
       <div className="inline-flex items-end gap-4 w-full mb-4">
         <Suspense>
-          <FilterInput />
+          <QueryInput paramKey="search" />
+          <QuerySelect
+            paramKey="orderBy"
+            defaultValue="newest"
+            placeholder="Сортировка"
+            options={[
+              { value: 'newest', label: 'Сначала новые' },
+              { value: 'oldest', label: 'Сначала старые' },
+            ]}
+          />
         </Suspense>
-        <Select defaultValue="new">
-          <SelectTrigger className="w-full max-w-48">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent position="popper">
-            <SelectItem value="new">Сначала новые</SelectItem>
-            <SelectItem value="old">Сначала старые</SelectItem>
-          </SelectContent>
-        </Select>
       </div>
       <Suspense fallback={<SpinnerFallback />}>
-        <PublicRoadmapsContent />
+        <PublicRoadmapsContent search={search} orderBy={orderBy} />
       </Suspense>
     </div>
   );

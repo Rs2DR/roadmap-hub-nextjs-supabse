@@ -4,9 +4,9 @@ import { Suspense } from 'react';
 
 import { Plus } from 'lucide-react';
 
-import { FilterInput } from '@/components/filter-input';
 import { ManageMyRoadmapDialog } from '@/components/manage-my-roadmap-dialog';
 import { MyRoadmapsContent } from '@/components/my-roadmaps-content';
+import { QueryInput } from '@/components/query-input';
 import { SeactionHeader } from '@/components/section-header';
 import { SpinnerFallback } from '@/components/spinner-fallback';
 import { Button } from '@/components/ui/Button';
@@ -20,7 +20,7 @@ export default async function MyRoadmapsPage() {
       />
       <div className="inline-flex w-full items-end gap-4 mb-4">
         <Suspense>
-          <FilterInput />
+          <QueryInput />
         </Suspense>
         <ManageMyRoadmapDialog
           title="Создать roadmap"
