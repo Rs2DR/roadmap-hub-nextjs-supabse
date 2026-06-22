@@ -9,3 +9,5 @@ export const RoadmapBaseSchema = z.object({
   roadmap_likes: z.array(z.object({ count: z.number() })),
   roadmap_comments: z.array(z.object({ count: z.number() })),
 });
+
+export type RoadmapBase = z.infer<typeof RoadmapBaseSchema>;

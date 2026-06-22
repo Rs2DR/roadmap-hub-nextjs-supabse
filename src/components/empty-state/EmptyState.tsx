@@ -25,7 +25,7 @@ export function EmptyState({
     <Empty>
       <EmptyHeader>
         <EmptyMedia variant="icon">
-          <Icon className="size-12" />
+          <Icon className="size-10" />
         </EmptyMedia>
 
         <EmptyTitle className="text-xl">{title}</EmptyTitle>

@@ -1,12 +1,15 @@
 'use client';
 
+import { useMemo } from 'react';
+
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { Globe, Heart, Search } from 'lucide-react';
+import { Heart, Search } from 'lucide-react';
 import { useQueryState } from 'nuqs';
 
 import { EmptyState } from '@/components/empty-state';
 import { PublicRoadmapCard } from '@/components/public-roadmap-card';
 import { getBookmarkedRoadmapsQueryOptions } from '@/queries/getBookedmarkedRoadmapsQueryOptions';
+import { filterRoadmaps } from '@/utils/filterRoadmaps';
 
 export function BookmarkedRoadmapsList() {
   const [filterValue] = useQueryState('filter', {
@@ -14,6 +17,11 @@ export function BookmarkedRoadmapsList() {
     clearOnDefault: true,
   });
   const { data } = useSuspenseQuery(getBookmarkedRoadmapsQueryOptions());
+
+  const filteredRoadmaps = useMemo(
+    () => filterRoadmaps(data, filterValue),
+    [data, filterValue],
+  );
 
   const isEmpty = data.length === 0;
 
@@ -39,7 +47,7 @@ export function BookmarkedRoadmapsList() {
 
   return (
     <div className="cards-list">
-      {data.map((roadmap) => (
+      {filteredRoadmaps.map((roadmap) => (
         <PublicRoadmapCard key={roadmap.id} roadmap={roadmap} />
       ))}
     </div>
