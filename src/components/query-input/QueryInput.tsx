@@ -1,7 +1,7 @@
 'use client';
 
 import type { ChangeEvent } from 'react';
-import { useId, useMemo, useTransition } from 'react';
+import { useId, useEffect, useMemo, useState } from 'react';
 
 import debounce from 'lodash-es/debounce';
 import { Search } from 'lucide-react';
@@ -15,7 +15,7 @@ import {
 } from '@/components/ui/InputGroup';
 
 type QueryInputProps = {
-  paramKey?: string;
+  paramKey: string;
   label?: string;
   placeholder?: string;
   maxLength?: number;
@@ -23,28 +23,27 @@ type QueryInputProps = {
 };
 
 export function QueryInput({
-  paramKey = 'filter',
+  paramKey,
   label = 'Поиск',
   placeholder = 'Поиск...',
   maxLength = 100,
   debounceMs = 300,
 }: QueryInputProps) {
   const id = useId();
-  const [, startTransition] = useTransition();
 
-  const [value, setValue] = useQueryState(paramKey, {
+  const [urlValue, setUrlValue] = useQueryState(paramKey, {
     defaultValue: '',
     clearOnDefault: true,
   });
 
-  const setValueDebounced = useMemo(
+  const [inputValue, setInputValue] = useState(urlValue);
+
+  const syncToUrl = useMemo(
     () =>
-      debounce((v: string) => {
-        startTransition(() => {
-          setValue(v);
-        });
+      debounce((value: string) => {
+        setUrlValue(value);
       }, debounceMs),
-    [setValue, debounceMs],
+    [setUrlValue, debounceMs],
   );
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -54,7 +53,8 @@ export function QueryInput({
       nextValue = nextValue.slice(0, maxLength);
     }
 
-    setValueDebounced(nextValue);
+    setInputValue(nextValue);
+    syncToUrl(nextValue);
   };
 
   return (
@@ -68,9 +68,9 @@ export function QueryInput({
 
         <InputGroupInput
           id={id}
-          placeholder={placeholder}
-          value={value}
+          value={inputValue}
           onChange={handleChange}
+          placeholder={placeholder}
           maxLength={maxLength}
         />
       </InputGroup>

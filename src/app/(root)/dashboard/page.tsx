@@ -28,8 +28,8 @@ export default async function DashboardPage({
         title="Опубликованные Roadmaps"
         description="Изучай, сохраняй и проходи лучшие дорожные карты"
       />
-      <div className="inline-flex items-end gap-4 w-full mb-4">
-        <Suspense>
+      <Suspense>
+        <div className="inline-flex items-end gap-4 w-full mb-4">
           <QueryInput paramKey="search" />
           <QuerySelect
             paramKey="orderBy"
@@ -40,8 +40,8 @@ export default async function DashboardPage({
               { value: 'oldest', label: 'Сначала старые' },
             ]}
           />
-        </Suspense>
-      </div>
+        </div>
+      </Suspense>
       <Suspense fallback={<SpinnerFallback />}>
         <PublicRoadmapsContent search={search} orderBy={orderBy} />
       </Suspense>

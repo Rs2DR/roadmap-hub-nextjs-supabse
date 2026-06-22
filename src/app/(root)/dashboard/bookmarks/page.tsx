@@ -12,9 +12,11 @@ export default async function BookmarksPage() {
         title="Избранные Roadmap'ы"
         description="Тут собраны rodmap'ы отложенные тобой"
       />
-      <div className="inline-flex items-end w-full mb-4">
-        <QueryInput />
-      </div>
+      <Suspense>
+        <div className="inline-flex items-end w-full mb-4">
+          <QueryInput paramKey="filter" />
+        </div>
+      </Suspense>
       <Suspense fallback={<SpinnerFallback />}>
         <BookmarksContent />
       </Suspense>
