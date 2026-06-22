@@ -1,27 +1,23 @@
 import { Suspense } from 'react';
 
-import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
-
-import { BookmarkedRoadmapsList } from '@/components/bookmarked-roadmaps-list';
-import { BOOKMARKED_ROADMAPS } from '@/constants/queries';
-import { getQueryClient } from '@/lib/tanstack-query';
-import { getBookmarkedRoadmapsServer } from '@/services/roadmaps';
+import { BookmarksContent } from '@/components/bookmarks-content';
+import { FilterInput } from '@/components/filter-input';
+import { SeactionHeader } from '@/components/section-header';
+import { SpinnerFallback } from '@/components/spinner-fallback';
 
 export default async function BookmarksPage() {
-  const queryClient = getQueryClient();
-
-  await queryClient.prefetchQuery({
-    queryKey: [BOOKMARKED_ROADMAPS],
-    queryFn: () => getBookmarkedRoadmapsServer(),
-  });
-
   return (
-    <div className="px-4 pt-2">
-      <HydrationBoundary state={dehydrate(queryClient)}>
-        <Suspense>
-          <BookmarkedRoadmapsList />
-        </Suspense>
-      </HydrationBoundary>
+    <div className="page-wrapper">
+      <SeactionHeader
+        title="Избранные Roadmap'ы"
+        description="Тут собраны rodmap'ы отложенные тобой"
+      />
+      <div className="inline-flex items-end w-full mb-4">
+        <FilterInput />
+      </div>
+      <Suspense fallback={<SpinnerFallback />}>
+        <BookmarksContent />
+      </Suspense>
     </div>
   );
 }

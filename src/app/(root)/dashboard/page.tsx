@@ -2,10 +2,10 @@
 
 import { Suspense } from 'react';
 
-import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
-
 import { FilterInput } from '@/components/filter-input';
-import { PublicRoadmapsList } from '@/components/public-roadmaps-list';
+import { PublicRoadmapsContent } from '@/components/public-roadmaps-content';
+import { SeactionHeader } from '@/components/section-header';
+import { SpinnerFallback } from '@/components/spinner-fallback';
 import {
   Select,
   SelectContent,
@@ -13,28 +13,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/Select';
-import { Spinner } from '@/components/ui/Spinner';
-import { ROADMAPS } from '@/constants/queries';
-import { getQueryClient } from '@/lib/tanstack-query';
-import { getPublicRoadmapsServer } from '@/services/roadmaps';
 
 export default async function DashboardPage() {
-  const queryClient = getQueryClient();
-
-  await queryClient.prefetchQuery({
-    queryKey: [ROADMAPS, { search: undefined, orderBy: 'newest' }],
-    queryFn: () =>
-      getPublicRoadmapsServer({ search: undefined, orderBy: 'newest' }),
-  });
-
   return (
-    <div className="px-4 pt-2">
-      <div className="flex flex-col gap-2 mb-6">
-        <h2 className="text-4xl">Опубликованные Roadmaps</h2>
-        <p className="text-muted-foreground">
-          Изучай, сохраняй и проходи лучшие дорожные карты
-        </p>
-      </div>
+    <div className="page-wrapper">
+      <SeactionHeader
+        title="Опубликованные Roadmaps"
+        description="Изучай, сохраняй и проходи лучшие дорожные карты"
+      />
       <div className="inline-flex items-end gap-4 w-full mb-4">
         <Suspense>
           <FilterInput />
@@ -49,11 +35,9 @@ export default async function DashboardPage() {
           </SelectContent>
         </Select>
       </div>
-      <HydrationBoundary state={dehydrate(queryClient)}>
-        <Suspense fallback={<Spinner />}>
-          <PublicRoadmapsList />
-        </Suspense>
-      </HydrationBoundary>
+      <Suspense fallback={<SpinnerFallback />}>
+        <PublicRoadmapsContent />
+      </Suspense>
     </div>
   );
 }

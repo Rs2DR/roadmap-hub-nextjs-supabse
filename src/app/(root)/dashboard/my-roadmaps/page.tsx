@@ -2,29 +2,23 @@
 
 import { Suspense } from 'react';
 
-import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { Plus } from 'lucide-react';
 
 import { FilterInput } from '@/components/filter-input';
 import { ManageMyRoadmapDialog } from '@/components/manage-my-roadmap-dialog';
-import { MyRoadmapsList } from '@/components/my-roadmaps-list';
+import { MyRoadmapsContent } from '@/components/my-roadmaps-content';
+import { SeactionHeader } from '@/components/section-header';
+import { SpinnerFallback } from '@/components/spinner-fallback';
 import { Button } from '@/components/ui/Button';
-import { Spinner } from '@/components/ui/Spinner';
-import { MY_ROADMAPS_KEY } from '@/constants/queries';
-import { getQueryClient } from '@/lib/tanstack-query';
-import { getMyRoadmapsInfoServer } from '@/services/roadmaps';
 
 export default async function MyRoadmapsPage() {
-  const queryClient = getQueryClient();
-
-  await queryClient.prefetchQuery({
-    queryKey: [MY_ROADMAPS_KEY],
-    queryFn: () => getMyRoadmapsInfoServer(),
-  });
-
   return (
-    <div className="flex flex-col gap-4 px-4 pt-2">
-      <div className="inline-flex w-full items-end gap-4">
+    <div className="page-wrapper">
+      <SeactionHeader
+        title="Мои Roadmap'ы"
+        description="Создай свой уникальный Roadmap и удиви всех"
+      />
+      <div className="inline-flex w-full items-end gap-4 mb-4">
         <Suspense>
           <FilterInput />
         </Suspense>
@@ -38,11 +32,9 @@ export default async function MyRoadmapsPage() {
           </Button>
         </ManageMyRoadmapDialog>
       </div>
-      <HydrationBoundary state={dehydrate(queryClient)}>
-        <Suspense fallback={<Spinner />}>
-          <MyRoadmapsList />
-        </Suspense>
-      </HydrationBoundary>
+      <Suspense fallback={<SpinnerFallback />}>
+        <MyRoadmapsContent />
+      </Suspense>
     </div>
   );
 }
