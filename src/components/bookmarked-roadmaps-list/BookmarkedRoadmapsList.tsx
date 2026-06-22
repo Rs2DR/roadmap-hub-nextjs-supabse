@@ -23,7 +23,7 @@ export function BookmarkedRoadmapsList() {
     [data, filterValue],
   );
 
-  const isEmpty = data.length === 0;
+  const isEmpty = filteredRoadmaps.length === 0;
 
   if (isEmpty) {
     if (filterValue) {

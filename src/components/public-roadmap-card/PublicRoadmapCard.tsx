@@ -1,8 +1,9 @@
 'use client';
 
-import { Bookmark, Heart, MessageSquare } from 'lucide-react';
+import { Heart, MessageSquare } from 'lucide-react';
 import Link from 'next/link';
 
+import { ToggleBookmarkButton } from '@/components/toggle-bookmark-button';
 import { Avatar, AvatarFallback } from '@/components/ui/Avatar';
 import { Button } from '@/components/ui/Button';
 import {
@@ -13,8 +14,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/Card';
-import { useToggleBookmark } from '@/hooks/useToggleBookmark';
-import { cn } from '@/lib/utils';
 
 import type { PublicRoadmap } from '@/shcemas/PublicRoadmapSchema';
 
@@ -25,8 +24,6 @@ interface PublicRoadmapCardProps {
 export function PublicRoadmapCard({ roadmap }: PublicRoadmapCardProps) {
   const { id, title, description, likesCount, commentsCount, isBookmarked } =
     roadmap;
-
-  const { toggle } = useToggleBookmark();
 
   return (
     <Card className="flex w-full">
@@ -39,14 +36,7 @@ export function PublicRoadmapCard({ roadmap }: PublicRoadmapCardProps) {
             <CardTitle>{title}</CardTitle>
           </div>
           <CardAction>
-            <Button variant="outline" size="icon" onClick={() => toggle(id)}>
-              <Bookmark
-                className={cn(
-                  'stroke-purple-500',
-                  isBookmarked && 'fill-purple-500',
-                )}
-              />
-            </Button>
+            <ToggleBookmarkButton id={id} isBookmarked={isBookmarked} />
           </CardAction>
         </div>
         <CardDescription className="mt-2 line-clamp-3 mb-2">
