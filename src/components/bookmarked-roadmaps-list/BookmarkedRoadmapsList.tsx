@@ -21,7 +21,7 @@ export function BookmarkedRoadmapsList() {
     if (filterValue) {
       return (
         <EmptyState
-          icon={<Search />}
+          icon={Search}
           title="Ничего не найдено"
           description="Попробуйте изменить запрос"
         />
@@ -30,7 +30,7 @@ export function BookmarkedRoadmapsList() {
 
     return (
       <EmptyState
-        icon={<Heart />}
+        icon={Heart}
         title="Пока у вас нет избранных Roadmap'ов"
         description="Скорее добавьте сюда Roadmap'ы, которые вы хотите пройти"
       />

@@ -8,17 +8,25 @@ import {
   EmptyTitle,
 } from '@/components/ui/Empty';
 
+import type { LucideIcon } from 'lucide-react';
+
 interface EmptyStateProps {
-  icon: ReactNode;
+  icon: LucideIcon;
   title: string;
   description: string;
 }
 
-export function EmptyState({ icon, title, description }: EmptyStateProps) {
+export function EmptyState({
+  icon: Icon,
+  title,
+  description,
+}: EmptyStateProps) {
   return (
     <Empty>
       <EmptyHeader>
-        {icon && <EmptyMedia variant="icon">{icon}</EmptyMedia>}
+        <EmptyMedia variant="icon">
+          <Icon className="size-12" />
+        </EmptyMedia>
 
         <EmptyTitle className="text-xl">{title}</EmptyTitle>
 

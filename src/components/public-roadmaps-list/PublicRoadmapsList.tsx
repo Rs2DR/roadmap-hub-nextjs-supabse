@@ -32,7 +32,7 @@ export function PublicRoadmapsList() {
     if (search) {
       return (
         <EmptyState
-          icon={<Search />}
+          icon={Search}
           title="Ничего не найдено"
           description="Попробуйте изменить запрос"
         />
@@ -41,7 +41,7 @@ export function PublicRoadmapsList() {
 
     return (
       <EmptyState
-        icon={<Globe />}
+        icon={Globe}
         title="Пока нет публичных Roadmap’ов"
         description="Станьте первым, кто поделится своим Roadmap"
       />

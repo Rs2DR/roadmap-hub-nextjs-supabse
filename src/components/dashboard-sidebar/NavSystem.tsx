@@ -15,7 +15,7 @@ export function NavSystem() {
     <SidebarGroup>
       <SidebarGroupLabel>Система</SidebarGroupLabel>
       <SidebarMenuItem>
-        <SidebarMenuButton asChild>
+        <SidebarMenuButton asChild tooltip="Настройки">
           <Link href={DASHBOARD_ROUTES.SETTINGS}>
             <Settings /> <span>Настройки</span>
           </Link>

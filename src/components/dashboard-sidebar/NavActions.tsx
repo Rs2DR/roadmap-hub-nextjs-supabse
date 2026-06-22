@@ -1,4 +1,4 @@
-import { PlusIcon, Search } from 'lucide-react';
+import { PlusIcon } from 'lucide-react';
 
 import { ManageMyRoadmapDialog } from '@/components/manage-my-roadmap-dialog';
 
@@ -18,7 +18,7 @@ export function NavActions() {
           title="Создать roadmap"
           description="Тут вы можете создать свой Roadmap"
         >
-          <SidebarMenuButton>
+          <SidebarMenuButton tooltip="Создать">
             <PlusIcon /> <span>Создать </span>
           </SidebarMenuButton>
         </ManageMyRoadmapDialog>

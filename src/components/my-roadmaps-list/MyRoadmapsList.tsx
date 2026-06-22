@@ -29,7 +29,7 @@ export function MyRoadmapsList() {
     if (filterValue) {
       return (
         <EmptyState
-          icon={<Search />}
+          icon={Search}
           title="Совпадений не найдено"
           description="Попробуйте изменить запрос или убрать фильтр"
         />
@@ -38,7 +38,7 @@ export function MyRoadmapsList() {
 
     return (
       <EmptyState
-        icon={<Folder />}
+        icon={Folder}
         title="У вас пока нет Roadmap’ов"
         description="Создайте свой первый Roadmap, чтобы начать"
       />

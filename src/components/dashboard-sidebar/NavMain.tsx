@@ -1,21 +1,21 @@
+'use client';
+
 import {
   Award,
+  Bookmark,
   ChartAreaIcon,
   ChevronRight,
-  FolderBookmark,
-  Heart,
+  Folder,
   House,
   Rotate3DIcon,
 } from 'lucide-react';
 import Link from 'next/link';
 
-import { APP_ROUTES, DASHBOARD_ROUTES } from '@/constants/routes';
-
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from '../ui/Collapsible';
+} from '@/components/ui/Collapsible';
 import {
   SidebarGroup,
   SidebarGroupLabel,
@@ -24,67 +24,112 @@ import {
   SidebarMenuSub,
   SidebarMenuSubButton,
   SidebarMenuSubItem,
-} from '../ui/Sidebar';
+  useSidebar,
+} from '@/components/ui/Sidebar';
+import { APP_ROUTES, DASHBOARD_ROUTES } from '@/constants/routes';
 
-const items = [
+import type { NavItem } from '@/types/NavItem';
+
+export const navItems: NavItem[] = [
   {
-    title: 'Проекты',
-    url: DASHBOARD_ROUTES.MY_ROADMAPS,
-    icon: FolderBookmark,
+    type: 'link',
+    title: 'Главная',
+    url: APP_ROUTES.DASHBOARD,
+    icon: House,
   },
   {
-    title: 'Активные треки',
-    url: DASHBOARD_ROUTES.IN_PROCESS,
-    icon: Award,
+    type: 'group',
+    title: 'Мои Roadmaps',
+    icon: Rotate3DIcon,
+    items: [
+      {
+        title: 'Проекты',
+        url: DASHBOARD_ROUTES.MY_ROADMAPS,
+        icon: Folder,
+      },
+      {
+        title: 'Активные',
+        url: DASHBOARD_ROUTES.IN_PROCESS,
+        icon: Award,
+      },
+      {
+        title: 'Избранное',
+        url: DASHBOARD_ROUTES.BOOKMARKS,
+        icon: Bookmark,
+      },
+    ],
   },
   {
-    title: 'Избранное',
-    url: DASHBOARD_ROUTES.BOOKMARKS,
-    icon: Heart,
+    type: 'link',
+    title: 'Статистика',
+    url: DASHBOARD_ROUTES.MY_STATISTICS,
+    icon: ChartAreaIcon,
   },
 ];
 
 export function NavMain() {
+  const { setOpenMobile } = useSidebar();
+
+  const handleCloseOnMobile = () => setOpenMobile(false);
+
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Основное</SidebarGroupLabel>
-      <SidebarMenuItem>
-        <SidebarMenuButton asChild>
-          <Link href={APP_ROUTES.DASHBOARD}>
-            <House /> <span>Главная</span>
-          </Link>
-        </SidebarMenuButton>
-      </SidebarMenuItem>
-      <Collapsible>
-        <SidebarMenuItem>
-          <CollapsibleTrigger asChild>
-            <SidebarMenuButton tooltip="Мои Roudmap">
-              <Rotate3DIcon /> <span>Мои Roudmap</span>
-              <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-            </SidebarMenuButton>
-          </CollapsibleTrigger>
-          <CollapsibleContent>
-            <SidebarMenuSub>
-              {items.map((subItem) => (
-                <SidebarMenuSubItem key={subItem.title}>
-                  <SidebarMenuSubButton asChild>
-                    <Link href={subItem.url}>
-                      <subItem.icon /> <span>{subItem.title}</span>
-                    </Link>
-                  </SidebarMenuSubButton>
-                </SidebarMenuSubItem>
-              ))}
-            </SidebarMenuSub>
-          </CollapsibleContent>
-        </SidebarMenuItem>
-      </Collapsible>
-      <SidebarMenuItem>
-        <SidebarMenuButton asChild>
-          <Link href={DASHBOARD_ROUTES.MY_STATISTICS}>
-            <ChartAreaIcon /> <span>Статистика</span>
-          </Link>
-        </SidebarMenuButton>
-      </SidebarMenuItem>
+
+      {navItems.map((item) => {
+        if (item.type === 'link') {
+          const { title, url, icon: Icon } = item;
+
+          return (
+            <SidebarMenuItem key={title}>
+              <SidebarMenuButton
+                asChild
+                onClick={handleCloseOnMobile}
+                tooltip={title}
+              >
+                <Link href={url}>
+                  <Icon />
+                  <span>{title}</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          );
+        }
+
+        const { icon: GroupIcon, title, items } = item;
+
+        return (
+          <Collapsible key={title} className="group/collapsible">
+            <SidebarMenuItem>
+              <CollapsibleTrigger asChild>
+                <SidebarMenuButton tooltip={title}>
+                  <GroupIcon />
+                  <span>{title}</span>
+                  <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                </SidebarMenuButton>
+              </CollapsibleTrigger>
+
+              <CollapsibleContent>
+                <SidebarMenuSub>
+                  {items.map(({ title, url, icon: SubIcon }) => (
+                    <SidebarMenuSubItem key={title}>
+                      <SidebarMenuSubButton
+                        asChild
+                        onClick={handleCloseOnMobile}
+                      >
+                        <Link href={url}>
+                          <SubIcon />
+                          <span>{title}</span>
+                        </Link>
+                      </SidebarMenuSubButton>
+                    </SidebarMenuSubItem>
+                  ))}
+                </SidebarMenuSub>
+              </CollapsibleContent>
+            </SidebarMenuItem>
+          </Collapsible>
+        );
+      })}
     </SidebarGroup>
   );
 }
