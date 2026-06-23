@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 
-import { RoadmapContent } from '@/components/roadmap-content';
+import { RoadmapEditorContent } from '@/components/roadmap-editor-content';
 import { SpinnerFallback } from '@/components/spinner-fallback';
 
 export default async function MyRoadmapPage({
@@ -10,7 +10,7 @@ export default async function MyRoadmapPage({
 
   return (
     <Suspense fallback={<SpinnerFallback />}>
-      <RoadmapContent id={id} />
+      <RoadmapEditorContent id={id} />
     </Suspense>
   );
 }

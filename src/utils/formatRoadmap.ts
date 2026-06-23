@@ -18,5 +18,7 @@ export const formatRoadmap = (roadmap: unknown) => {
     edges: formatEdges(assertArray(r.edges, 'edges')),
   };
 
+  console.log(result);
+
   return RoadmapGraphSchema.parse(result);
 };

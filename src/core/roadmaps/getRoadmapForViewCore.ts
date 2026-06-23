@@ -30,7 +30,5 @@ export const getRoadmapForViewCore = async (
 
   if (error) throw new Error('Не удалось загрузить Roadmap');
 
-  if (!data) return null;
-
   return formatRoadmap(data);
 };

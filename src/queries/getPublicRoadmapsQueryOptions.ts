@@ -1,7 +1,7 @@
 import { queryOptions } from '@tanstack/react-query';
 
 import { getPublicRoadmapsApiClient } from '@/api-client/roadmaps';
-import { ROADMAPS } from '@/constants/queries';
+import { ROADMAPS_KEY } from '@/constants/queries';
 
 import type { GetPublicRoadmapsInput } from '@/shcemas/GetPublicRoadmapsSchema';
 
@@ -17,7 +17,7 @@ export const getPublicRoadmapsQueryOptions = (
   const orderBy = params?.orderBy ?? 'newest';
 
   return queryOptions({
-    queryKey: [ROADMAPS, { search, orderBy }],
+    queryKey: [ROADMAPS_KEY, { search, orderBy }],
     queryFn: () => getPublicRoadmapsApiClient({ search, orderBy }),
   });
 };

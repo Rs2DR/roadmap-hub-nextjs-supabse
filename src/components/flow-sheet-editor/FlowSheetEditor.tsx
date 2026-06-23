@@ -1,5 +1,6 @@
 'use client';
 
+import { NodeEditorForm } from '@/components/node-editor-form';
 import {
   Sheet,
   SheetContent,
@@ -7,14 +8,12 @@ import {
   SheetHeader,
   SheetTitle,
 } from '@/components/ui/Sheet';
-import { FLOW_MODE } from '@/constants/flow';
 import { useFlowStore } from '@/store/useFlowStore';
 
-import { FlowSheetContentSwitcher } from './FlowSheetContentSwitcher';
+import { EdgeEditorForm } from '../edge-editor-form/EdgeEditorForm';
 
-export function FlowSheet() {
+export function FlowSheetEditor() {
   const activeElement = useFlowStore((s) => s.activeElement);
-  const mode = useFlowStore((s) => s.mode);
   const closeSidebar = useFlowStore((s) => s.closeSidebar);
 
   const isOpen = !!activeElement;
@@ -23,9 +22,7 @@ export function FlowSheet() {
     <Sheet open={isOpen} onOpenChange={(open) => !open && closeSidebar()}>
       <SheetContent>
         <SheetHeader>
-          <SheetTitle>
-            {mode === FLOW_MODE.EDIT ? 'Редактирование' : 'Информация'}
-          </SheetTitle>
+          <SheetTitle>Редактирование</SheetTitle>
           <SheetDescription>
             {activeElement?.type === 'node'
               ? 'Параметры узла карты'
@@ -34,7 +31,21 @@ export function FlowSheet() {
         </SheetHeader>
 
         <div className="mt-4 h-full">
-          <FlowSheetContentSwitcher />
+          {activeElement?.type === 'node' && (
+            <NodeEditorForm
+              nodeId={activeElement.id}
+              defaultValues={activeElement.data}
+              onClose={closeSidebar}
+            />
+          )}
+
+          {activeElement?.type === 'edge' && (
+            <EdgeEditorForm
+              edgeId={activeElement.id}
+              defaultValues={activeElement.data}
+              onClose={closeSidebar}
+            />
+          )}
         </div>
       </SheetContent>
     </Sheet>

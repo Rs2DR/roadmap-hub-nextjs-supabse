@@ -8,7 +8,7 @@ import { MY_ROADMAPS_KEY } from '@/constants/queries';
 import { getQueryClient } from '@/lib/tanstack-query/getQueryClient';
 import { getRoadmapForEditServer } from '@/services/roadmaps';
 
-export async function RoadmapContent({ id }: { id: string }) {
+export async function RoadmapEditorContent({ id }: { id: string }) {
   const queryClient = getQueryClient();
 
   await queryClient.prefetchQuery({

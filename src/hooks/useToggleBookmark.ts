@@ -1,3 +1,5 @@
+'use client';
+
 import { useRef } from 'react';
 
 import { mutationOptions } from '@next-safe-action/adapter-tanstack-query';
@@ -5,7 +7,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { toggleBookmarkAction } from '@/actions/roadmap/toggleBookmark';
-import { ROADMAPS, BOOKMARKED_ROADMAPS } from '@/constants/queries';
+import { ROADMAPS_KEY, BOOKMARKED_ROADMAPS_KEY } from '@/constants/queries';
 import { handleActionError } from '@/utils/handleActionError';
 
 import type { PublicRoadmap } from '@/shcemas/PublicRoadmapSchema';
@@ -26,7 +28,7 @@ export const useToggleBookmark = () => {
       },
       onSettled: () => {
         queryClient.invalidateQueries({
-          queryKey: [BOOKMARKED_ROADMAPS],
+          queryKey: [BOOKMARKED_ROADMAPS_KEY],
         });
       },
     }),
@@ -34,7 +36,7 @@ export const useToggleBookmark = () => {
 
   const getState = (id: string) => {
     const data = queryClient
-      .getQueriesData<PublicRoadmap[]>({ queryKey: [ROADMAPS] })
+      .getQueriesData<PublicRoadmap[]>({ queryKey: [ROADMAPS_KEY] })
       .flatMap(([, d]) => d ?? []);
 
     return data.find((i) => i.id === id)?.isBookmarked;
@@ -42,7 +44,7 @@ export const useToggleBookmark = () => {
 
   const updateCache = (id: string) => {
     queryClient.setQueriesData<PublicRoadmap[]>(
-      { queryKey: [ROADMAPS] },
+      { queryKey: [ROADMAPS_KEY] },
       (old) =>
         old?.map((item) =>
           item.id === id ? { ...item, isBookmarked: !item.isBookmarked } : item,
@@ -50,7 +52,7 @@ export const useToggleBookmark = () => {
     );
 
     queryClient.setQueriesData<PublicRoadmap[]>(
-      { queryKey: [BOOKMARKED_ROADMAPS] },
+      { queryKey: [BOOKMARKED_ROADMAPS_KEY] },
       (old) => {
         if (!old) return old;
 
@@ -61,7 +63,7 @@ export const useToggleBookmark = () => {
         }
 
         const roadmap = queryClient
-          .getQueriesData<PublicRoadmap[]>({ queryKey: [ROADMAPS] })
+          .getQueriesData<PublicRoadmap[]>({ queryKey: [ROADMAPS_KEY] })
           .flatMap(([, d]) => d ?? [])
           .find((i) => i.id === id);
 

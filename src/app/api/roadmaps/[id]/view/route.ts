@@ -21,7 +21,9 @@ export async function GET(
     }
 
     return NextResponse.json(roadmap);
-  } catch {
+  } catch (error) {
+    console.log(error);
+
     return NextResponse.json(
       { error: 'Не удалось загрузить Roadmap' },
       { status: 500 },

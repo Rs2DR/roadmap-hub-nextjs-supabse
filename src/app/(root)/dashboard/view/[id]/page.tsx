@@ -1,11 +1,11 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/Card';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/Tabs';
+import { Suspense } from 'react';
+
+import { Heart, MessageCircle, Share } from 'lucide-react';
+
+import { RoadmapViewerContent } from '@/components/roadmap-viewer-content';
+import { SpinnerFallback } from '@/components/spinner-fallback';
+import { ToggleBookmarkButton } from '@/components/toggle-bookmark-button';
+import { Button } from '@/components/ui/Button';
 
 export default async function ViewDashboardPage({
   params,
@@ -13,71 +13,22 @@ export default async function ViewDashboardPage({
   const { id } = await params;
 
   return (
-    <div>
-      <Tabs defaultValue="overview" className="w-[400px]">
-        <TabsList variant="line">
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="analytics">Analytics</TabsTrigger>
-          <TabsTrigger value="reports">Reports</TabsTrigger>
-          <TabsTrigger value="settings">Settings</TabsTrigger>
-        </TabsList>
-        <TabsContent value="overview">
-          <Card>
-            <CardHeader>
-              <CardTitle>Overview</CardTitle>
-              <CardDescription>
-                View your key metrics and recent project activity. Track
-                progress across all your active projects.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="text-sm text-muted-foreground">
-              You have 12 active projects and 3 pending tasks.
-            </CardContent>
-          </Card>
-        </TabsContent>
-        <TabsContent value="analytics">
-          <Card>
-            <CardHeader>
-              <CardTitle>Analytics</CardTitle>
-              <CardDescription>
-                Track performance and user engagement metrics. Monitor trends
-                and identify growth opportunities.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="text-sm text-muted-foreground">
-              Page views are up 25% compared to last month.
-            </CardContent>
-          </Card>
-        </TabsContent>
-        <TabsContent value="reports">
-          <Card>
-            <CardHeader>
-              <CardTitle>Reports</CardTitle>
-              <CardDescription>
-                Generate and download your detailed reports. Export data in
-                multiple formats for analysis.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="text-sm text-muted-foreground">
-              You have 5 reports ready and available to export.
-            </CardContent>
-          </Card>
-        </TabsContent>
-        <TabsContent value="settings">
-          <Card>
-            <CardHeader>
-              <CardTitle>Settings</CardTitle>
-              <CardDescription>
-                Manage your account preferences and options. Customize your
-                experience to fit your needs.
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="text-sm text-muted-foreground">
-              Configure notifications, security, and themes.
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
+    <div className="page-wrapper relative w-full h-full">
+      <div className="absolute right-2 top-2 inline-flex items-center gap-1.5 z-50">
+        <Button variant="outline" size="icon">
+          <Heart />
+        </Button>
+        <Button variant="outline" size="icon">
+          <MessageCircle />
+        </Button>
+        <ToggleBookmarkButton id={id} isBookmarked={true} />
+        <Button variant="outline">
+          <Share /> Поделиться
+        </Button>
+      </div>
+      <Suspense fallback={<SpinnerFallback />}>
+        <RoadmapViewerContent id={id} />
+      </Suspense>
     </div>
   );
 }
