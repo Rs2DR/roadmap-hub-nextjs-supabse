@@ -20,9 +20,7 @@ export async function BookmarksContent() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <Suspense fallback={<SpinnerFallback />}>
-        <BookmarkedRoadmapsList />
-      </Suspense>
+      <BookmarkedRoadmapsList />
     </HydrationBoundary>
   );
 }

@@ -5,7 +5,12 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { likeRoadmap } from '@/actions/roadmap/likeRoadmap';
-import { MY_ROADMAPS_KEY, ROADMAPS_KEY } from '@/constants/queries';
+import {
+  ROADMAP_VIEW_KEY,
+  ROADMAPS_KEY,
+  MY_ROADMAPS_KEY,
+} from '@/constants/queries';
+import { asArray } from '@/utils/asArray';
 import { handleActionError } from '@/utils/handleActionError';
 
 import type { PublicRoadmap } from '@/shcemas/PublicRoadmapSchema';
@@ -17,98 +22,55 @@ export const useLikeRoadmap = () => {
     mutationOptions(likeRoadmap, {
       onMutate: async ({ id }) => {
         await queryClient.cancelQueries({ queryKey: [ROADMAPS_KEY] });
+        await queryClient.cancelQueries({ queryKey: [ROADMAP_VIEW_KEY, id] });
 
-        const detailedKey = [ROADMAPS_KEY, id];
-        const previousPublicRoadmap =
-          queryClient.getQueryData<PublicRoadmap>(detailedKey);
+        const previousView = queryClient.getQueryData<PublicRoadmap>([
+          ROADMAP_VIEW_KEY,
+          id,
+        ]);
 
-        if (previousPublicRoadmap) {
-          queryClient.setQueryData<PublicRoadmap>(detailedKey, {
-            ...previousPublicRoadmap,
-            isLiked: !previousPublicRoadmap.isLiked,
-            likesCount:
-              (previousPublicRoadmap.likesCount ?? 0) +
-              (!previousPublicRoadmap.isLiked ? 1 : -1),
-          });
-        }
+        const toggle = (r: PublicRoadmap): PublicRoadmap => {
+          const isLiked = !r.isLiked;
 
-        const previousQueries = queryClient.getQueriesData<PublicRoadmap[]>({
-          queryKey: [ROADMAPS_KEY],
-        });
+          return {
+            ...r,
+            isLiked,
+            likesCount: (r.likesCount ?? 0) + (isLiked ? 1 : -1),
+          };
+        };
 
-        previousQueries.forEach(([queryKey, oldRoadmaps]) => {
-          if (queryKey.length === 2 && queryKey[1] === id) return;
-          if (!oldRoadmaps) return;
+        queryClient.setQueryData<PublicRoadmap>(
+          [ROADMAP_VIEW_KEY, id],
+          (old) => (old ? toggle(old) : old),
+        );
 
-          queryClient.setQueryData<PublicRoadmap[]>(
-            queryKey,
-            oldRoadmaps.map((roadmap) =>
-              roadmap.id === id
-                ? {
-                    ...roadmap,
-                    isLiked: !roadmap.isLiked,
-                    likesCount:
-                      (roadmap.likesCount ?? 0) + (!roadmap.isLiked ? 1 : -1),
-                  }
-                : roadmap,
-            ),
-          );
-        });
+        queryClient.setQueriesData<PublicRoadmap[]>(
+          { queryKey: [ROADMAPS_KEY] },
+          (old) => {
+            if (!old) return old;
 
-        return { previousPublicRoadmap, previousQueries };
+            return asArray(old).map((r) => (r.id === id ? toggle(r) : r));
+          },
+        );
+
+        return { previousView };
       },
 
       onError: (error, { id }, context) => {
-        if (context?.previousPublicRoadmap) {
+        toast.error(handleActionError(error));
+
+        if (context?.previousView) {
           queryClient.setQueryData(
-            [ROADMAPS_KEY, id],
-            context.previousPublicRoadmap,
+            [ROADMAP_VIEW_KEY, id],
+            context.previousView,
           );
         }
-
-        if (context?.previousQueries) {
-          context.previousQueries.forEach(([queryKey, previousData]) => {
-            queryClient.setQueryData(queryKey, previousData);
-          });
-        }
-
-        toast.error(handleActionError(error));
       },
 
-      onSuccess: ({ isLiked }, { id }) => {
-        queryClient.setQueryData<PublicRoadmap>([ROADMAPS_KEY, id], (old) => {
-          if (!old) return old;
-
-          if (old.isLiked === isLiked) return old;
-
-          return {
-            ...old,
-            isLiked,
-            likesCount: (old.likesCount ?? 0) + (isLiked ? 1 : -1),
-          };
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: [MY_ROADMAPS_KEY],
         });
-
-        queryClient
-          .getQueriesData<PublicRoadmap[]>({ queryKey: [ROADMAPS_KEY] })
-          .forEach(([queryKey, oldRoadmaps]) => {
-            if (queryKey.length === 2 && queryKey[1] === id) return;
-            if (!oldRoadmaps) return;
-
-            queryClient.setQueryData<PublicRoadmap[]>(
-              queryKey,
-              oldRoadmaps.map((m) =>
-                m.id === id
-                  ? {
-                      ...m,
-                      isLiked,
-                      likesCount: (m.likesCount ?? 0) + (isLiked ? 1 : -1),
-                    }
-                  : m,
-              ),
-            );
-          });
-
-        queryClient.invalidateQueries({ queryKey: [MY_ROADMAPS_KEY] });
       },
     }),
   );

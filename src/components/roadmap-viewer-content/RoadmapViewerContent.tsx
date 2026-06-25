@@ -5,7 +5,7 @@ import { ReactFlowProvider } from '@xyflow/react';
 
 import { RoadmapViewer } from '@/components/roadmap-viewer';
 import { RoadmapViewerHeader } from '@/components/roadmap-viewer-content/RoadmapViewerHeader';
-import { ROADMAPS_KEY } from '@/constants/queries';
+import { ROADMAP_VIEW_KEY } from '@/constants/queries';
 import { getQueryClient } from '@/lib/tanstack-query/getQueryClient';
 import { getRoadmapForViewServer } from '@/services/roadmaps';
 
@@ -13,7 +13,7 @@ export async function RoadmapViewerContent({ id }: { id: string }) {
   const queryClient = getQueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: [ROADMAPS_KEY, id],
+    queryKey: [ROADMAP_VIEW_KEY, id],
     queryFn: () => getRoadmapForViewServer({ id }),
   });
 

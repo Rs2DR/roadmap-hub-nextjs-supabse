@@ -5,7 +5,12 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
 import { toggleBookmarkAction } from '@/actions/roadmap/toggleBookmark';
-import { ROADMAPS_KEY, BOOKMARKED_ROADMAPS_KEY } from '@/constants/queries';
+import {
+  ROADMAPS_KEY,
+  BOOKMARKED_ROADMAPS_KEY,
+  ROADMAP_VIEW_KEY,
+} from '@/constants/queries';
+import { asArray } from '@/utils/asArray';
 import { handleActionError } from '@/utils/handleActionError';
 
 import type { PublicRoadmap } from '@/shcemas/PublicRoadmapSchema';
@@ -20,121 +25,54 @@ export const useToggleBookmark = () => {
         await queryClient.cancelQueries({
           queryKey: [BOOKMARKED_ROADMAPS_KEY],
         });
+        await queryClient.cancelQueries({ queryKey: [ROADMAP_VIEW_KEY, id] });
 
-        const detailedKey = [ROADMAPS_KEY, id];
-        const previousPublicRoadmap =
-          queryClient.getQueryData<PublicRoadmap>(detailedKey);
-
-        if (previousPublicRoadmap) {
-          queryClient.setQueryData<PublicRoadmap>(detailedKey, {
-            ...previousPublicRoadmap,
-            isBookmarked: !previousPublicRoadmap.isBookmarked,
-          });
-        }
-
-        const previousQueries = queryClient.getQueriesData<PublicRoadmap[]>({
-          queryKey: [ROADMAPS_KEY],
+        const toggle = (r: PublicRoadmap): PublicRoadmap => ({
+          ...r,
+          isBookmarked: !r.isBookmarked,
         });
 
-        previousQueries.forEach(([queryKey, oldRoadmaps]) => {
-          if (queryKey.length === 2 && queryKey[1] === id) return;
-          if (!oldRoadmaps) return;
+        queryClient.setQueryData<PublicRoadmap>(
+          [ROADMAP_VIEW_KEY, id],
+          (old) => (old ? toggle(old) : old),
+        );
 
-          queryClient.setQueryData<PublicRoadmap[]>(
-            queryKey,
-            oldRoadmaps.map((roadmap) =>
-              roadmap.id === id
-                ? { ...roadmap, isBookmarked: !roadmap.isBookmarked }
-                : roadmap,
-            ),
-          );
-        });
+        queryClient.setQueriesData<PublicRoadmap[]>(
+          { queryKey: [ROADMAPS_KEY] },
+          (old) => asArray(old).map((r) => (r.id === id ? toggle(r) : r)),
+        );
 
-        const previousBookmarkedQueries = queryClient.getQueriesData<
-          PublicRoadmap[]
-        >({
-          queryKey: [BOOKMARKED_ROADMAPS_KEY],
-        });
+        queryClient.setQueriesData<PublicRoadmap[]>(
+          { queryKey: [BOOKMARKED_ROADMAPS_KEY] },
+          (old) => {
+            const arr = asArray(old);
 
-        previousBookmarkedQueries.forEach(([queryKey, oldBookmarked]) => {
-          if (!oldBookmarked) return;
+            const exists = arr.some((r) => r.id === id);
 
-          const exists = oldBookmarked.find((i) => i.id === id);
-
-          if (exists) {
-            queryClient.setQueryData<PublicRoadmap[]>(
-              queryKey,
-              oldBookmarked.filter((i) => i.id !== id),
-            );
-          } else {
-            const roadmap =
-              previousQueries
-                .flatMap(([, d]) => d ?? [])
-                .find((i) => i.id === id) || previousPublicRoadmap;
-
-            if (roadmap) {
-              queryClient.setQueryData<PublicRoadmap[]>(queryKey, [
-                ...oldBookmarked,
-                { ...roadmap, isBookmarked: true },
-              ]);
+            if (exists) {
+              return arr.filter((r) => r.id !== id);
             }
-          }
-        });
-        return {
-          previousPublicRoadmap,
-          previousQueries,
-          previousBookmarkedQueries,
-        };
+
+            const fromRoadmap = queryClient
+              .getQueriesData<PublicRoadmap[]>({
+                queryKey: [ROADMAPS_KEY],
+              })
+              .flatMap(([, d]) => asArray(d))
+              .find((r) => r.id === id);
+
+            if (!fromRoadmap) return arr;
+
+            return [...arr, { ...fromRoadmap, isBookmarked: true }];
+          },
+        );
       },
 
-      onError: (error, { id }, context) => {
-        if (context?.previousPublicRoadmap) {
-          queryClient.setQueryData(
-            [ROADMAPS_KEY, id],
-            context.previousPublicRoadmap,
-          );
-        }
-
-        if (context?.previousQueries) {
-          context.previousQueries.forEach(([queryKey, previousData]) => {
-            queryClient.setQueryData(queryKey, previousData);
-          });
-        }
-
-        if (context?.previousBookmarkedQueries) {
-          context.previousBookmarkedQueries.forEach(
-            ([queryKey, previousData]) => {
-              queryClient.setQueryData(queryKey, previousData);
-            },
-          );
-        }
-
+      onError: (error) => {
         toast.error(handleActionError(error));
-      },
 
-      onSuccess: ({ isBookmarked }, { id }) => {
-        queryClient.setQueryData<PublicRoadmap>([ROADMAPS_KEY, id], (old) => {
-          if (!old || old.isBookmarked === isBookmarked) return old;
-          return { ...old, isBookmarked };
-        });
-
-        queryClient
-          .getQueriesData<PublicRoadmap[]>({ queryKey: [ROADMAPS_KEY] })
-          .forEach(([queryKey, oldRoadmaps]) => {
-            if (queryKey.length === 2 && queryKey[1] === id) return;
-            if (!oldRoadmaps) return;
-
-            queryClient.setQueryData<PublicRoadmap[]>(
-              queryKey,
-              oldRoadmaps.map((m) =>
-                m.id === id ? { ...m, isBookmarked } : m,
-              ),
-            );
-          });
-
-        queryClient.invalidateQueries({
-          queryKey: [BOOKMARKED_ROADMAPS_KEY],
-        });
+        queryClient.invalidateQueries({ queryKey: [ROADMAP_VIEW_KEY] });
+        queryClient.invalidateQueries({ queryKey: [ROADMAPS_KEY] });
+        queryClient.invalidateQueries({ queryKey: [BOOKMARKED_ROADMAPS_KEY] });
       },
     }),
   );

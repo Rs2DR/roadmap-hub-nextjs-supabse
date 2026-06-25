@@ -9,6 +9,8 @@ const makeQueryClient = () =>
     defaultOptions: {
       queries: {
         staleTime: 60 * 1000,
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
       },
       dehydrate: {
         shouldDehydrateQuery: (query) =>
@@ -29,4 +31,3 @@ export const getQueryClient = () => {
     return browserQueryClient;
   }
 };
-

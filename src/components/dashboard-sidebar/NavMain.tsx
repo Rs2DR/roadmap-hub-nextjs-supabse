@@ -48,22 +48,11 @@ export const navItems: NavItem[] = [
         icon: Folder,
       },
       {
-        title: 'Активные',
-        url: DASHBOARD_ROUTES.IN_PROCESS,
-        icon: Award,
-      },
-      {
         title: 'Избранное',
         url: DASHBOARD_ROUTES.BOOKMARKS,
         icon: Bookmark,
       },
     ],
-  },
-  {
-    type: 'link',
-    title: 'Статистика',
-    url: DASHBOARD_ROUTES.MY_STATISTICS,
-    icon: ChartAreaIcon,
   },
 ];
 

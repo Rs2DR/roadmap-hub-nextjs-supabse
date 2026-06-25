@@ -1,6 +1,6 @@
 export const APP_ROUTES = {
-  ROOT: `${process.env.NEXT_PUBLIC_SITE_URL}`,
-  DASHBOARD: `${process.env.NEXT_PUBLIC_SITE_URL}/dashboard`,
+  ROOT: `/`,
+  DASHBOARD: `/dashboard`,
 } as const;
 
 export const AUTH_ROUTES = {
