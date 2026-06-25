@@ -12,7 +12,18 @@ export const getMyRoadmapsInfoCore = async (
 
   const { data, error } = await supabase
     .from('roadmaps')
-    .select('*, roadmap_likes(count), roadmap_comments(count)')
+    .select(
+      `
+      id,
+      title,
+      description,
+      is_public,
+      created_at,
+      updated_at,
+      likes_count,           
+      roadmap_comments(count) 
+    `,
+    )
     .eq('user_id', userId)
     .order('created_at', { ascending: false });
 

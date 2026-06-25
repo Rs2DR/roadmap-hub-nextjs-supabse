@@ -17,22 +17,25 @@ export function ToggleBookmarkButton({
   id,
   isBookmarked,
   className,
+  variant = 'outline',
+  size = 'icon',
   ...props
 }: ToggleBookmarkButtonProps) {
-  const { toggle } = useToggleBookmark();
+  const { mutate } = useToggleBookmark();
 
-  const handleToggle = () => toggle(id);
+  const handleToggle = () => mutate({ id });
 
   return (
     <Button
       className={cn(className)}
-      variant="outline"
-      size="icon"
+      variant={variant}
+      size={size}
       onClick={handleToggle}
       {...props}
     >
       <Bookmark
-        className={cn('stroke-purple-500', isBookmarked && 'fill-purple-500')}
+        className="text-purple-500 transition-all duration-200"
+        fill={isBookmarked ? 'currentColor' : 'none'}
       />
     </Button>
   );

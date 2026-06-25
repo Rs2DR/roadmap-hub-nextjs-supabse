@@ -17,6 +17,8 @@ export const saveRoadmapGraphCore = async (
     p_viewport: viewport,
   });
 
+  console.log(error);
+
   if (error) {
     throw new Error('Не удалось сохранить roadmap');
   }

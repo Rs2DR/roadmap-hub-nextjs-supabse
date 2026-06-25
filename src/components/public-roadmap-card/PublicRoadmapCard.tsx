@@ -14,6 +14,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/Card';
+import { DASHBOARD_ROUTES } from '@/constants/routes';
 
 import type { PublicRoadmap } from '@/shcemas/PublicRoadmapSchema';
 
@@ -22,8 +23,15 @@ interface PublicRoadmapCardProps {
 }
 
 export function PublicRoadmapCard({ roadmap }: PublicRoadmapCardProps) {
-  const { id, title, description, likesCount, commentsCount, isBookmarked } =
-    roadmap;
+  const {
+    id,
+    title,
+    description,
+    likesCount,
+    commentsCount,
+    isLiked,
+    isBookmarked,
+  } = roadmap;
 
   return (
     <Card className="flex w-full">
@@ -50,13 +58,17 @@ export function PublicRoadmapCard({ roadmap }: PublicRoadmapCardProps) {
             <span>{commentsCount}</span>
           </div>
           <div className="inline-flex items-center gap-1.5">
-            <Heart className="text-red-500" size={18} />
+            <Heart
+              className="text-red-500"
+              fill={isLiked ? 'currentColor' : 'none'}
+              size={18}
+            />
             <span>{likesCount}</span>
           </div>
         </div>
         <div className="inline-flex items-center gap-4">
           <Button asChild>
-            <Link href={`dashboard/view/${id}`}>Просмотреть</Link>
+            <Link href={`${DASHBOARD_ROUTES.VIEW(id)}`}>Просмотреть</Link>
           </Button>
         </div>
       </CardFooter>

@@ -7,7 +7,7 @@ export const MyRoadmapSchema = RoadmapBaseSchema.extend({
 }).transform(
   ({
     roadmap_comments,
-    roadmap_likes,
+    likes_count,
     is_public,
     created_at,
     updated_at,
@@ -17,7 +17,7 @@ export const MyRoadmapSchema = RoadmapBaseSchema.extend({
     isPublic: is_public,
     createdAt: created_at,
     updatedAt: updated_at,
-    likesCount: roadmap_likes[0].count,
+    likesCount: likes_count,
     commentsCount: roadmap_comments[0].count,
   }),
 );

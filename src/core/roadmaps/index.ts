@@ -9,3 +9,4 @@ export * from './toggleRoadmapBookmarkCore';
 export * from './getPublicRoadmapsCore';
 export * from './getBookmarkedRoadmapsCore';
 export * from './publishRoadmapCore';
+export * from './likeRoadmapCore';

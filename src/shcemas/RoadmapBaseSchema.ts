@@ -6,7 +6,7 @@ export const RoadmapBaseSchema = z.object({
   description: z.string(),
   created_at: z.string(),
   updated_at: z.string(),
-  roadmap_likes: z.array(z.object({ count: z.number() })),
+  likes_count: z.number(),
   roadmap_comments: z.array(z.object({ count: z.number() })),
 });
 

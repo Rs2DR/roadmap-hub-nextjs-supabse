@@ -1,4 +1,4 @@
-import z from 'zod';
+import { z } from 'zod';
 
 import { PublicRoadmapSchema } from '@/shcemas/PublicRoadmapSchema';
 
@@ -12,16 +12,23 @@ export const getPublicRoadmapsCore = async (
 ) => {
   const { search, orderBy = 'newest', userId } = params;
 
-  const selectQuery = `
-    *,
-    roadmap_likes(count),
-    roadmap_comments(count),
-    is_bookmarked:roadmap_bookmarks!left(id)${userId ? `?user_id=eq.${userId}` : ''},
-  `;
-
   let query = supabase
     .from('roadmaps')
-    .select(selectQuery)
+    .select(
+      `
+      id,
+      title,
+      description,
+      created_at,
+      updated_at,
+      likes_count,               
+      roadmap_comments(count),    
+      is_liked:roadmap_likes(id), 
+      is_bookmarked:roadmap_bookmarks(id)
+    `,
+    )
+    .eq('roadmap_likes.user_id', userId)
+    .eq('roadmap_bookmarks.user_id', userId)
     .eq('is_public', true);
 
   if (search && search.trim() !== '') {

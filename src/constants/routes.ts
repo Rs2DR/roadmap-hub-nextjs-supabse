@@ -1,6 +1,6 @@
 export const APP_ROUTES = {
-  ROOT: '/',
-  DASHBOARD: '/dashboard',
+  ROOT: `${process.env.NEXT_PUBLIC_SITE_URL}`,
+  DASHBOARD: `${process.env.NEXT_PUBLIC_SITE_URL}/dashboard`,
 } as const;
 
 export const AUTH_ROUTES = {
@@ -17,6 +17,7 @@ export const DASHBOARD_ROUTES = {
   BOOKMARKS: `${APP_ROUTES.DASHBOARD}/bookmarks`,
   IN_PROCESS: `${APP_ROUTES.DASHBOARD}/in-process`,
   SETTINGS: `${APP_ROUTES.DASHBOARD}/settings`,
+  VIEW: (id: string) => `${APP_ROUTES.DASHBOARD}/view/${id}`,
 } as const;
 
 export const AUTH_PROTECTED_ROUTES = [

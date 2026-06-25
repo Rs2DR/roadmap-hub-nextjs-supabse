@@ -14,13 +14,19 @@ export const getBookmarkedRoadmapsCore = async (
     .from('roadmaps')
     .select(
       `
-      *,
-      roadmap_likes(count),
-      roadmap_comments(count),
-      is_bookmarked:roadmap_bookmarks!inner(id) 
+      id,
+      title,
+      description,
+      created_at,
+      updated_at,
+      likes_count,                      
+      roadmap_comments(count),            
+      is_liked:roadmap_likes(id),         
+      is_bookmarked:roadmap_bookmarks!inner(id)
     `,
     )
-    .eq('roadmap_bookmarks.user_id', userId);
+    .eq('roadmap_bookmarks.user_id', userId)
+    .eq('roadmap_likes.user_id', userId);
 
   if (error) {
     throw new Error('Не удалось получить Roadmaps в закладках');

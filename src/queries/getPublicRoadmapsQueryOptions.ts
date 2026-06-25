@@ -10,12 +10,10 @@ type GetPublicRoadmapsQueryOptionsParams = Omit<
   'userId'
 >;
 
-export const getPublicRoadmapsQueryOptions = (
-  params?: GetPublicRoadmapsQueryOptionsParams,
-) => {
-  const search = params?.search;
-  const orderBy = params?.orderBy ?? 'newest';
-
+export const getPublicRoadmapsQueryOptions = ({
+  search,
+  orderBy,
+}: GetPublicRoadmapsQueryOptionsParams) => {
   return queryOptions({
     queryKey: [ROADMAPS_KEY, { search, orderBy }],
     queryFn: () => getPublicRoadmapsApiClient({ search, orderBy }),

@@ -10,5 +10,7 @@ export const saveRoadmapGraph = authActionClient
     const { supabase } = ctx;
     const { id, nodes, edges, viewport } = parsedInput;
 
+    console.log(parsedInput);
+
     return saveRoadmapGraphCore(supabase, { id, nodes, edges, viewport });
   });

@@ -10,7 +10,9 @@ export const publishRoadmapCore = async (
     p_roadmap_id: id,
   });
 
-  if (error) throw new Error('Не удалось опубликовать карту');
+  if (error) {
+    throw new Error('Не удалось опубликовать карту');
+  }
 
   return { success: true };
 };

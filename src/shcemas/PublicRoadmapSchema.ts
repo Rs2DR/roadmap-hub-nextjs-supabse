@@ -3,22 +3,35 @@ import z from 'zod';
 import { RoadmapBaseSchema } from './RoadmapBaseSchema';
 
 export const PublicRoadmapSchema = RoadmapBaseSchema.extend({
-  is_bookmarked: z.array(z.object({ id: z.string() })).catch([]),
+  is_liked: z
+    .array(z.object({ id: z.string() }))
+    .max(1)
+    .optional()
+    .default([])
+    .transform((arr) => arr.length > 0),
+  is_bookmarked: z
+    .array(z.object({ id: z.string() }))
+    .max(1)
+    .optional()
+    .default([])
+    .transform((arr) => arr.length > 0),
 }).transform(
   ({
     roadmap_comments,
-    roadmap_likes,
+    likes_count,
     is_bookmarked,
     created_at,
     updated_at,
+    is_liked,
     ...rest
   }) => ({
     ...rest,
     createdAt: created_at,
     updatedAt: updated_at,
-    likesCount: roadmap_likes[0].count,
+    isLiked: is_liked,
+    likesCount: likes_count,
     commentsCount: roadmap_comments[0].count,
-    isBookmarked: is_bookmarked.length > 0,
+    isBookmarked: is_bookmarked,
   }),
 );
 
