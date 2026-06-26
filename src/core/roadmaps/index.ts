@@ -10,3 +10,6 @@ export * from './getPublicRoadmapsCore';
 export * from './getBookmarkedRoadmapsCore';
 export * from './publishRoadmapCore';
 export * from './likeRoadmapCore';
+export * from './deleteCommentOnRoadmapCore';
+export * from './addCommentOnRoadmapCore';
+export * from './getRoadmapCommentsCore';

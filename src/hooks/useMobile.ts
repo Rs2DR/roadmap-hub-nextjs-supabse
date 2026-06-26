@@ -1,6 +1,6 @@
 import { useSyncExternalStore } from 'react';
 
-const MOBILE_BREAKPOINT = 768;
+const MOBILE_BREAKPOINT = 640;
 
 const subscribe = (callback: () => void) => {
   const mql = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT - 1}px)`);

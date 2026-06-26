@@ -3,3 +3,4 @@ export * from './getRoadmapForViewApiClient';
 export * from './getMyRoadmapsInfoApiClient';
 export * from './getPublicRoadmapsApiClient';
 export * from './getBookmarkedRoadmapsApiClient';
+export * from './getRoadmapCommentsApiClient';

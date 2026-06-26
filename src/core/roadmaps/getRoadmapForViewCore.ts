@@ -26,7 +26,11 @@ export const getRoadmapForViewCore = async (
     `,
     )
     .eq('id', id)
+    .eq('roadmap_likes.user_id', userId)
+    .eq('roadmap_bookmarks.user_id', userId)
     .single();
+
+  console.log(error);
 
   if (error) {
     throw new Error('Не удалось загрузить Roadmap');

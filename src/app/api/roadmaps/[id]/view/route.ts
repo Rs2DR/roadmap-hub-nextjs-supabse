@@ -12,9 +12,9 @@ export async function GET(
   try {
     const { id } = await ctx.params;
 
-    const { supabase } = await requireAuth();
+    const { supabase, userId } = await requireAuth();
 
-    const roadmap = await getRoadmapForViewCore(supabase, { id });
+    const roadmap = await getRoadmapForViewCore(supabase, { id, userId });
 
     if (!roadmap) {
       return NextResponse.json({ error: 'Roadmap не найден' }, { status: 404 });

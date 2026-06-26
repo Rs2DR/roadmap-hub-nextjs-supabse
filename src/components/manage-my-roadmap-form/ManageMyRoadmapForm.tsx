@@ -103,6 +103,7 @@ export function ManageMyRoadmapForm({
                 id="title"
                 type="text"
                 placeholder="Название Roadmap"
+                autoComplete="off"
                 aria-invalid={fieldState.invalid}
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
@@ -120,6 +121,7 @@ export function ManageMyRoadmapForm({
                 id="description"
                 placeholder="Описание для Roadmap"
                 className="max-h-40"
+                autoComplete="off"
                 aria-invalid={fieldState.invalid}
               />
               {fieldState.invalid && <FieldError errors={[fieldState.error]} />}

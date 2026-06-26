@@ -1,5 +1,6 @@
 'use client';
 
+import { EdgeEditorForm } from '@/components/edge-editor-form';
 import { NodeEditorForm } from '@/components/node-editor-form';
 import {
   Sheet,
@@ -8,11 +9,12 @@ import {
   SheetHeader,
   SheetTitle,
 } from '@/components/ui/Sheet';
+import { useIsMobile } from '@/hooks/useMobile';
+import { cn } from '@/lib/utils';
 import { useFlowStore } from '@/store/useFlowStore';
 
-import { EdgeEditorForm } from '../edge-editor-form/EdgeEditorForm';
-
 export function FlowSheetEditor() {
+  const isMobile = useIsMobile();
   const activeElement = useFlowStore((s) => s.activeElement);
   const closeSidebar = useFlowStore((s) => s.closeSidebar);
 
@@ -20,7 +22,7 @@ export function FlowSheetEditor() {
 
   return (
     <Sheet open={isOpen} onOpenChange={(open) => !open && closeSidebar()}>
-      <SheetContent>
+      <SheetContent className={cn(isMobile && '')}>
         <SheetHeader>
           <SheetTitle>Редактирование</SheetTitle>
           <SheetDescription>
@@ -30,7 +32,7 @@ export function FlowSheetEditor() {
           </SheetDescription>
         </SheetHeader>
 
-        <div className="mt-4 h-full">
+        <div className="mt-4 h-full no-scrollbar overflow-y-auto">
           {activeElement?.type === 'node' && (
             <NodeEditorForm
               nodeId={activeElement.id}

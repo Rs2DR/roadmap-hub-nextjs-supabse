@@ -29,29 +29,29 @@ const createOptimisticRoadmap = (
 
 export const useCreateRoadmap = () => {
   const queryClient = useQueryClient();
+  const queryKey = [MY_ROADMAPS_KEY];
 
   return useMutation(
     mutationOptions(createRoadmap, {
       onMutate: async (newRoadmap) => {
-        await queryClient.cancelQueries({ queryKey: [MY_ROADMAPS_KEY] });
+        await queryClient.cancelQueries({ queryKey });
 
-        const previousRoadmaps = queryClient.getQueryData<MyRoadmap[]>([
-          MY_ROADMAPS_KEY,
-        ]);
+        const previousRoadmaps =
+          queryClient.getQueryData<MyRoadmap[]>(queryKey);
 
         const optimisticRoadmap = createOptimisticRoadmap(newRoadmap);
 
-        queryClient.setQueryData<MyRoadmap[]>(
-          [MY_ROADMAPS_KEY],
-          (oldRoadmap) => [optimisticRoadmap, ...(oldRoadmap ?? [])],
-        );
+        queryClient.setQueryData<MyRoadmap[]>(queryKey, (oldRoadmap) => [
+          optimisticRoadmap,
+          ...(oldRoadmap ?? []),
+        ]);
 
         return { previousRoadmaps };
       },
 
       onSuccess: () => {
         queryClient.invalidateQueries({
-          queryKey: [MY_ROADMAPS_KEY],
+          queryKey,
         });
 
         toast.success('Roadmap успешно создана');
@@ -60,7 +60,7 @@ export const useCreateRoadmap = () => {
       onError: (error, _vars, context) => {
         if (context?.previousRoadmaps) {
           queryClient.setQueryData<MyRoadmap[]>(
-            [MY_ROADMAPS_KEY],
+            queryKey,
             context.previousRoadmaps,
           );
         }

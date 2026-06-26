@@ -25,7 +25,7 @@ export function MyRoadmapCard({ roadmap }: MyRoadmapCardProps) {
         <div className="inline-flex justify-between w-full">
           <div className="inline-flex items-center gap-4">
             <Avatar>
-              <AvatarFallback>CN</AvatarFallback>
+              <AvatarFallback>My</AvatarFallback>
             </Avatar>
             <CardTitle>{title}</CardTitle>
           </div>
