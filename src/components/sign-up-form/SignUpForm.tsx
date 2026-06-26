@@ -21,8 +21,6 @@ import { useSignUpNewUser } from '@/hooks/useSignUpNewUser';
 import { cn } from '@/lib/utils';
 import { SignUpSchema } from '@/shcemas/SignUpSchema';
 
-import { SocialProviders } from '../social-providers';
-
 import type { SignUpInput } from '@/shcemas/SignUpSchema';
 
 export function SignUpForm({ className, ...props }: ComponentProps<'form'>) {
@@ -145,7 +143,6 @@ export function SignUpForm({ className, ...props }: ComponentProps<'form'>) {
             Зарегестрироваться
           </Button>
         </Field>
-        <SocialProviders />
         <Field>
           <FieldDescription className="px-6 text-center">
             У вас уже есть аккаунт?{' '}

@@ -21,8 +21,6 @@ import { useSignInWithEmail } from '@/hooks/useSignInWithEmail';
 import { cn } from '@/lib/utils';
 import { SignInSchema } from '@/shcemas/SignInSchema';
 
-import { SocialProviders } from '../social-providers';
-
 import type { SignInInput } from '@/shcemas/SignInSchema';
 
 export function SignInForm({ className, ...props }: ComponentProps<'form'>) {
@@ -109,7 +107,6 @@ export function SignInForm({ className, ...props }: ComponentProps<'form'>) {
             Войти
           </Button>
         </Field>
-        <SocialProviders />
         <Field>
           <FieldDescription className="px-6 text-center">
             У вас еще нет аккаунта?{' '}
