@@ -1,4 +1,4 @@
-import { formatRoadmap } from '@/utils/formatRoadmap';
+import { RoadmapGraphSchema } from '@/shcemas/RoadmapGrahpSchema';
 
 import type { SupabaseClient } from '@supabase/supabase-js';
 
@@ -12,9 +12,12 @@ export const getRoadmapForEditCore = async (
     .from('roadmaps')
     .select(
       `
-      *,
-      nodes: roadmap_nodes(*),
-      edges: roadmap_edges(*)
+      id,
+      viewport,
+      created_at,
+      updated_at,
+      nodes: roadmap_nodes(id, type, position_x, position_y, data),
+      edges: roadmap_edges(id, source, target, type, data)
     `,
     )
     .eq('id', id)
@@ -24,7 +27,16 @@ export const getRoadmapForEditCore = async (
     throw new Error('Не удалось загрузить Roadmap');
   }
 
-  if (!data) return null;
+  const formattedGraph = {
+    ...data,
+    nodes: data.nodes.map(({ position_x, position_y, ...rest }) => ({
+      ...rest,
+      position: {
+        x: position_x,
+        y: position_y,
+      },
+    })),
+  };
 
-  return formatRoadmap(data);
+  return RoadmapGraphSchema.parse(formattedGraph);
 };

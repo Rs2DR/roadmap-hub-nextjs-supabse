@@ -6,11 +6,9 @@ import { Button } from '../ui/Button';
 import { Field } from '../ui/Field';
 
 export function GitHubProvider() {
-  const handleSignIn = () => {};
-
   return (
     <Field>
-      <Button variant="outline" type="button" onClick={handleSignIn}>
+      <Button variant="outline" type="button">
         <FaGithub /> Продолжить с GitHub
       </Button>
     </Field>

@@ -1,4 +1,4 @@
-import { RoadmapSchema } from '@/shcemas/RoadmapSchema';
+import { MyRoadmapSchema } from '@/shcemas/MyRoadmapSchema';
 
 import type { SupabaseClient } from '@supabase/supabase-js';
 
@@ -25,5 +25,5 @@ export const updateRoadmapInfoCore = async (
     throw new Error('Не удалось обновить roadmap');
   }
 
-  return RoadmapSchema.parse(data);
+  return MyRoadmapSchema.parse(data);
 };

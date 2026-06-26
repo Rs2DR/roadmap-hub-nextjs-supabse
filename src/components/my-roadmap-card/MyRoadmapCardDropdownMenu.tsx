@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-import { Eye, EyeOff, MoreHorizontal, Pencil, Trash } from 'lucide-react';
+import { MoreHorizontal, Pencil, Trash } from 'lucide-react';
 
 import { useDeleteRoadmap } from '@/hooks/useDeleteRoadmap';
 
@@ -17,12 +17,11 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from '../ui/DropdownMenu';
-import { Separator } from '../ui/Separator';
 
-import type { Roadmap } from '@/shcemas/RoadmapSchema';
+import type { MyRoadmap } from '@/shcemas/MyRoadmapSchema';
 
 interface MyRoadmapCardDropdownMenuProps {
-  roadmap: Roadmap;
+  roadmap: MyRoadmap;
 }
 
 export function MyRoadmapCardDropdownMenu({
@@ -30,32 +29,17 @@ export function MyRoadmapCardDropdownMenu({
 }: MyRoadmapCardDropdownMenuProps) {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-  const [isVisibilityOpen, setIsVisibilityOpen] = useState(false);
 
   const { mutate: deleteRoadmap } = useDeleteRoadmap();
 
-  const { id, title, description, isPublic } = roadmap;
+  const { id, title, description } = roadmap;
 
   const handleEditOpen = () => setIsEditOpen(true);
   const handleDeleteOpen = () => setIsDeleteOpen(true);
-  const handleVisibilityOpen = () => setIsVisibilityOpen(true);
 
   const handleDeleteRoadmap = () => {
     deleteRoadmap({ id });
   };
-
-  const handleToggleVisibility = () => {};
-
-  const visibilityTitle = isPublic
-    ? `Сделать ${title} приватным?`
-    : `Сделать ${title} публичным?`;
-
-  const visibilityDescription = isPublic
-    ? 'После этого roadmap будет доступен только вам.'
-    : 'После этого roadmap будет виден всем пользователям.';
-
-  const visibilityIcon = isPublic ? <EyeOff /> : <Eye />;
-  const visibilityLabel = isPublic ? 'Приватный' : 'Публичный';
 
   return (
     <>
@@ -84,16 +68,6 @@ export function MyRoadmapCardDropdownMenu({
               <Trash /> Удалить
             </DropdownMenuItem>
           </DropdownMenuGroup>
-
-          <Separator />
-
-          <DropdownMenuGroup>
-            <DropdownMenuLabel>Основное</DropdownMenuLabel>
-            <DropdownMenuItem onClick={handleVisibilityOpen}>
-              {visibilityIcon}
-              {visibilityLabel}
-            </DropdownMenuItem>
-          </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>
 
@@ -115,15 +89,6 @@ export function MyRoadmapCardDropdownMenu({
         description="Это действие нельзя будет отменить!"
         onConfirm={handleDeleteRoadmap}
         confirmText="Удалить"
-      />
-
-      {/* VISIBILITY */}
-      <CustomAlertDialog
-        open={isVisibilityOpen}
-        onOpenChange={setIsVisibilityOpen}
-        title={visibilityTitle}
-        description={visibilityDescription}
-        onConfirm={handleToggleVisibility}
       />
     </>
   );

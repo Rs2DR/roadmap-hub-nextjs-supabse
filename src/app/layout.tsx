@@ -9,7 +9,7 @@ import type { Metadata } from 'next';
 import '@/styles/globals.css';
 
 const roboto = Roboto({
-  subsets: ['latin'],
+  subsets: ['latin', 'greek'],
 });
 
 export const metadata: Metadata = {
@@ -23,10 +23,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${roboto.className} h-full antialiased`}>
+    <html lang="ru" className={`${roboto.className} h-full antialiased`}>
       <body className="min-h-full flex flex-col">
         <Providers>{children}</Providers>
-        <Toaster />
+        <Toaster position="top-center" />
       </body>
     </html>
   );

@@ -1,16 +1,16 @@
-import { RoadmapGraphBaseSchema } from '@/shcemas/RoadmapGraphBaseSchema';
+import { z } from 'zod';
 
-import type { z } from 'zod';
+import { RoadmapEdgeSchema } from '@/shcemas/RoadmapEdgeSchema';
+import { RoadmapNodeSchema } from '@/shcemas/RoadmapNodeSchema';
+import { ViewportSchema } from '@/shcemas/ViewportSchema';
 
-export const RoadmapGraphSchema = RoadmapGraphBaseSchema.transform((data) => ({
-  id: data.id,
-  viewport: data.viewport,
-  isPublic: data.is_public,
-  userId: data.user_id,
-  createdAt: data.created_at,
-  updatedAt: data.updated_at,
-  nodes: data.nodes,
-  edges: data.edges,
-}));
+export const RoadmapGraphSchema = z.object({
+  id: z.uuid(),
+  viewport: ViewportSchema,
+  created_at: z.string(),
+  updated_at: z.string(),
+  nodes: z.array(RoadmapNodeSchema).default([]),
+  edges: z.array(RoadmapEdgeSchema).default([]),
+});
 
 export type RoadmapGraph = z.infer<typeof RoadmapGraphSchema>;

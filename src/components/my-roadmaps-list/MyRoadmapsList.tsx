@@ -3,20 +3,19 @@
 import { useMemo } from 'react';
 
 import { useSuspenseQuery } from '@tanstack/react-query';
+import { Search, Folder } from 'lucide-react';
 import { useQueryState } from 'nuqs';
 
+import { EmptyState } from '@/components/empty-state';
+import { MyRoadmapCard } from '@/components/my-roadmap-card';
 import { getMyRoadmapsInfoQueryOptions } from '@/queries/getMyRoadmapsInfoQueryOptions';
 import { filterRoadmaps } from '@/utils/filterRoadmaps';
-
-import { MyRoadmapCard } from '../my-roadmap-card';
-
-import { MyRoadmapsListEmptyState } from './MyRoadmapsListEmptyState';
-import { MyRoadmapsListNotFoundState } from './MyRoadmapsListNotFoundState';
 
 export function MyRoadmapsList() {
   const [filterValue] = useQueryState('filter', {
     defaultValue: '',
   });
+
   const { data } = useSuspenseQuery(getMyRoadmapsInfoQueryOptions());
 
   const filteredRoadmaps = useMemo(
@@ -24,14 +23,30 @@ export function MyRoadmapsList() {
     [data, filterValue],
   );
 
-  if (filteredRoadmaps.length === 0 && !filterValue)
-    return <MyRoadmapsListEmptyState />;
+  const isEmpty = filteredRoadmaps.length === 0;
 
-  if (filteredRoadmaps.length === 0 && filterValue)
-    return <MyRoadmapsListNotFoundState />;
+  if (isEmpty) {
+    if (filterValue) {
+      return (
+        <EmptyState
+          icon={Search}
+          title="Совпадений не найдено"
+          description="Попробуйте изменить запрос или убрать фильтр"
+        />
+      );
+    }
+
+    return (
+      <EmptyState
+        icon={Folder}
+        title="У вас пока нет Roadmap’ов"
+        description="Создайте свой первый Roadmap, чтобы начать"
+      />
+    );
+  }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+    <div className="cards-list">
       {filteredRoadmaps.map((roadmap) => (
         <MyRoadmapCard key={roadmap.id} roadmap={roadmap} />
       ))}

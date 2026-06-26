@@ -33,11 +33,11 @@ export default async function DashboardLayout({
               <SidebarTrigger className="-ml-1" />
               <Separator
                 orientation="vertical"
-                className="mr-2 data-[orientation=vertical]:h-4"
+                className="mr-2 data-[orientation=vertical]:h-8"
               />
             </div>
           </header>
-          <div className="w-full h-full">{children}</div>
+          {children}
         </SidebarInset>
       </SidebarProvider>
     </HydrationBoundary>

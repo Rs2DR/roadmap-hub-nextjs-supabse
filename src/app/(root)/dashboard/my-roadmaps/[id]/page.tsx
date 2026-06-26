@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 
-import { RoadmapContent } from '@/components/roadmap-content';
-import { Spinner } from '@/components/ui/Spinner';
+import { RoadmapEditorContent } from '@/components/roadmap-editor-content';
+import { SpinnerFallback } from '@/components/spinner-fallback';
 
 export default async function MyRoadmapPage({
   params,
@@ -9,8 +9,8 @@ export default async function MyRoadmapPage({
   const { id } = await params;
 
   return (
-    <Suspense fallback={<Spinner />}>
-      <RoadmapContent id={id} />
+    <Suspense fallback={<SpinnerFallback />}>
+      <RoadmapEditorContent id={id} />
     </Suspense>
   );
 }

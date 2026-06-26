@@ -109,7 +109,7 @@ export function useRoadmap({ initialEdges, initialNodes }: UseRoadmapParams) {
         id,
         type: ROADMAP_TYPES.node,
         position: screenToFlowPosition({ x: clientX, y: clientY }),
-        data: { ...DEFAULT_NODE_DATA, label: `Node ${id}` },
+        data: { ...DEFAULT_NODE_DATA },
         origin: [0.5, 0.0],
       };
 

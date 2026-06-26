@@ -1,6 +1,6 @@
 export const APP_ROUTES = {
-  ROOT: '/',
-  DASHBOARD: '/dashboard',
+  ROOT: `/`,
+  DASHBOARD: `/dashboard`,
 } as const;
 
 export const AUTH_ROUTES = {
@@ -14,9 +14,10 @@ export const AUTH_ROUTES = {
 export const DASHBOARD_ROUTES = {
   MY_ROADMAPS: `${APP_ROUTES.DASHBOARD}/my-roadmaps`,
   MY_STATISTICS: `${APP_ROUTES.DASHBOARD}/my-statistics`,
-  FAVORITES: `${APP_ROUTES.DASHBOARD}/favorites`,
+  BOOKMARKS: `${APP_ROUTES.DASHBOARD}/bookmarks`,
   IN_PROCESS: `${APP_ROUTES.DASHBOARD}/in-process`,
   SETTINGS: `${APP_ROUTES.DASHBOARD}/settings`,
+  VIEW: (id: string) => `${APP_ROUTES.DASHBOARD}/view/${id}`,
 } as const;
 
 export const AUTH_PROTECTED_ROUTES = [

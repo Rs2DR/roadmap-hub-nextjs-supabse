@@ -26,8 +26,11 @@ export default function AuthLayout({ children }: LayoutProps<'/'>) {
       <div className="relative hidden lg:block">
         <Image
           src="/images/bg-image.jpg"
-          alt="Image"
+          alt="Фоновое изображение страницы авторизации RoadmapHub"
           fill
+          priority
+          sizes="(min-width: 1024px) 50vw, 0vw"
+          quality={75}
           className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
         />
       </div>

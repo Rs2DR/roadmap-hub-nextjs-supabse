@@ -37,10 +37,10 @@ export function NavUser() {
       },
     });
 
-  if (!user) return null;
-
   const { user_metadata } = user;
   const { firstName, email, avatar } = user_metadata;
+
+  const initials = firstName.slice(0, 2).toUpperCase();
 
   return (
     <SidebarMenu>
@@ -53,7 +53,9 @@ export function NavUser() {
             >
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage src={avatar} alt={firstName} />
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                <AvatarFallback className="rounded-lg">
+                  {initials}
+                </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-medium">{firstName}</span>
@@ -80,13 +82,6 @@ export function NavUser() {
                 </div>
               </div>
             </DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <BadgeCheck />
-                Аккаунт
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={handleSignOut}>
               <LogOut />

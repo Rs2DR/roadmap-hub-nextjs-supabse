@@ -1,23 +1,11 @@
 import { NextResponse } from 'next/server';
 
 import { getMyRoadmapsInfoCore } from '@/core/roadmaps';
-import { createServerSupabase } from '@/lib/supabase/server';
+import { requireAuth } from '@/lib/supabase';
 
 export async function GET() {
   try {
-    const supabase = await createServerSupabase();
-
-    const { data } = await supabase.auth.getClaims();
-
-    if (!data)
-      return NextResponse.json(
-        { error: 'Пользователь не авторизован' },
-        { status: 401 },
-      );
-
-    const {
-      claims: { sub: userId },
-    } = data;
+    const { supabase, userId } = await requireAuth();
 
     const roadmaps = await getMyRoadmapsInfoCore(supabase, {
       userId,

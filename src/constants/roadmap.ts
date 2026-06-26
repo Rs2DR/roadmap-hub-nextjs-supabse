@@ -1,3 +1,5 @@
+import { EDGE_LINE_STYLES, EDGE_ROUTING_TYPES } from '@/constants/edge';
+
 import type { EdgeData } from '@/shcemas/EdgeDataSchema';
 import type { NodeData } from '@/shcemas/NodeDataSchema';
 
@@ -17,7 +19,7 @@ export const DEFAULT_NODE_DATA: NodeData = {
 
 export const DEFAULT_EDGE_DATA: EdgeData = {
   routingType: 'bezier',
-  color: '#999999',
+  color: '#3b82f6',
   lineStyle: 'solid',
   animated: false,
 };
