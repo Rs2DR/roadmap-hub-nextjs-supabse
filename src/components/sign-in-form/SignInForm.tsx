@@ -31,7 +31,7 @@ export function SignInForm({ className, ...props }: ComponentProps<'form'>) {
   const {
     handleSubmit,
     control,
-    formState: { isSubmitting, isValid },
+    formState: { isSubmitting },
   } = useForm<SignInInput>({
     resolver: zodResolver(SignInSchema),
     defaultValues: {
@@ -99,11 +99,7 @@ export function SignInForm({ className, ...props }: ComponentProps<'form'>) {
           )}
         />
         <Field>
-          <Button
-            type="submit"
-            disabled={!isValid}
-            loading={isPending || isSubmitting}
-          >
+          <Button type="submit" loading={isPending || isSubmitting}>
             Войти
           </Button>
         </Field>
