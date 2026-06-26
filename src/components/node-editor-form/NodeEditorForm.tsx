@@ -13,9 +13,9 @@ import {
 import { Button } from '@/components/ui/Button';
 import { FieldGroup } from '@/components/ui/Field';
 import { SheetFooter } from '@/components/ui/Sheet';
-import { NodeDataSchema } from '@/shcemas/NodeDataSchema';
+import { NodeDataSchema } from '@/schemas/NodeDataSchema';
 
-import type { NodeData } from '@/shcemas/NodeDataSchema';
+import type { NodeData } from '@/schemas/NodeDataSchema';
 
 interface NodeEditorFormProps {
   nodeId: string;

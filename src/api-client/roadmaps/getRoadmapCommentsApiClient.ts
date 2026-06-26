@@ -1,6 +1,6 @@
 import { http } from '@/lib/xior';
 
-import type { PublicComment } from '@/shcemas/PublicCommentSchema';
+import type { PublicComment } from '@/schemas/PublicCommentSchema';
 
 export const getRoadmapCommentsApiClient = async ({ id }: { id: string }) => {
   const res = await http.get<PublicComment[]>(`/roadmaps/${id}/comments`);

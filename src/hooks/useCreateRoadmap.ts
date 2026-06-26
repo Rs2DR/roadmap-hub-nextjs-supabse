@@ -8,8 +8,8 @@ import { createRoadmap } from '@/actions/roadmap/createRoadmap';
 import { MY_ROADMAPS_KEY } from '@/constants/queries';
 import { handleActionError } from '@/utils/handleActionError';
 
-import type { ManageMyRoadmapInput } from '@/shcemas/ManageMyRoadmapSchema';
-import type { MyRoadmap } from '@/shcemas/MyRoadmapSchema';
+import type { ManageMyRoadmapInput } from '@/schemas/manageMyRoadmapSchema';
+import type { MyRoadmap } from '@/schemas/MyRoadmapSchema';
 
 const createOptimisticRoadmap = (
   newRoadmap: ManageMyRoadmapInput,

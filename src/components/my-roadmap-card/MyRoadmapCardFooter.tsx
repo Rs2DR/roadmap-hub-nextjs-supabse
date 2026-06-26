@@ -10,7 +10,7 @@ import { DASHBOARD_ROUTES } from '@/constants/routes';
 import { Button } from '../ui/Button';
 import { CardFooter } from '../ui/Card';
 
-import type { MyRoadmap } from '@/shcemas/MyRoadmapSchema';
+import type { MyRoadmap } from '@/schemas/MyRoadmapSchema';
 
 interface MyRoadmapCardFooterProps extends ComponentProps<typeof CardFooter> {
   roadmap: MyRoadmap;

@@ -1,7 +1,7 @@
 import { EDGE_LINE_STYLES, EDGE_ROUTING_TYPES } from '@/constants/edge';
 
-import type { EdgeData } from '@/shcemas/EdgeDataSchema';
-import type { NodeData } from '@/shcemas/NodeDataSchema';
+import type { EdgeData } from '@/schemas/EdgeDataSchema';
+import type { NodeData } from '@/schemas/NodeDataSchema';
 
 export const ROADMAP_TYPES = {
   node: 'RoadmapNode',

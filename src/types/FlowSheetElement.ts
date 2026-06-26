@@ -1,5 +1,5 @@
-import type { EdgeData } from '@/shcemas/EdgeDataSchema';
-import type { NodeData } from '@/shcemas/NodeDataSchema';
+import type { EdgeData } from '@/schemas/EdgeDataSchema';
+import type { NodeData } from '@/schemas/NodeDataSchema';
 
 export type FlowSheetElement =
   | { type: 'node'; id: string; data: NodeData }

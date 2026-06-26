@@ -1,9 +1,7 @@
 'use client';
 
 import {
-  Award,
   Bookmark,
-  ChartAreaIcon,
   ChevronRight,
   Folder,
   House,

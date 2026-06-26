@@ -4,7 +4,7 @@ import { API_ROUTES } from '@/constants/api';
 import { signUpCore } from '@/core/auth';
 import { actionClient } from '@/lib/next-safe-actions';
 import { createServerSupabase } from '@/lib/supabase';
-import { SignUpSchema } from '@/shcemas/SignUpSchema';
+import { SignUpSchema } from '@/schemas/signUpSchema';
 
 export const signUpNewUser = actionClient
   .inputSchema(SignUpSchema)

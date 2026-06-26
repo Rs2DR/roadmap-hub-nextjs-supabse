@@ -7,9 +7,9 @@ import { QueryInput } from '@/components/query-input';
 import { QuerySelect } from '@/components/query-select';
 import { SeactionHeader } from '@/components/section-header';
 import { SpinnerFallback } from '@/components/spinner-fallback';
-import { PublicRoadmapsSearchParamsSchema } from '@/shcemas/PublicRoadmapsSearchParamsSchema';
+import { PublicRoadmapsSearchParamsSchema } from '@/schemas/PublicRoadmapsSearchParamsSchema';
 
-import type { PublicRoadmapsSearchParams } from '@/shcemas/PublicRoadmapsSearchParamsSchema';
+import type { PublicRoadmapsSearchParams } from '@/schemas/PublicRoadmapsSearchParamsSchema';
 
 export default async function DashboardPage({
   searchParams,

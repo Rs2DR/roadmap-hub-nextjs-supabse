@@ -11,7 +11,7 @@ import { cn } from '@/lib/utils';
 
 import type { Position } from '@xyflow/react';
 
-import type { EdgeData } from '@/shcemas/EdgeDataSchema';
+import type { EdgeData } from '@/schemas/EdgeDataSchema';
 
 interface UseEdgeStylesParams {
   sourceX: number;

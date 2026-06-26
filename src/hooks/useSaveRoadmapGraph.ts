@@ -6,7 +6,7 @@ import { saveRoadmapGraph } from '@/actions/roadmap/saveRoadmapGraph';
 import { MY_ROADMAPS_KEY } from '@/constants/queries';
 import { handleActionError } from '@/utils/handleActionError';
 
-import type { RoadmapGraph } from '@/shcemas/RoadmapGrahpSchema';
+import type { RoadmapGraph } from '@/schemas/RoadmapGrahpSchema';
 
 export const useSaveRoadmapGraph = () => {
   const queryClient = useQueryClient();

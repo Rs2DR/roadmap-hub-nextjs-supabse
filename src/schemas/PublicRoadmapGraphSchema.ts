@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { RoadmapGraphSchema } from '@/shcemas/RoadmapGrahpSchema';
+import { RoadmapGraphSchema } from '@/schemas/RoadmapGrahpSchema';
 
 export const PublicRoadmapGraphSchema = RoadmapGraphSchema.extend({
   title: z.string().min(1, 'Название обязательно'),

@@ -11,14 +11,14 @@ import { DASHBOARD_ROUTES } from '@/constants/routes';
 import { useCreateRoadmap } from '@/hooks/useCreateRoadmap';
 import { useUpdateRoadmapInfo } from '@/hooks/useUpdateRoadmapInfo';
 import { cn } from '@/lib/utils';
-import { ManageMyRoadmapSchema } from '@/shcemas/ManageMyRoadmapSchema';
+import { ManageMyRoadmapSchema } from '@/schemas/manageMyRoadmapSchema';
 
 import { Button } from '../ui/Button';
 import { Field, FieldError, FieldGroup, FieldLabel } from '../ui/Field';
 import { Input } from '../ui/Input';
 import { Textarea } from '../ui/Textarea';
 
-import type { ManageMyRoadmapInput } from '@/shcemas/ManageMyRoadmapSchema';
+import type { ManageMyRoadmapInput } from '@/schemas/manageMyRoadmapSchema';
 import type { FormMode } from '@/types/FormMode';
 
 interface ManageMyRoadmapFormProps extends ComponentProps<'form'> {

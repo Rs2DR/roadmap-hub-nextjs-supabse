@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 
-import { getRoadmapForViewCore } from '@/core/roadmaps';
 import { getRoadmapCommentsCore } from '@/core/roadmaps/getRoadmapCommentsCore';
 import { requireAuth } from '@/lib/supabase';
 

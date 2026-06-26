@@ -8,7 +8,7 @@ import { deleteRoadmap } from '@/actions/roadmap/deleteRoadmap';
 import { MY_ROADMAPS_KEY } from '@/constants/queries';
 import { handleActionError } from '@/utils/handleActionError';
 
-import type { MyRoadmap } from '@/shcemas/MyRoadmapSchema';
+import type { MyRoadmap } from '@/schemas/MyRoadmapSchema';
 
 export const useDeleteRoadmap = () => {
   const queryClient = useQueryClient();

@@ -19,9 +19,9 @@ import { Input } from '@/components/ui/Input';
 import { AUTH_ROUTES } from '@/constants/routes';
 import { useSignUpNewUser } from '@/hooks/useSignUpNewUser';
 import { cn } from '@/lib/utils';
-import { SignUpSchema } from '@/shcemas/SignUpSchema';
+import { SignUpSchema } from '@/schemas/signUpSchema';
 
-import type { SignUpInput } from '@/shcemas/SignUpSchema';
+import type { SignUpInput } from '@/schemas/signUpSchema';
 
 export function SignUpForm({ className, ...props }: ComponentProps<'form'>) {
   const router = useRouter();

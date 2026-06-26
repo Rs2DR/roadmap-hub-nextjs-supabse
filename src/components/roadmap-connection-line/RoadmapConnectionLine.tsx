@@ -8,8 +8,8 @@ import { useReconnectStore } from '@/store/useReconnectStore';
 
 import type { ConnectionLineComponentProps, Edge, Node } from '@xyflow/react';
 
-import type { EdgeData } from '@/shcemas/EdgeDataSchema';
-import type { NodeData } from '@/shcemas/NodeDataSchema';
+import type { EdgeData } from '@/schemas/EdgeDataSchema';
+import type { NodeData } from '@/schemas/NodeDataSchema';
 
 const RoadmapConnectionLine = (props: ConnectionLineComponentProps) => {
   const { fromX, fromY, toX, toY, fromPosition, toPosition } = props;

@@ -3,7 +3,7 @@ import { Controller } from 'react-hook-form';
 import { Checkbox } from '@/components/ui/Checkbox';
 import { Field, FieldDescription, FieldLabel } from '@/components/ui/Field';
 
-import type { EdgeData } from '@/shcemas/EdgeDataSchema';
+import type { EdgeData } from '@/schemas/EdgeDataSchema';
 import type { FieldProps } from '@/types/FieldProps';
 
 export const EdgeEditorAnimatedField = ({ control }: FieldProps<EdgeData>) => (

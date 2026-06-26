@@ -1,4 +1,4 @@
-import { RoadmapGraphSchema } from '@/shcemas/RoadmapGrahpSchema';
+import { RoadmapGraphSchema } from '@/schemas/RoadmapGrahpSchema';
 
 import type { SupabaseClient } from '@supabase/supabase-js';
 

@@ -6,7 +6,7 @@ import { ButtonGroup } from '@/components/ui/ButtonGroup';
 import { NODE_COPY_OFFSET } from '@/constants/node';
 import { useFlowStore } from '@/store/useFlowStore';
 
-import type { NodeData } from '@/shcemas/NodeDataSchema';
+import type { NodeData } from '@/schemas/NodeDataSchema';
 
 interface RoadmapNodeToolbarProps {
   id: string;

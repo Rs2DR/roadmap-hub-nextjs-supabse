@@ -1,14 +1,13 @@
 'use client';
 
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { BadgeCheck, ChevronsUpDown, LogOut } from 'lucide-react';
+import { ChevronsUpDown, LogOut } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/Avatar';
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
   DropdownMenuSeparator,
