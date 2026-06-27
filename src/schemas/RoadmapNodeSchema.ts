@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { NodeDataSchema } from '@/shcemas/NodeDataSchema';
+import { NodeDataSchema } from '@/schemas/NodeDataSchema';
 
 export const RoadmapNodeSchema = z.object({
   id: z.string(),

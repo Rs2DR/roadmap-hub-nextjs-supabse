@@ -5,7 +5,7 @@ import { ButtonGroup } from '@/components/ui/ButtonGroup';
 import { Field, FieldLabel } from '@/components/ui/Field';
 import { EDGE_LINE_STYLES } from '@/constants/edge';
 
-import type { EdgeData } from '@/shcemas/EdgeDataSchema';
+import type { EdgeData } from '@/schemas/EdgeDataSchema';
 import type { FieldProps } from '@/types/FieldProps';
 
 export const EdgeEditorStyleField = ({ control }: FieldProps<EdgeData>) => (

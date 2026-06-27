@@ -2,8 +2,8 @@
 
 import { updateRoadmapInfoCore } from '@/core/roadmaps';
 import { authActionClient } from '@/lib/next-safe-actions';
-import { ManageMyRoadmapSchema } from '@/shcemas/ManageMyRoadmapSchema';
-import { RoadmapBaseSchema } from '@/shcemas/RoadmapBaseSchema';
+import { ManageMyRoadmapSchema } from '@/schemas/manageMyRoadmapSchema';
+import { RoadmapBaseSchema } from '@/schemas/RoadmapBaseSchema';
 
 export const updateRoadmapInfo = authActionClient
   .inputSchema(

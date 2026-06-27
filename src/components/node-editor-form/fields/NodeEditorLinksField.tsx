@@ -15,7 +15,7 @@ import {
   InputGroupInput,
 } from '@/components/ui/InputGroup';
 
-import type { NodeData } from '@/shcemas/NodeDataSchema';
+import type { NodeData } from '@/schemas/NodeDataSchema';
 import type { FieldProps } from '@/types/FieldProps';
 
 export const NodeEditorLinksField = ({ control }: FieldProps<NodeData>) => {

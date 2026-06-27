@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/Field';
 import { Textarea } from '@/components/ui/Textarea';
 
-import type { NodeData } from '@/shcemas/NodeDataSchema';
+import type { NodeData } from '@/schemas/NodeDataSchema';
 import type { FieldProps } from '@/types/FieldProps';
 
 export const NodeEditorDescriptionField = ({

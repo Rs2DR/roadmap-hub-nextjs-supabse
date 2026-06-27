@@ -5,6 +5,8 @@ import { QueryInput } from '@/components/query-input';
 import { SeactionHeader } from '@/components/section-header';
 import { SpinnerFallback } from '@/components/spinner-fallback';
 
+export const dynamic = 'force-dynamic';
+
 export default async function BookmarksPage() {
   return (
     <div className="page-wrapper">

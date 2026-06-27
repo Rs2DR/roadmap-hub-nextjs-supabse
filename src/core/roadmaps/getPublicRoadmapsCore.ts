@@ -1,10 +1,10 @@
 import { z } from 'zod';
 
-import { PublicRoadmapSchema } from '@/shcemas/PublicRoadmapSchema';
+import { PublicRoadmapSchema } from '@/schemas/PublicRoadmapSchema';
 
 import type { SupabaseClient } from '@supabase/supabase-js';
 
-import type { GetPublicRoadmapsInput } from '@/shcemas/GetPublicRoadmapsSchema';
+import type { GetPublicRoadmapsInput } from '@/schemas/GetPublicRoadmapsSchema';
 
 export const getPublicRoadmapsCore = async (
   supabase: SupabaseClient,

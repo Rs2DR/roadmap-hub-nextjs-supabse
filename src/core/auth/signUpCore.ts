@@ -1,6 +1,6 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 
-import type { SignUpInput } from '@/shcemas/SignUpSchema';
+import type { SignUpInput } from '@/schemas/signUpSchema';
 
 export const signUpCore = async (
   supabase: SupabaseClient,

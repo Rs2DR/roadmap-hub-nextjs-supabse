@@ -1,7 +1,7 @@
 import { http } from '@/lib/xior';
 
-import type { GetPublicRoadmapsInput } from '@/shcemas/GetPublicRoadmapsSchema';
-import type { PublicRoadmap } from '@/shcemas/PublicRoadmapSchema';
+import type { GetPublicRoadmapsInput } from '@/schemas/GetPublicRoadmapsSchema';
+import type { PublicRoadmap } from '@/schemas/PublicRoadmapSchema';
 
 export const getPublicRoadmapsApiClient = async (
   params?: Omit<GetPublicRoadmapsInput, 'userId'>,

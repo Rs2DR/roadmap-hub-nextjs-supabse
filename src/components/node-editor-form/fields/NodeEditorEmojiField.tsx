@@ -16,7 +16,7 @@ import {
   PopoverTrigger,
 } from '@/components/ui/Popover';
 
-import type { NodeData } from '@/shcemas/NodeDataSchema';
+import type { NodeData } from '@/schemas/NodeDataSchema';
 import type { FieldProps } from '@/types/FieldProps';
 
 export const NodeEditorEmojiField = ({ control }: FieldProps<NodeData>) => {

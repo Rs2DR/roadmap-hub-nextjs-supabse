@@ -13,7 +13,7 @@ import { ROADMAP_COMMENTS_KEY } from '@/constants/queries';
 import { getUserQueryOptions } from '@/queries/getUserQueryOptions';
 import { handleActionError } from '@/utils/handleActionError';
 
-import type { PublicComment } from '@/shcemas/PublicCommentSchema';
+import type { PublicComment } from '@/schemas/PublicCommentSchema';
 
 export const useAddCommentOnRoadmap = ({
   roadmapId,

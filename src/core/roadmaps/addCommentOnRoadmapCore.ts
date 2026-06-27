@@ -1,6 +1,6 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 
-import type { CreateCommentInput } from '@/shcemas/CreateCommentSchema';
+import type { CreateCommentInput } from '@/schemas/CreateCommentSchema';
 
 export const addCommentOnRoadmapCore = async (
   supabase: SupabaseClient,

@@ -18,7 +18,7 @@ import {
   DropdownMenuTrigger,
 } from '../ui/DropdownMenu';
 
-import type { MyRoadmap } from '@/shcemas/MyRoadmapSchema';
+import type { MyRoadmap } from '@/schemas/MyRoadmapSchema';
 
 interface MyRoadmapCardDropdownMenuProps {
   roadmap: MyRoadmap;

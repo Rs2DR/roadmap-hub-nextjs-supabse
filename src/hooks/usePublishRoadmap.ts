@@ -8,7 +8,7 @@ import { publishRoadmap } from '@/actions/roadmap/publishRoadmap';
 import { MY_ROADMAPS_KEY, ROADMAPS_KEY } from '@/constants/queries';
 import { handleActionError } from '@/utils/handleActionError';
 
-import type { MyRoadmap } from '@/shcemas/MyRoadmapSchema';
+import type { MyRoadmap } from '@/schemas/MyRoadmapSchema';
 
 export const usePublishRoadmap = () => {
   const queryClient = useQueryClient();

@@ -14,7 +14,7 @@ import {
   PopoverTrigger,
 } from '@/components/ui/Popover';
 
-import type { EdgeData } from '@/shcemas/EdgeDataSchema';
+import type { EdgeData } from '@/schemas/EdgeDataSchema';
 import type { FieldProps } from '@/types/FieldProps';
 
 export const EdgeEditorColorField = ({ control }: FieldProps<EdgeData>) => (

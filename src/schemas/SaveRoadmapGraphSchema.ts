@@ -1,4 +1,4 @@
-import { RoadmapGraphSchema } from '@/shcemas/RoadmapGrahpSchema';
+import { RoadmapGraphSchema } from '@/schemas/RoadmapGrahpSchema';
 
 import type { z } from 'zod';
 

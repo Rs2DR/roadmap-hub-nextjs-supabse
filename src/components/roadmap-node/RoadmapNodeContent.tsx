@@ -2,7 +2,7 @@ import type { CSSProperties } from 'react';
 
 import { darken, lighten } from 'polished';
 
-import type { NodeData } from '@/shcemas/NodeDataSchema';
+import type { NodeData } from '@/schemas/NodeDataSchema';
 
 interface RoadmapNodeContentProps {
   data: NodeData;

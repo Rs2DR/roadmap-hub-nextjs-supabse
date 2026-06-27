@@ -4,7 +4,7 @@ import { API_ROUTES } from '@/constants/api';
 import { requestPasswordResetCore } from '@/core/auth';
 import { actionClient } from '@/lib/next-safe-actions';
 import { createServerSupabase } from '@/lib/supabase';
-import { RequestResetPasswordSchema } from '@/shcemas/RequestResetPasswordSchema';
+import { RequestResetPasswordSchema } from '@/schemas/requestResetPasswordSchema';
 
 export const requestPasswordReset = actionClient
   .inputSchema(RequestResetPasswordSchema)

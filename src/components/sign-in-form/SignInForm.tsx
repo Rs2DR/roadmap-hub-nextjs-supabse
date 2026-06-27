@@ -19,9 +19,9 @@ import { Input } from '@/components/ui/Input';
 import { APP_ROUTES, AUTH_ROUTES } from '@/constants/routes';
 import { useSignInWithEmail } from '@/hooks/useSignInWithEmail';
 import { cn } from '@/lib/utils';
-import { SignInSchema } from '@/shcemas/SignInSchema';
+import { SignInSchema } from '@/schemas/signInSchema';
 
-import type { SignInInput } from '@/shcemas/SignInSchema';
+import type { SignInInput } from '@/schemas/signInSchema';
 
 export function SignInForm({ className, ...props }: ComponentProps<'form'>) {
   const router = useRouter();
@@ -31,7 +31,7 @@ export function SignInForm({ className, ...props }: ComponentProps<'form'>) {
   const {
     handleSubmit,
     control,
-    formState: { isSubmitting, isValid },
+    formState: { isSubmitting },
   } = useForm<SignInInput>({
     resolver: zodResolver(SignInSchema),
     defaultValues: {
@@ -99,11 +99,7 @@ export function SignInForm({ className, ...props }: ComponentProps<'form'>) {
           )}
         />
         <Field>
-          <Button
-            type="submit"
-            disabled={!isValid}
-            loading={isPending || isSubmitting}
-          >
+          <Button type="submit" loading={isPending || isSubmitting}>
             Войти
           </Button>
         </Field>

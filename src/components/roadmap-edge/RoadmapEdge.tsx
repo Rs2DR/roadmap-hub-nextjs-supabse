@@ -9,7 +9,7 @@ import { useEdgeStyles } from '@/hooks/useEdgeStyles';
 
 import type { Edge, EdgeProps } from '@xyflow/react';
 
-import type { EdgeData } from '@/shcemas/EdgeDataSchema';
+import type { EdgeData } from '@/schemas/EdgeDataSchema';
 
 type RoadmapEdgeData = Edge<EdgeData>;
 

@@ -1,4 +1,4 @@
-import { CommentBaseSchema } from '@/shcemas/CommentBaseSchema';
+import { CommentBaseSchema } from '@/schemas/CommentBaseSchema';
 
 import type z from 'zod';
 

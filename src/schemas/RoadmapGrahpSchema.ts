@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
-import { RoadmapEdgeSchema } from '@/shcemas/RoadmapEdgeSchema';
-import { RoadmapNodeSchema } from '@/shcemas/RoadmapNodeSchema';
-import { ViewportSchema } from '@/shcemas/ViewportSchema';
+import { RoadmapEdgeSchema } from '@/schemas/RoadmapEdgeSchema';
+import { RoadmapNodeSchema } from '@/schemas/RoadmapNodeSchema';
+import { ViewportSchema } from '@/schemas/ViewportSchema';
 
 export const RoadmapGraphSchema = z.object({
   id: z.uuid(),

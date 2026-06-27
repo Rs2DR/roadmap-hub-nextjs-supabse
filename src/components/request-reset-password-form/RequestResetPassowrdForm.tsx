@@ -6,16 +6,20 @@ import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 
+import { Button } from '@/components/ui/Button';
+import {
+  Field,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from '@/components/ui/Field';
+import { Input } from '@/components/ui/Input';
 import { AUTH_ROUTES } from '@/constants/routes';
 import { useRequestPasswordReset } from '@/hooks/useRequestPasswordReset';
 import { cn } from '@/lib/utils';
-import { RequestResetPasswordSchema } from '@/shcemas/RequestResetPasswordSchema';
+import { RequestResetPasswordSchema } from '@/schemas/requestResetPasswordSchema';
 
-import { Button } from '../ui/Button';
-import { Field, FieldError, FieldGroup, FieldLabel } from '../ui/Field';
-import { Input } from '../ui/Input';
-
-import type { RequestResetPasswordInput } from '@/shcemas/RequestResetPasswordSchema';
+import type { RequestResetPasswordInput } from '@/schemas/requestResetPasswordSchema';
 
 export function RequestResetPasswordForm({
   className,

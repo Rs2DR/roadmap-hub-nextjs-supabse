@@ -3,7 +3,7 @@
 import { updatePasswordCore } from '@/core/auth';
 import { actionClient } from '@/lib/next-safe-actions';
 import { createServerSupabase } from '@/lib/supabase';
-import { ResetPasswordSchema } from '@/shcemas/ResetPasswordSchema';
+import { ResetPasswordSchema } from '@/schemas/resetPasswordSchema';
 
 export const updatePassword = actionClient
   .inputSchema(ResetPasswordSchema)

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { RoadmapBaseSchema } from '@/shcemas/RoadmapBaseSchema';
+import { RoadmapBaseSchema } from '@/schemas/RoadmapBaseSchema';
 
 export const CreateCommentSchema = z.object({
   roadmapId: RoadmapBaseSchema.shape.id,

@@ -4,7 +4,7 @@ import z from 'zod';
 
 import { likeRoadmapCore } from '@/core/roadmaps';
 import { authActionClient } from '@/lib/next-safe-actions';
-import { RoadmapBaseSchema } from '@/shcemas/RoadmapBaseSchema';
+import { RoadmapBaseSchema } from '@/schemas/RoadmapBaseSchema';
 
 export const likeRoadmap = authActionClient
   .inputSchema(z.object({ id: RoadmapBaseSchema.shape.id }))
