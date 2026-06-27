@@ -1,9 +1,9 @@
 'use client';
 
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { ReactFlow, Background, MiniMap } from '@xyflow/react';
+import { ReactFlow, Background } from '@xyflow/react';
 
-import { FlowSheetViewer } from '@/components/flow-sheet-viewer';
+import { FlowDrawerViewer } from '@/components/flow-drawer-viewer';
 import { RoadmapConnectionLine } from '@/components/roadmap-connection-line';
 import { RoadmapEdge } from '@/components/roadmap-edge';
 import { RoadmapNode } from '@/components/roadmap-node';
@@ -46,10 +46,9 @@ export function RoadmapViewer({ id }: RoadmapViewerProps) {
         fitView
       >
         <Background />
-        <MiniMap nodeStrokeWidth={3} />
       </ReactFlow>
 
-      <FlowSheetViewer />
+      <FlowDrawerViewer />
     </div>
   );
 }
