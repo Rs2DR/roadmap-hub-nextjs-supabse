@@ -8,7 +8,7 @@ import {
 } from '@/components/ui/Field';
 import { Input } from '@/components/ui/Input';
 
-import type { NodeData } from '@/shcemas/NodeDataSchema';
+import type { NodeData } from '@/schemas/NodeDataSchema';
 import type { FieldProps } from '@/types/FieldProps';
 
 export const NodeEditorLabelField = ({ control }: FieldProps<NodeData>) => (

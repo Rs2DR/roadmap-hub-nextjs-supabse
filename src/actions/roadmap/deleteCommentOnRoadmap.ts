@@ -4,7 +4,7 @@ import z from 'zod';
 
 import { deleteCommentOnRoadmapCore } from '@/core/roadmaps';
 import { authActionClient } from '@/lib/next-safe-actions';
-import { CommentBaseSchema } from '@/shcemas/CommentBaseSchema';
+import { CommentBaseSchema } from '@/schemas/CommentBaseSchema';
 
 export const deleteCommentOnRoadmap = authActionClient
   .inputSchema(z.object({ id: CommentBaseSchema.shape.id }))

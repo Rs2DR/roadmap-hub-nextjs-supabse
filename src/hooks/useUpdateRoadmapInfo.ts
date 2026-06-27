@@ -8,7 +8,7 @@ import { updateRoadmapInfo } from '@/actions/roadmap/updateRoadmapInfo';
 import { MY_ROADMAPS_KEY } from '@/constants/queries';
 import { handleActionError } from '@/utils/handleActionError';
 
-import type { MyRoadmap } from '@/shcemas/MyRoadmapSchema';
+import type { MyRoadmap } from '@/schemas/MyRoadmapSchema';
 
 export const useUpdateRoadmapInfo = () => {
   const queryClient = useQueryClient();

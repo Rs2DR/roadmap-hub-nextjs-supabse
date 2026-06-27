@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/Button';
 import { ButtonGroup } from '@/components/ui/ButtonGroup';
 import { useFlowStore } from '@/store/useFlowStore';
 
-import type { EdgeData } from '@/shcemas/EdgeDataSchema';
+import type { EdgeData } from '@/schemas/EdgeDataSchema';
 
 interface RoadmapEdgeToolbarProps {
   id: string;

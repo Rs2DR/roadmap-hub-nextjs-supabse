@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { EdgeDataSchema } from '@/shcemas/EdgeDataSchema';
+import { EdgeDataSchema } from '@/schemas/EdgeDataSchema';
 
 export const RoadmapEdgeSchema = z.object({
   id: z.string(),

@@ -1,6 +1,6 @@
 import z from 'zod';
 
-import { PublicRoadmapSchema } from '@/shcemas/PublicRoadmapSchema';
+import { PublicRoadmapSchema } from '@/schemas/PublicRoadmapSchema';
 
 import type { SupabaseClient } from '@supabase/supabase-js';
 

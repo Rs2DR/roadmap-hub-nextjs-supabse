@@ -13,7 +13,7 @@ import {
 import { asArray } from '@/utils/asArray';
 import { handleActionError } from '@/utils/handleActionError';
 
-import type { PublicRoadmap } from '@/shcemas/PublicRoadmapSchema';
+import type { PublicRoadmap } from '@/schemas/PublicRoadmapSchema';
 
 export const useLikeRoadmap = () => {
   const queryClient = useQueryClient();

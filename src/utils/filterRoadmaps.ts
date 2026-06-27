@@ -1,4 +1,4 @@
-import type { RoadmapBase } from '@/shcemas/RoadmapBaseSchema';
+import type { RoadmapBase } from '@/schemas/RoadmapBaseSchema';
 
 export const filterRoadmaps = <
   T extends Pick<RoadmapBase, 'title' | 'description'>,

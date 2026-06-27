@@ -3,7 +3,7 @@ import z from 'zod';
 
 import { getPublicRoadmapsCore } from '@/core/roadmaps';
 import { requireAuth } from '@/lib/supabase';
-import { GetPublicRoadmapsSchema } from '@/shcemas/GetPublicRoadmapsSchema';
+import { GetPublicRoadmapsSchema } from '@/schemas/GetPublicRoadmapsSchema';
 
 import type { NextRequest } from 'next/server';
 

@@ -3,7 +3,7 @@ import { queryOptions } from '@tanstack/react-query';
 import { getPublicRoadmapsApiClient } from '@/api-client/roadmaps';
 import { ROADMAPS_KEY } from '@/constants/queries';
 
-import type { GetPublicRoadmapsInput } from '@/shcemas/GetPublicRoadmapsSchema';
+import type { GetPublicRoadmapsInput } from '@/schemas/GetPublicRoadmapsSchema';
 
 type GetPublicRoadmapsQueryOptionsParams = Omit<
   GetPublicRoadmapsInput,

@@ -19,9 +19,9 @@ import { Input } from '@/components/ui/Input';
 import { AUTH_ROUTES } from '@/constants/routes';
 import { useSignUpNewUser } from '@/hooks/useSignUpNewUser';
 import { cn } from '@/lib/utils';
-import { SignUpSchema } from '@/shcemas/SignUpSchema';
+import { SignUpSchema } from '@/schemas/signUpSchema';
 
-import type { SignUpInput } from '@/shcemas/SignUpSchema';
+import type { SignUpInput } from '@/schemas/signUpSchema';
 
 export function SignUpForm({ className, ...props }: ComponentProps<'form'>) {
   const router = useRouter();
@@ -31,7 +31,7 @@ export function SignUpForm({ className, ...props }: ComponentProps<'form'>) {
   const {
     handleSubmit,
     control,
-    formState: { isSubmitting, isValid },
+    formState: { isSubmitting },
   } = useForm<SignUpInput>({
     resolver: zodResolver(SignUpSchema),
     defaultValues: {
@@ -135,11 +135,7 @@ export function SignUpForm({ className, ...props }: ComponentProps<'form'>) {
           )}
         />
         <Field>
-          <Button
-            type="submit"
-            disabled={!isValid}
-            loading={isPending || isSubmitting}
-          >
+          <Button type="submit" loading={isPending || isSubmitting}>
             Зарегестрироваться
           </Button>
         </Field>

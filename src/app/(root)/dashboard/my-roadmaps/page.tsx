@@ -1,5 +1,3 @@
-'use server';
-
 import { Suspense } from 'react';
 
 import { Plus } from 'lucide-react';
@@ -10,6 +8,8 @@ import { QueryInput } from '@/components/query-input';
 import { SeactionHeader } from '@/components/section-header';
 import { SpinnerFallback } from '@/components/spinner-fallback';
 import { Button } from '@/components/ui/Button';
+
+export const dynamic = 'force-dynamic';
 
 export default async function MyRoadmapsPage() {
   return (

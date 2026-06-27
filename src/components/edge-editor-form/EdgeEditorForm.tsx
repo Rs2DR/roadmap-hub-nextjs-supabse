@@ -12,9 +12,9 @@ import {
 import { Button } from '@/components/ui/Button';
 import { FieldGroup } from '@/components/ui/Field';
 import { SheetFooter } from '@/components/ui/Sheet';
-import { EdgeDataSchema } from '@/shcemas/EdgeDataSchema';
+import { EdgeDataSchema } from '@/schemas/EdgeDataSchema';
 
-import type { EdgeData } from '@/shcemas/EdgeDataSchema';
+import type { EdgeData } from '@/schemas/EdgeDataSchema';
 
 interface EdgeEditorFormProps {
   edgeId: string;

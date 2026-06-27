@@ -10,7 +10,7 @@ import {
 import { MyRoadmapCardDropdownMenu } from './MyRoadmapCardDropdownMenu';
 import { MyRoadmapCardFooter } from './MyRoadmapCardFooter';
 
-import type { MyRoadmap } from '@/shcemas/MyRoadmapSchema';
+import type { MyRoadmap } from '@/schemas/MyRoadmapSchema';
 
 interface MyRoadmapCardProps {
   roadmap: MyRoadmap;

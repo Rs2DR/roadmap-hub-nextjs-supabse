@@ -6,16 +6,20 @@ import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 
+import { Button } from '@/components/ui/Button';
+import {
+  Field,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from '@/components/ui/Field';
+import { Input } from '@/components/ui/Input';
 import { APP_ROUTES } from '@/constants/routes';
 import { useUpdatePassword } from '@/hooks/useUpdatePassword';
 import { cn } from '@/lib/utils';
-import { ResetPasswordSchema } from '@/shcemas/ResetPasswordSchema';
+import { ResetPasswordSchema } from '@/schemas/resetPasswordSchema';
 
-import { Button } from '../ui/Button';
-import { Field, FieldError, FieldGroup, FieldLabel } from '../ui/Field';
-import { Input } from '../ui/Input';
-
-import type { ResetPasswordInput } from '@/shcemas/ResetPasswordSchema';
+import type { ResetPasswordInput } from '@/schemas/resetPasswordSchema';
 
 export function ResetPasswordForm({
   className,

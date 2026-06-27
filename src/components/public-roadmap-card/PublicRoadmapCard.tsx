@@ -16,7 +16,7 @@ import {
 } from '@/components/ui/Card';
 import { DASHBOARD_ROUTES } from '@/constants/routes';
 
-import type { PublicRoadmap } from '@/shcemas/PublicRoadmapSchema';
+import type { PublicRoadmap } from '@/schemas/PublicRoadmapSchema';
 
 interface PublicRoadmapCardProps {
   roadmap: PublicRoadmap;
