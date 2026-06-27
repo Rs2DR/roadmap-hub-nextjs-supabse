@@ -22,7 +22,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/Tooltip';
-import { useIsMobile } from '@/hooks/useMobile';
+import { useIsMobile } from '@/hooks/share/useIsMobile';
 import { cn } from '@/lib/utils';
 
 import type { VariantProps } from 'class-variance-authority';

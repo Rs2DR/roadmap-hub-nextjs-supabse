@@ -4,7 +4,7 @@ import { Checkbox } from '@/components/ui/Checkbox';
 import { Field, FieldDescription, FieldLabel } from '@/components/ui/Field';
 
 import type { EdgeData } from '@/schemas/EdgeDataSchema';
-import type { FieldProps } from '@/types/FieldProps';
+import type { FieldProps } from '@/types/form/FieldProps';
 
 export const EdgeEditorAnimatedField = ({ control }: FieldProps<EdgeData>) => (
   <Controller

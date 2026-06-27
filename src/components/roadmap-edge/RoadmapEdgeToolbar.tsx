@@ -7,7 +7,7 @@ import { Pencil, Trash } from 'lucide-react';
 
 import { Button } from '@/components/ui/Button';
 import { ButtonGroup } from '@/components/ui/ButtonGroup';
-import { useFlowStore } from '@/store/useFlowStore';
+import { useFlowStore } from '@/store/roadmap/useFlowStore';
 
 import type { EdgeData } from '@/schemas/EdgeDataSchema';
 

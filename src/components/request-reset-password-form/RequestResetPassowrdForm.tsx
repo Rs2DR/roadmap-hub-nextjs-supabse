@@ -15,11 +15,11 @@ import {
 } from '@/components/ui/Field';
 import { Input } from '@/components/ui/Input';
 import { AUTH_ROUTES } from '@/constants/routes';
-import { useRequestPasswordReset } from '@/hooks/useRequestPasswordReset';
+import { useRequestPasswordReset } from '@/hooks/auth/useRequestPasswordReset';
 import { cn } from '@/lib/utils';
-import { RequestResetPasswordSchema } from '@/schemas/requestResetPasswordSchema';
+import { RequestResetPasswordSchema } from '@/schemas/auth/RequestResetPasswordSchema';
 
-import type { RequestResetPasswordInput } from '@/schemas/requestResetPasswordSchema';
+import type { RequestResetPasswordInput } from '@/schemas/auth/RequestResetPasswordSchema';
 
 export function RequestResetPasswordForm({
   className,

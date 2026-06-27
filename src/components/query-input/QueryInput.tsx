@@ -1,7 +1,7 @@
 'use client';
 
 import type { ChangeEvent } from 'react';
-import { useId, useEffect, useMemo, useState } from 'react';
+import { useId, useMemo, useState } from 'react';
 
 import debounce from 'lodash-es/debounce';
 import { Search } from 'lucide-react';

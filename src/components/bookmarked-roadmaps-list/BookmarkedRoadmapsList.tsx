@@ -8,8 +8,8 @@ import { useQueryState } from 'nuqs';
 
 import { EmptyState } from '@/components/empty-state';
 import { PublicRoadmapCard } from '@/components/public-roadmap-card';
-import { getBookmarkedRoadmapsQueryOptions } from '@/queries/getBookedmarkedRoadmapsQueryOptions';
-import { filterRoadmaps } from '@/utils/filterRoadmaps';
+import { getBookmarkedRoadmapsQueryOptions } from '@/queries/roadmap/makeBookedmarkedRoadmapsOptions';
+import { filterRoadmaps } from '@/utils/roadmap/filterRoadmaps';
 
 export function BookmarkedRoadmapsList() {
   const [filterValue] = useQueryState('filter', {

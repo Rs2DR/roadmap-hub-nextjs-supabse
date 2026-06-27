@@ -2,7 +2,7 @@
 
 import { saveRoadmapGraphCore } from '@/core/roadmaps';
 import { authActionClient } from '@/lib/next-safe-actions';
-import { SaveRoadmapGraphSchema } from '@/schemas/SaveRoadmapGraphSchema';
+import { SaveRoadmapGraphSchema } from '@/schemas/roadmap/SaveRoadmapGraphSchema';
 
 export const saveRoadmapGraph = authActionClient
   .inputSchema(SaveRoadmapGraphSchema)

@@ -15,8 +15,8 @@ import {
   InputGroupInput,
 } from '@/components/ui/InputGroup';
 
-import type { NodeData } from '@/schemas/NodeDataSchema';
-import type { FieldProps } from '@/types/FieldProps';
+import type { NodeData } from '@/schemas/roadmap/NodeDataSchema';
+import type { FieldProps } from '@/types/form/FieldProps';
 
 export const NodeEditorLinksField = ({ control }: FieldProps<NodeData>) => {
   const { fields, append, remove } = useFieldArray({

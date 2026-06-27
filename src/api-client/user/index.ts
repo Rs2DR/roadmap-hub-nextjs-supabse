@@ -1,1 +1,1 @@
-export * from './getUserApiClient';
+export * from './fetchUser';

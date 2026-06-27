@@ -4,9 +4,9 @@ import { Copy, Pencil, Trash } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { ButtonGroup } from '@/components/ui/ButtonGroup';
 import { NODE_COPY_OFFSET } from '@/constants/node';
-import { useFlowStore } from '@/store/useFlowStore';
+import { useFlowStore } from '@/store/roadmap/useFlowStore';
 
-import type { NodeData } from '@/schemas/NodeDataSchema';
+import type { NodeData } from '@/schemas/roadmap/NodeDataSchema';
 
 interface RoadmapNodeToolbarProps {
   id: string;

@@ -6,9 +6,9 @@ import { useQueryStates, parseAsString } from 'nuqs';
 
 import { EmptyState } from '@/components/empty-state';
 import { PublicRoadmapCard } from '@/components/public-roadmap-card';
-import { getPublicRoadmapsQueryOptions } from '@/queries/getPublicRoadmapsQueryOptions';
+import { getPublicRoadmapsQueryOptions } from '@/queries/roadmap/makePublicRoadmapsOptions';
 
-import type { RoadmapOrderBy } from '@/types/RoadmapOrderBy';
+import type { RoadmapOrderBy } from '@/types/roadmap/RoadmapOrderBy';
 
 export function PublicRoadmapsList() {
   const [query] = useQueryStates({

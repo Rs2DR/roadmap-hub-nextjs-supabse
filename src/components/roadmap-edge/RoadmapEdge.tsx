@@ -5,7 +5,7 @@ import { memo } from 'react';
 import { BaseEdge } from '@xyflow/react';
 
 import { RoadmapEdgeToolbar } from '@/components/roadmap-edge/RoadmapEdgeToolbar';
-import { useEdgeStyles } from '@/hooks/useEdgeStyles';
+import { useEdgeStyles } from '@/hooks/roadmap/useEdgeStyles';
 
 import type { Edge, EdgeProps } from '@xyflow/react';
 

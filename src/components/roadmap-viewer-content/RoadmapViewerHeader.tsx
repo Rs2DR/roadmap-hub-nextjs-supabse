@@ -1,14 +1,14 @@
 'use client';
 
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { MessageCircle, Share } from 'lucide-react';
+import { Share } from 'lucide-react';
 
 import { LikeRoadmapButton } from '@/components/like-roadmap-button';
 import { RoadmapCommentsSheet } from '@/components/roadmap-comments-sheet';
 import { ToggleBookmarkButton } from '@/components/toggle-bookmark-button';
 import { Button } from '@/components/ui/Button';
-import { useIsMobile } from '@/hooks/useMobile';
-import { getRoadmapForViewQueryOptions } from '@/queries/getRoadmapForViewQueryOptions';
+import { useIsMobile } from '@/hooks/share/useIsMobile';
+import { getRoadmapForViewQueryOptions } from '@/queries/roadmap/makeRoadmapForViewOptions';
 
 interface RoadmapViewerHeaderProps {
   id: string;

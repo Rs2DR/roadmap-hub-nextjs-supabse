@@ -2,7 +2,7 @@ import { MyRoadmapSchema } from '@/schemas/MyRoadmapSchema';
 
 import type { SupabaseClient } from '@supabase/supabase-js';
 
-import type { ManageMyRoadmapInput } from '@/schemas/manageMyRoadmapSchema';
+import type { ManageMyRoadmapInput } from '@/schemas/roadmap/ManageMyRoadmapSchema';
 
 export const createRoadmapCore = async (
   supabase: SupabaseClient,

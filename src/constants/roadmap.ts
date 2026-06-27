@@ -1,5 +1,5 @@
 import type { EdgeData } from '@/schemas/EdgeDataSchema';
-import type { NodeData } from '@/schemas/NodeDataSchema';
+import type { NodeData } from '@/schemas/roadmap/NodeDataSchema';
 
 export const ROADMAP_TYPES = {
   node: 'RoadmapNode',

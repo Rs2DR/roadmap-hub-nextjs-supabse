@@ -3,7 +3,7 @@
 import { signInWithEmailCore } from '@/core/auth';
 import { actionClient } from '@/lib/next-safe-actions';
 import { createServerSupabase } from '@/lib/supabase';
-import { SignInSchema } from '@/schemas/signInSchema';
+import { SignInSchema } from '@/schemas/auth/SignInSchema';
 
 export const signInWithEmail = actionClient
   .inputSchema(SignInSchema)

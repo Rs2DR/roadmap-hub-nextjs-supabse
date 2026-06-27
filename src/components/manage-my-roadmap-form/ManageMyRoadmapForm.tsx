@@ -8,18 +8,18 @@ import { useRouter } from 'next/navigation';
 
 import { FORM_MODE } from '@/constants/form';
 import { DASHBOARD_ROUTES } from '@/constants/routes';
-import { useCreateRoadmap } from '@/hooks/useCreateRoadmap';
-import { useUpdateRoadmapInfo } from '@/hooks/useUpdateRoadmapInfo';
+import { useCreateRoadmap } from '@/hooks/roadmap/useCreateRoadmap';
+import { useUpdateRoadmapInfo } from '@/hooks/roadmap/useUpdateRoadmapInfo';
 import { cn } from '@/lib/utils';
-import { ManageMyRoadmapSchema } from '@/schemas/manageMyRoadmapSchema';
+import { ManageMyRoadmapSchema } from '@/schemas/roadmap/ManageMyRoadmapSchema';
 
 import { Button } from '../ui/Button';
 import { Field, FieldError, FieldGroup, FieldLabel } from '../ui/Field';
 import { Input } from '../ui/Input';
 import { Textarea } from '../ui/Textarea';
 
-import type { ManageMyRoadmapInput } from '@/schemas/manageMyRoadmapSchema';
-import type { FormMode } from '@/types/FormMode';
+import type { ManageMyRoadmapInput } from '@/schemas/roadmap/ManageMyRoadmapSchema';
+import type { FormMode } from '@/types/form/FormMode';
 
 interface ManageMyRoadmapFormProps extends ComponentProps<'form'> {
   mode?: FormMode;

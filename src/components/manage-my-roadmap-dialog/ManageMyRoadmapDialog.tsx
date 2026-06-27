@@ -14,8 +14,8 @@ import {
   DialogTrigger,
 } from '../ui/Dialog';
 
-import type { ManageMyRoadmapInput } from '@/schemas/manageMyRoadmapSchema';
-import type { FormMode } from '@/types/FormMode';
+import type { ManageMyRoadmapInput } from '@/schemas/roadmap/ManageMyRoadmapSchema';
+import type { FormMode } from '@/types/form/FormMode';
 
 interface ManageMyRoadmapDialogProps extends ComponentProps<typeof Dialog> {
   title: string;

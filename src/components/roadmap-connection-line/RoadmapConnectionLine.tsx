@@ -3,13 +3,13 @@ import { memo } from 'react';
 import { useReactFlow } from '@xyflow/react';
 
 import { DEFAULT_EDGE_DATA } from '@/constants/roadmap';
-import { useEdgeStyles } from '@/hooks/useEdgeStyles';
-import { useReconnectStore } from '@/store/useReconnectStore';
+import { useEdgeStyles } from '@/hooks/roadmap/useEdgeStyles';
+import { useReconnectStore } from '@/store/roadmap/useReconnectStore';
 
 import type { ConnectionLineComponentProps, Edge, Node } from '@xyflow/react';
 
 import type { EdgeData } from '@/schemas/EdgeDataSchema';
-import type { NodeData } from '@/schemas/NodeDataSchema';
+import type { NodeData } from '@/schemas/roadmap/NodeDataSchema';
 
 const RoadmapConnectionLine = (props: ConnectionLineComponentProps) => {
   const { fromX, fromY, toX, toY, fromPosition, toPosition } = props;

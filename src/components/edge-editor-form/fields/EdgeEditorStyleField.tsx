@@ -6,7 +6,7 @@ import { Field, FieldLabel } from '@/components/ui/Field';
 import { EDGE_LINE_STYLES } from '@/constants/edge';
 
 import type { EdgeData } from '@/schemas/EdgeDataSchema';
-import type { FieldProps } from '@/types/FieldProps';
+import type { FieldProps } from '@/types/form/FieldProps';
 
 export const EdgeEditorStyleField = ({ control }: FieldProps<EdgeData>) => (
   <Controller

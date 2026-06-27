@@ -1,4 +1,4 @@
-import type { FlowNodeElement } from '@/types/FlowSheetElement';
+import type { FlowNodeElement } from '@/types/react-flow/FlowSheetElement';
 
 interface FloweDrawerViewerContentProps {
   nodeElement: FlowNodeElement | null;

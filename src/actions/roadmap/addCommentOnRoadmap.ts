@@ -2,7 +2,7 @@
 
 import { addCommentOnRoadmapCore } from '@/core/roadmaps';
 import { authActionClient } from '@/lib/next-safe-actions';
-import { CreateCommentSchema } from '@/schemas/CreateCommentSchema';
+import { CreateCommentSchema } from '@/schemas/roadmap/CreateCommentSchema';
 
 export const addCommentOnRoadmap = authActionClient
   .inputSchema(CreateCommentSchema)

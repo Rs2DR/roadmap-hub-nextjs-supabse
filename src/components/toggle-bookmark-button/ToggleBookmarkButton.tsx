@@ -5,7 +5,7 @@ import type { ComponentProps } from 'react';
 import { Bookmark } from 'lucide-react';
 
 import { Button } from '@/components/ui/Button';
-import { useToggleBookmark } from '@/hooks/useToggleBookmark';
+import { useToggleBookmark } from '@/hooks/roadmap/useToggleBookmark';
 import { cn } from '@/lib/utils';
 
 interface ToggleBookmarkButtonProps extends ComponentProps<typeof Button> {

@@ -7,7 +7,7 @@ import { ROADMAPS_KEY } from '@/constants/queries';
 import { getQueryClient } from '@/lib/tanstack-query';
 import { getPublicRoadmapsServer } from '@/services/roadmaps';
 
-import type { RoadmapOrderBy } from '@/types/RoadmapOrderBy';
+import type { RoadmapOrderBy } from '@/types/roadmap/RoadmapOrderBy';
 
 interface PublicRoadmapsContentProps {
   search?: string;

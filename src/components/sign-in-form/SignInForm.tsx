@@ -17,11 +17,11 @@ import {
 } from '@/components/ui/Field';
 import { Input } from '@/components/ui/Input';
 import { APP_ROUTES, AUTH_ROUTES } from '@/constants/routes';
-import { useSignInWithEmail } from '@/hooks/useSignInWithEmail';
+import { useSignInWithEmail } from '@/hooks/auth/useSignInWithEmail';
 import { cn } from '@/lib/utils';
-import { SignInSchema } from '@/schemas/signInSchema';
+import { SignInSchema } from '@/schemas/auth/SignInSchema';
 
-import type { SignInInput } from '@/schemas/signInSchema';
+import type { SignInInput } from '@/schemas/auth/SignInSchema';
 
 export function SignInForm({ className, ...props }: ComponentProps<'form'>) {
   const router = useRouter();

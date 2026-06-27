@@ -5,7 +5,7 @@ import type { ComponentProps } from 'react';
 import { Heart } from 'lucide-react';
 
 import { Button } from '@/components/ui/Button';
-import { useLikeRoadmap } from '@/hooks/useLikeRoadmap';
+import { useLikeRoadmap } from '@/hooks/roadmap/useLikeRoadmap';
 import { cn } from '@/lib/utils';
 
 interface LikeRoadmapButtonProps extends ComponentProps<typeof Button> {

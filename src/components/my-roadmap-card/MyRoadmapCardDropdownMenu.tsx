@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import { MoreHorizontal, Pencil, Trash } from 'lucide-react';
 
-import { useDeleteRoadmap } from '@/hooks/useDeleteRoadmap';
+import { useDeleteRoadmap } from '@/hooks/roadmap/useDeleteRoadmap';
 
 import { CustomAlertDialog } from '../custom-alert-dialog';
 import { ManageMyRoadmapDialog } from '../manage-my-roadmap-dialog';

@@ -1,8 +1,8 @@
 import { EdgeEditorForm } from '@/components/edge-editor-form';
 import { NodeEditorForm } from '@/components/node-editor-form';
-import { useFlowStore } from '@/store/useFlowStore';
+import { useFlowStore } from '@/store/roadmap/useFlowStore';
 
-import type { FlowElement } from '@/types/FlowSheetElement';
+import type { FlowElement } from '@/types/react-flow/FlowSheetElement';
 
 interface FlowDrawerEditorContentProps {
   activeElement: FlowElement;

@@ -26,7 +26,7 @@ import {
 } from '@/components/ui/Sidebar';
 import { APP_ROUTES, DASHBOARD_ROUTES } from '@/constants/routes';
 
-import type { NavItem } from '@/types/NavItem';
+import type { NavItem } from '@/types/navigation/NavItem';
 
 export const navItems: NavItem[] = [
   {

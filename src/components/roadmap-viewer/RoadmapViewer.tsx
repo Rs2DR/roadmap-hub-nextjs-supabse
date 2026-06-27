@@ -8,8 +8,8 @@ import { RoadmapConnectionLine } from '@/components/roadmap-connection-line';
 import { RoadmapEdge } from '@/components/roadmap-edge';
 import { RoadmapNode } from '@/components/roadmap-node';
 import { DEFAULT_EDGE_DATA, ROADMAP_TYPES } from '@/constants/roadmap';
-import { useRoadmap } from '@/hooks/useRoadmap';
-import { getRoadmapForViewQueryOptions } from '@/queries/getRoadmapForViewQueryOptions';
+import { useRoadmap } from '@/hooks/roadmap/useRoadmap';
+import { getRoadmapForViewQueryOptions } from '@/queries/roadmap/makeRoadmapForViewOptions';
 
 import '@xyflow/react/dist/style.css';
 

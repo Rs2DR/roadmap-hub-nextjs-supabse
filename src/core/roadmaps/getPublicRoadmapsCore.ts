@@ -4,7 +4,7 @@ import { PublicRoadmapSchema } from '@/schemas/PublicRoadmapSchema';
 
 import type { SupabaseClient } from '@supabase/supabase-js';
 
-import type { GetPublicRoadmapsInput } from '@/schemas/GetPublicRoadmapsSchema';
+import type { GetPublicRoadmapsInput } from '@/schemas/roadmap/GetPublicRoadmapsSchema';
 
 export const getPublicRoadmapsCore = async (
   supabase: SupabaseClient,

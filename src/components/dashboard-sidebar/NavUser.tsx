@@ -20,8 +20,8 @@ import {
   useSidebar,
 } from '@/components/ui/Sidebar';
 import { APP_ROUTES } from '@/constants/routes';
-import { useSignOut } from '@/hooks/useSignOut';
-import { getUserQueryOptions } from '@/queries/getUserQueryOptions';
+import { useSignOut } from '@/hooks/auth/useSignOut';
+import { getUserQueryOptions } from '@/queries/user/makeUserOptions';
 
 export function NavUser() {
   const router = useRouter();

@@ -1,6 +1,6 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 
-import type { SignInInput } from '@/schemas/signInSchema';
+import type { SignInInput } from '@/schemas/auth/SignInSchema';
 
 export const signInWithEmailCore = async (
   supabase: SupabaseClient,

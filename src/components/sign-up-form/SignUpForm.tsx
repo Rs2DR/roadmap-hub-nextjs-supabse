@@ -17,11 +17,11 @@ import {
 } from '@/components/ui/Field';
 import { Input } from '@/components/ui/Input';
 import { AUTH_ROUTES } from '@/constants/routes';
-import { useSignUpNewUser } from '@/hooks/useSignUpNewUser';
+import { useSignUpNewUser } from '@/hooks/auth/useSignUpNewUser';
 import { cn } from '@/lib/utils';
-import { SignUpSchema } from '@/schemas/signUpSchema';
+import { SignUpSchema } from '@/schemas/auth/SignUpSchema';
 
-import type { SignUpInput } from '@/schemas/signUpSchema';
+import type { SignUpInput } from '@/schemas/auth/SignUpSchema';
 
 export function SignUpForm({ className, ...props }: ComponentProps<'form'>) {
   const router = useRouter();

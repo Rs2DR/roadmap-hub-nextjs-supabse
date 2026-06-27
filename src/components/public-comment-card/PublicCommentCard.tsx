@@ -15,10 +15,10 @@ import {
   CardAction,
   CardContent,
 } from '@/components/ui/Card';
-import { useDeleteCommentOnRoadmap } from '@/hooks/useDeleteCommentOnRoadmap';
-import { getUserQueryOptions } from '@/queries/getUserQueryOptions';
+import { useDeleteCommentOnRoadmap } from '@/hooks/roadmap/useDeleteCommentOnRoadmap';
+import { getUserQueryOptions } from '@/queries/user/makeUserOptions';
 
-import type { PublicComment } from '@/schemas/PublicCommentSchema';
+import type { PublicComment } from '@/schemas/roadmap/PublicCommentSchema';
 
 interface PublicCommentCardProps {
   comment: PublicComment;

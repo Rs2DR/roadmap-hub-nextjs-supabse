@@ -19,12 +19,12 @@ import { RoadmapNode } from '@/components/roadmap-node';
 import { Button } from '@/components/ui/Button';
 import { ButtonGroup } from '@/components/ui/ButtonGroup';
 import { DEFAULT_EDGE_DATA, ROADMAP_TYPES } from '@/constants/roadmap';
-import { useFlowClipboard } from '@/hooks/useFlowClipboard';
-import { useMousePosition } from '@/hooks/useMousePosition';
-import { usePublishRoadmap } from '@/hooks/usePublishRoadmap';
-import { useRoadmap } from '@/hooks/useRoadmap';
-import { useSaveRoadmapGraph } from '@/hooks/useSaveRoadmapGraph';
-import { getRoadmapForEditQueryOptions } from '@/queries/getRoadmapForEditQueryOptions';
+import { useFlowClipboard } from '@/hooks/roadmap/useFlowClipboard';
+import { usePublishRoadmap } from '@/hooks/roadmap/usePublishRoadmap';
+import { useRoadmap } from '@/hooks/roadmap/useRoadmap';
+import { useSaveRoadmapGraph } from '@/hooks/roadmap/useSaveRoadmapGraph';
+import { useMousePosition } from '@/hooks/share/useMousePosition';
+import { getRoadmapForEditQueryOptions } from '@/queries/roadmap/makeRoadmapForEditOptions';
 
 import '@xyflow/react/dist/style.css';
 

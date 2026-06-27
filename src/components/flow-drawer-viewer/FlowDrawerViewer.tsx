@@ -8,8 +8,8 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from '@/components/ui/Drawer';
-import { useIsMobile } from '@/hooks/useMobile';
-import { useFlowStore } from '@/store/useFlowStore';
+import { useIsMobile } from '@/hooks/share/useIsMobile';
+import { useFlowStore } from '@/store/roadmap/useFlowStore';
 
 export function FlowDrawerViewer() {
   const isMobile = useIsMobile();

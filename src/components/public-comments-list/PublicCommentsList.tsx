@@ -3,7 +3,7 @@ import { MessageSquare } from 'lucide-react';
 
 import { EmptyState } from '@/components/empty-state';
 import { PublicCommentCard } from '@/components/public-comment-card';
-import { getRoadmapCommentsQueryOptions } from '@/queries/getRoadmapCommentsQueryOptions';
+import { getRoadmapCommentsQueryOptions } from '@/queries/roadmap/makeRoadmapCommentsOptions';
 
 interface PublicCommentsListProps {
   id: string;

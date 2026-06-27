@@ -1,6 +1,6 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 
-import type { RequestResetPasswordInput } from '@/schemas/requestResetPasswordSchema';
+import type { RequestResetPasswordInput } from '@/schemas/auth/RequestResetPasswordSchema';
 
 export const requestPasswordResetCore = async (
   supabase: SupabaseClient,

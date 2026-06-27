@@ -8,8 +8,8 @@ import { useQueryState } from 'nuqs';
 
 import { EmptyState } from '@/components/empty-state';
 import { MyRoadmapCard } from '@/components/my-roadmap-card';
-import { getMyRoadmapsInfoQueryOptions } from '@/queries/getMyRoadmapsInfoQueryOptions';
-import { filterRoadmaps } from '@/utils/filterRoadmaps';
+import { getMyRoadmapsInfoQueryOptions } from '@/queries/roadmap/makeMyRoadmapsInfoOptions';
+import { filterRoadmaps } from '@/utils/roadmap/filterRoadmaps';
 
 export function MyRoadmapsList() {
   const [filterValue] = useQueryState('filter', {

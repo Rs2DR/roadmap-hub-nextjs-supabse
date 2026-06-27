@@ -9,7 +9,7 @@ import { RoadmapNodeToolbar } from '@/components/roadmap-node/RoadmapNodeToolbar
 
 import type { Node, NodeProps } from '@xyflow/react';
 
-import type { NodeData } from '@/schemas/NodeDataSchema';
+import type { NodeData } from '@/schemas/roadmap/NodeDataSchema';
 
 type RoadmapNodeData = Node<NodeData>;
 
