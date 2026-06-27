@@ -10,8 +10,8 @@ import {
   EdgeEditorStyleField,
 } from '@/components/edge-editor-form/fields';
 import { Button } from '@/components/ui/Button';
+import { DrawerFooter } from '@/components/ui/Drawer';
 import { FieldGroup } from '@/components/ui/Field';
-import { SheetFooter } from '@/components/ui/Sheet';
 import { EdgeDataSchema } from '@/schemas/EdgeDataSchema';
 
 import type { EdgeData } from '@/schemas/EdgeDataSchema';
@@ -65,11 +65,11 @@ export const EdgeEditorForm = ({
         </FieldGroup>
       </div>
 
-      <SheetFooter className="p-4 border-t mt-4">
+      <DrawerFooter className="p-4 border-t mt-4">
         <Button type="submit" form={`edge-form-${edgeId}`}>
           Сохранить
         </Button>
-      </SheetFooter>
+      </DrawerFooter>
     </form>
   );
 };

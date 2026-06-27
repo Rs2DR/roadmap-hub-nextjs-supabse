@@ -12,7 +12,7 @@ import {
 } from '@xyflow/react';
 
 import { CustomAlertDialog } from '@/components/custom-alert-dialog';
-import { FlowSheetEditor } from '@/components/flow-sheet-editor';
+import { FlowDrawerEditor } from '@/components/flow-drawer-editor';
 import { RoadmapConnectionLine } from '@/components/roadmap-connection-line';
 import { RoadmapEdge } from '@/components/roadmap-edge';
 import { RoadmapNode } from '@/components/roadmap-node';
@@ -98,7 +98,7 @@ export function RoadmapEditor({ id }: RoadmapEditorProps) {
         <MiniMap nodeStrokeWidth={3} />
       </ReactFlow>
 
-      <FlowSheetEditor />
+      <FlowDrawerEditor />
       <CustomAlertDialog
         open={isOpenDialog}
         onOpenChange={setIsOpenDialog}

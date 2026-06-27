@@ -3,13 +3,13 @@ import { create } from 'zustand';
 import { FLOW_MODE } from '@/constants/flow';
 
 import type { FlowMode } from '@/types/FlowMode';
-import type { FlowSheetElement } from '@/types/FlowSheetElement';
+import type { FlowElement } from '@/types/FlowSheetElement';
 
 interface FlowUiState {
-  activeElement: FlowSheetElement;
+  activeElement: FlowElement;
   mode: FlowMode;
   setMode: (mode: FlowMode) => void;
-  openSidebar: (element: FlowSheetElement) => void;
+  openSidebar: (element: FlowElement) => void;
   closeSidebar: () => void;
 }
 
