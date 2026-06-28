@@ -1,3 +1,5 @@
+import type { ComponentProps } from 'react';
+
 import { PlusIcon } from 'lucide-react';
 
 import { ManageMyRoadmapDialog } from '@/components/manage-my-roadmap-dialog';
@@ -8,9 +10,9 @@ import {
   SidebarMenuItem,
 } from '@/components/ui/Sidebar';
 
-export function NavActions() {
+export function NavActions({ ...props }: ComponentProps<typeof SidebarGroup>) {
   return (
-    <SidebarGroup>
+    <SidebarGroup {...props}>
       <SidebarGroupLabel>Взаимодействия</SidebarGroupLabel>
       <SidebarMenuItem>
         <ManageMyRoadmapDialog

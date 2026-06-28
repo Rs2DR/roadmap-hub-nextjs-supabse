@@ -1,5 +1,7 @@
 'use client';
 
+import type { ComponentProps } from 'react';
+
 import { GalleryVerticalEnd } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
@@ -11,13 +13,15 @@ import {
 } from '@/components/ui/Sidebar';
 import { APP_ROUTES } from '@/constants/routes';
 
-export function DashboardSidebarHeader() {
+export function DashboardSidebarHeader({
+  ...props
+}: ComponentProps<typeof SidebarHeader>) {
   const router = useRouter();
 
   const handleNavigateToRoot = () => router.push(APP_ROUTES.ROOT);
 
   return (
-    <SidebarHeader>
+    <SidebarHeader {...props}>
       <SidebarMenu>
         <SidebarMenuItem>
           <SidebarMenuButton

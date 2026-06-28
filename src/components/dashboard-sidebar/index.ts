@@ -5,5 +5,3 @@ export * from './DashboardSidebarHeader';
 export * from './NavActions';
 export * from './NavMain';
 export * from './NavUser';
-export * from './NavGroupItem';
-export * from './NavLinkItem';
