@@ -11,14 +11,14 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '../ui/AlertDialog';
+} from '@/components/ui/AlertDialog';
 
-interface CustomAlertDialogProps extends ComponentProps<typeof AlertDialog> {
+type CustomAlertDialogProps = {
   title: string;
   description: string;
   confirmText?: string;
   onConfirm: () => void;
-}
+} & ComponentProps<typeof AlertDialog>;
 
 export function CustomAlertDialog({
   open,

@@ -20,13 +20,13 @@ import {
   useSidebar,
 } from '@/components/ui/Sidebar';
 import { APP_ROUTES } from '@/constants/routes';
-import { useSignOut } from '@/hooks/auth/useSignOut';
-import { getUserQueryOptions } from '@/queries/user/makeUserOptions';
+import { useSignOut } from '@/hooks/auth';
+import { makeUserOptions } from '@/queries/user';
 
 export function NavUser() {
   const router = useRouter();
   const { isMobile } = useSidebar();
-  const { data: user } = useSuspenseQuery(getUserQueryOptions());
+  const { data: user } = useSuspenseQuery(makeUserOptions());
   const { mutate: signOut } = useSignOut();
 
   const handleSignOut = () =>

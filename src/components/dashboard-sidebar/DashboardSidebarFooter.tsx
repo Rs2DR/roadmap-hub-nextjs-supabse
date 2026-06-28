@@ -1,8 +1,7 @@
 import { Suspense } from 'react';
 
-import { SidebarFooter } from '../ui/Sidebar';
-
-import { NavUser } from './NavUser';
+import { NavUser } from '@/components/dashboard-sidebar/NavUser';
+import { SidebarFooter } from '@/components/ui/Sidebar';
 
 export function DashboardSidebarFooter() {
   return (

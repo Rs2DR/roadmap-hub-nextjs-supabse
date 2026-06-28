@@ -1,7 +1,6 @@
-import { SidebarContent } from '../ui/Sidebar';
-
-import { NavActions } from './NavActions';
-import { NavMain } from './NavMain';
+import { NavActions } from '@/components/dashboard-sidebar';
+import { NavMain } from '@/components/dashboard-sidebar';
+import { SidebarContent } from '@/components/ui/Sidebar';
 
 export function DashboardSidebarContent() {
   return (

@@ -3,14 +3,13 @@
 import { GalleryVerticalEnd } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 
-import { APP_ROUTES } from '@/constants/routes';
-
 import {
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from '../ui/Sidebar';
+} from '@/components/ui/Sidebar';
+import { APP_ROUTES } from '@/constants/routes';
 
 export function DashboardSidebarHeader() {
   const router = useRouter();
