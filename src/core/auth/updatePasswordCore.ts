@@ -1,10 +1,10 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 
-import type { ResetPasswordInput } from '@/schemas/auth/ResetPasswordSchema';
+import type { PasswordWithConfirmInput } from '@/schemas/auth';
 
 export const updatePasswordCore = async (
   supabase: SupabaseClient,
-  params: Omit<ResetPasswordInput, 'confirmPassword'>,
+  params: Omit<PasswordWithConfirmInput, 'confirmPassword'>,
 ) => {
   const { password } = params;
 

@@ -1,8 +1,10 @@
-import { z } from 'zod';
+import z from 'zod';
 
-export const ResetPasswordSchema = z
+import { PasswordSchema } from '@/schemas/share';
+
+export const PasswordWithConfirmSchema = z
   .object({
-    password: z.string().min(8, 'Пароль должен быть минимум 8 символов'),
+    password: PasswordSchema,
     confirmPassword: z.string().min(8, 'Подтвердите пароль'),
   })
   .refine((data) => data.password === data.confirmPassword, {
@@ -10,4 +12,6 @@ export const ResetPasswordSchema = z
     path: ['confirmPassword'],
   });
 
-export type ResetPasswordInput = z.infer<typeof ResetPasswordSchema>;
+export type PasswordWithConfirmInput = z.infer<
+  typeof PasswordWithConfirmSchema
+>;

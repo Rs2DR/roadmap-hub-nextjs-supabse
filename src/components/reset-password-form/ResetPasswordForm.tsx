@@ -17,9 +17,9 @@ import { Input } from '@/components/ui/Input';
 import { APP_ROUTES } from '@/constants/routes';
 import { useUpdatePassword } from '@/hooks/auth/useUpdatePassword';
 import { cn } from '@/lib/utils';
-import { ResetPasswordSchema } from '@/schemas/auth/ResetPasswordSchema';
+import { PasswordWithConfirmSchema } from '@/schemas/auth';
 
-import type { ResetPasswordInput } from '@/schemas/auth/ResetPasswordSchema';
+import type { PasswordWithConfirmInput } from '@/schemas/auth';
 
 export function ResetPasswordForm({
   className,
@@ -33,15 +33,15 @@ export function ResetPasswordForm({
     handleSubmit,
     control,
     formState: { isSubmitting, isValid },
-  } = useForm<ResetPasswordInput>({
-    resolver: zodResolver(ResetPasswordSchema),
+  } = useForm<PasswordWithConfirmInput>({
+    resolver: zodResolver(PasswordWithConfirmSchema),
     defaultValues: {
       password: '',
       confirmPassword: '',
     },
   });
 
-  const onSubmit = async (data: ResetPasswordInput) => {
+  const onSubmit = async (data: PasswordWithConfirmInput) => {
     updatePassword(data, {
       onSuccess: () => {
         router.push(APP_ROUTES.DASHBOARD);

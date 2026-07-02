@@ -1,11 +1,10 @@
 import { z } from 'zod';
 
+import { EmailSchema, PasswordSchema } from '@/schemas/share';
+
 export const SignInSchema = z.object({
-  email: z.email('Некорректный формат email'),
-  password: z
-    .string()
-    .min(8, 'Пароль должен быть минимум 8 символов')
-    .max(30, 'Пароль должен быть менее 30 символов'),
+  email: EmailSchema,
+  password: PasswordSchema,
 });
 
 export type SignInInput = z.infer<typeof SignInSchema>;
