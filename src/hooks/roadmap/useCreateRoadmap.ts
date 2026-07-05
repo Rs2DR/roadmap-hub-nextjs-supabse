@@ -9,7 +9,7 @@ import { MY_ROADMAPS_KEY } from '@/constants/queries';
 import { handleActionError } from '@/utils/error/handleActionError';
 
 import type { MyRoadmap } from '@/schemas/MyRoadmapSchema';
-import type { ManageMyRoadmapInput } from '@/schemas/roadmap/ManageMyRoadmapSchema';
+import type { ManageMyRoadmapInput } from '@/schemas/roadmap/form/MyRoadmapInfoInputSchema';
 
 const createOptimisticRoadmap = (
   newRoadmap: ManageMyRoadmapInput,

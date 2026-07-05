@@ -8,7 +8,7 @@ import { deleteCommentOnRoadmap } from '@/actions/roadmap/deleteCommentOnRoadmap
 import { ROADMAP_COMMENTS_KEY } from '@/constants/queries';
 import { handleActionError } from '@/utils/error/handleActionError';
 
-import type { PublicComment } from '@/schemas/roadmap/PublicCommentSchema';
+import type { PublicComment } from '@/schemas/roadmap/RoadmapCommentSchema';
 
 export const useDeleteCommentOnRoadmap = ({
   roadmapId,

@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 import { PasswordWithConfirmSchema } from '@/schemas/auth';
-import { EmailSchema, NameSchema } from '@/schemas/share';
+import { EmailSchema, NameSchema } from '@/schemas/common';
 
 export const SignUpSchema = z
   .object({

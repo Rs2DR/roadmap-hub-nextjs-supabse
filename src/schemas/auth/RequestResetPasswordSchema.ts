@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { EmailSchema } from '@/schemas/share';
+import { EmailSchema } from '@/schemas/common';
 
 export const RequestResetPasswordSchema = z.object({
   email: EmailSchema,

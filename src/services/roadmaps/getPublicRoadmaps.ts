@@ -1,7 +1,7 @@
 import { getPublicRoadmapsCore } from '@/core/roadmaps';
 import { requireAuth } from '@/lib/supabase';
 
-import type { GetPublicRoadmapsInput } from '@/schemas/roadmap/GetPublicRoadmapsSchema';
+import type { GetPublicRoadmapsInput } from '@/schemas/roadmap/form/PublicRoadmapsInputSchema';
 
 export const getPublicRoadmaps = async (
   params: Omit<GetPublicRoadmapsInput, 'userId'>,

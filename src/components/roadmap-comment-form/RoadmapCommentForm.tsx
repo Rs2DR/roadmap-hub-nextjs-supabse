@@ -9,9 +9,9 @@ import { Button } from '@/components/ui/Button';
 import { Field, FieldError } from '@/components/ui/Field';
 import { Input } from '@/components/ui/Input';
 import { useAddCommentOnRoadmap } from '@/hooks/roadmap/useAddCommentOnRoadmap';
-import { CreateCommentSchema } from '@/schemas/roadmap/CreateCommentSchema';
+import { CreateCommentSchema } from '@/schemas/roadmap/form/RoadmapCommentInputSchema';
 
-import type { CreateCommentInput } from '@/schemas/roadmap/CreateCommentSchema';
+import type { CreateCommentInput } from '@/schemas/roadmap/form/RoadmapCommentInputSchema';
 
 interface RoadmapCommentFormProps {
   roadmapId: string;

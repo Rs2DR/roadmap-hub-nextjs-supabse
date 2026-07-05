@@ -1,17 +1,7 @@
-import { z } from 'zod';
+import { EdgeDataDbSchema } from '@/schemas/roadmap/db';
 
-import { EDGE_LINE_STYLES, EDGE_ROUTING_TYPES } from '@/constants/edge';
+import type z from 'zod';
 
-import { HexSchema } from './HexSchema';
-
-import type { EdgeLineStyle } from '@/types/roadmap/EdgeLineStyle';
-import type { EdgeRoutingType } from '@/types/roadmap/EdgeRoutingType';
-
-export const EdgeDataSchema = z.object({
-  routingType: z.enum(Object.keys(EDGE_ROUTING_TYPES) as EdgeRoutingType[]),
-  lineStyle: z.enum(Object.keys(EDGE_LINE_STYLES) as EdgeLineStyle[]),
-  color: HexSchema,
-  animated: z.boolean(),
-});
+export const EdgeDataSchema = EdgeDataDbSchema;
 
 export type EdgeData = z.infer<typeof EdgeDataSchema>;

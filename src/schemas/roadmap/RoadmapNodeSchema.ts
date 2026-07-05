@@ -1,15 +1,7 @@
-import { z } from 'zod';
+import { RoadmapNodeDbSchema } from '@/schemas/roadmap/db';
 
-import { NodeDataSchema } from '@/schemas/roadmap/NodeDataSchema';
+import type z from 'zod';
 
-export const RoadmapNodeSchema = z.object({
-  id: z.string(),
-  type: z.string().optional(),
-  position: z.object({
-    x: z.number(),
-    y: z.number(),
-  }),
-  data: NodeDataSchema,
-});
+export const RoadmapNodeSchema = RoadmapNodeDbSchema;
 
 export type RoadmapNode = z.infer<typeof RoadmapNodeSchema>;

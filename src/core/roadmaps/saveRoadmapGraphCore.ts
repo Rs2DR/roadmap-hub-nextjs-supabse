@@ -1,8 +1,8 @@
-import { RoadmapGraphSchema } from '@/schemas/roadmap/RoadmapGrahpSchema';
+import { RoadmapGraphSchema } from '@/schemas/roadmap/db/RoadmapGrahpBaseDbSchema';
 
 import type { SupabaseClient } from '@supabase/supabase-js';
 
-import type { SaveRoadmapGraphInput } from '@/schemas/roadmap/SaveRoadmapGraphSchema';
+import type { SaveRoadmapGraphInput } from '@/schemas/roadmap/RoadmapGraphInputSchema';
 
 export const saveRoadmapGraphCore = async (
   supabase: SupabaseClient,

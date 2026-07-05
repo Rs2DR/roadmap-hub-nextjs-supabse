@@ -2,7 +2,7 @@
 
 import { createRoadmapCore } from '@/core/roadmaps';
 import { authActionClient } from '@/lib/next-safe-actions';
-import { ManageMyRoadmapSchema } from '@/schemas/roadmap/ManageMyRoadmapSchema';
+import { ManageMyRoadmapSchema } from '@/schemas/roadmap/form/MyRoadmapInfoInputSchema';
 
 export const createRoadmap = authActionClient
   .inputSchema(ManageMyRoadmapSchema)

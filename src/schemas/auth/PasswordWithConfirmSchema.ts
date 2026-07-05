@@ -1,11 +1,11 @@
 import z from 'zod';
 
-import { PasswordSchema } from '@/schemas/share';
+import { PasswordSchema } from '@/schemas/common';
 
 export const PasswordWithConfirmSchema = z
   .object({
     password: PasswordSchema,
-    confirmPassword: z.string().min(8, 'Подтвердите пароль'),
+    confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: 'Пароли не совпадают',

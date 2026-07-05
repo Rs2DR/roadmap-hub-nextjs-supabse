@@ -2,7 +2,7 @@ import { MyRoadmapSchema } from '@/schemas/MyRoadmapSchema';
 
 import type { SupabaseClient } from '@supabase/supabase-js';
 
-import type { ManageMyRoadmapInput } from '@/schemas/roadmap/ManageMyRoadmapSchema';
+import type { ManageMyRoadmapInput } from '@/schemas/roadmap/form/MyRoadmapInfoInputSchema';
 
 export const updateRoadmapInfoCore = async (
   supabase: SupabaseClient,

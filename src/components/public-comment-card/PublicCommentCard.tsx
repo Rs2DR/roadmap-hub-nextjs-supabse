@@ -18,7 +18,7 @@ import {
 import { useDeleteCommentOnRoadmap } from '@/hooks/roadmap/useDeleteCommentOnRoadmap';
 import { getUserQueryOptions } from '@/queries/user/makeUserOptions';
 
-import type { PublicComment } from '@/schemas/roadmap/PublicCommentSchema';
+import type { PublicComment } from '@/schemas/roadmap/RoadmapCommentSchema';
 
 interface PublicCommentCardProps {
   comment: PublicComment;

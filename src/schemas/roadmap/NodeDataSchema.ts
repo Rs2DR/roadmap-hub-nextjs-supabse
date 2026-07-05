@@ -1,14 +1,7 @@
-import { z } from 'zod';
+import { NodeDataDbSchema } from '@/schemas/roadmap/db';
 
-import { HexSchema } from './HexSchema';
+import type z from 'zod';
 
-export const NodeDataSchema = z.object({
-  label: z.string().min(1, 'Название обязательно'),
-  description: z.string(),
-  emoji: z.emoji(),
-  color: HexSchema,
-  timeToLearn: z.string(),
-  links: z.array(z.object({ url: z.url('Введите корректный URL') })),
-});
+export const NodeDataSchema = NodeDataDbSchema;
 
 export type NodeData = z.infer<typeof NodeDataSchema>;

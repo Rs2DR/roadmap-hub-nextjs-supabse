@@ -1,6 +1,6 @@
 import z from 'zod';
 
-import { PublicCommentSchema } from '@/schemas/roadmap/PublicCommentSchema';
+import { PublicCommentSchema } from '@/schemas/roadmap/RoadmapCommentSchema';
 
 import type { SupabaseClient } from '@supabase/supabase-js';
 
