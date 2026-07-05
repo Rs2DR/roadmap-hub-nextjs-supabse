@@ -9,7 +9,7 @@ export const EdgeDataDbSchema = z.object({
   routingType: z.enum(Object.keys(EDGE_ROUTING_TYPES) as EdgeRoutingType[]),
   lineStyle: z.enum(Object.keys(EDGE_LINE_STYLES) as EdgeLineStyle[]),
   color: HexSchema,
-  animated: z.boolean(),
+  animated: z.boolean('Некорректный формат значения анимации'),
 });
 
 export type EdgeDataDb = z.infer<typeof EdgeDataDbSchema>;

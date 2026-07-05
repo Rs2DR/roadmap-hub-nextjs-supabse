@@ -5,7 +5,7 @@ import { UuidSchema } from '@/schemas/common';
 export const RoadmapCommentInputSchema = z.object({
   roadmapId: UuidSchema,
   content: z
-    .string()
+    .string('Некорректный формат сообщения')
     .nonempty('Комментарий не может быть пустым')
     .max(400, { error: ({ maximum }) => `Максимум ${maximum} символов` })
     .trim(),

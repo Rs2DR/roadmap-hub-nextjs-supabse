@@ -3,10 +3,12 @@ import { z } from 'zod';
 import { RoadmapGraphBaseDbSchema } from '@/schemas/roadmap/db';
 
 export const PublicRoadmapGraphDbSchema = RoadmapGraphBaseDbSchema.extend({
-  title: z.string().min(1, 'Название обязательно'),
+  title: z
+    .string('Некорректный формат загаловка')
+    .nonempty('Название обязательно'),
   description: z
-    .string()
-    .nullable()
+    .string('Некорректный формат описания')
+    .nonempty('Описание обязательно')
     .transform((val) => val ?? ''),
   is_liked: z
     .array(z.object({ id: z.string() }))

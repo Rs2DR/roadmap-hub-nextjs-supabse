@@ -6,8 +6,8 @@ import { EdgeDataDbSchema } from '@/schemas/roadmap/db';
 
 export const RoadmapEdgeDbSchema = z.object({
   id: UuidSchema,
-  source: z.string(),
-  target: z.string(),
+  source: z.string('Некорректное значение source'),
+  target: z.string('Некоррктное значение traget'),
   type: z.literal(ROADMAP_TYPES.edge).default(ROADMAP_TYPES.edge),
   data: EdgeDataDbSchema.optional(),
 });

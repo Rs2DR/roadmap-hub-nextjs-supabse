@@ -1,6 +1,6 @@
 import z from 'zod';
 
 export const AvatarSchema = z
-  .string()
+  .url('Некорректный формат аватарки')
   .nullable()
   .transform((val) => val ?? '');
