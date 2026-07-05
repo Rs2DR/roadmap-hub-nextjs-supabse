@@ -22,6 +22,4 @@ export const signUpCore = async (
   if (error) {
     throw new Error('Не удалось создать аккаунт');
   }
-
-  return { success: true };
 };

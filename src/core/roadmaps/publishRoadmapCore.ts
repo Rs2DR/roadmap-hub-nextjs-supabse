@@ -13,6 +13,4 @@ export const publishRoadmapCore = async (
   if (error) {
     throw new Error('Не удалось опубликовать карту');
   }
-
-  return { success: true };
 };

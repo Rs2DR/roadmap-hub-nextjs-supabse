@@ -1,7 +1,3 @@
-import z from 'zod';
-
-import { PublicRoadmapSchema } from '@/schemas/PublicRoadmapSchema';
-
 import type { SupabaseClient } from '@supabase/supabase-js';
 
 export const getBookmarkedRoadmapsCore = async (
@@ -32,5 +28,5 @@ export const getBookmarkedRoadmapsCore = async (
     throw new Error('Не удалось получить Roadmaps в закладках');
   }
 
-  return z.array(PublicRoadmapSchema).parse(data);
+  return data;
 };

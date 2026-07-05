@@ -1,7 +1,3 @@
-import { z } from 'zod';
-
-import { MyRoadmapSchema } from '@/schemas/MyRoadmapSchema';
-
 import type { SupabaseClient } from '@supabase/supabase-js';
 
 export const getMyRoadmapsInfoCore = async (
@@ -31,5 +27,5 @@ export const getMyRoadmapsInfoCore = async (
     throw new Error('Не удалось загрузить ваши roadmap');
   }
 
-  return z.array(MyRoadmapSchema).parse(data);
+  return data;
 };

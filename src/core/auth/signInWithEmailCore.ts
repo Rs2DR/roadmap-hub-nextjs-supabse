@@ -16,6 +16,4 @@ export const signInWithEmailCore = async (
   if (error) {
     throw new Error('Неверный email или пароль');
   }
-
-  return { success: true };
 };

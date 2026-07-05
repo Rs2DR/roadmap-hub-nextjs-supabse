@@ -1,10 +1,10 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 
-import type { CreateCommentInput } from '@/schemas/roadmap/form/RoadmapCommentInputSchema';
+import type { RoadmapCommentInput } from '@/schemas/roadmap/form';
 
 export const addCommentOnRoadmapCore = async (
   supabase: SupabaseClient,
-  params: CreateCommentInput & { userId: string },
+  params: RoadmapCommentInput & { userId: string },
 ) => {
   const { roadmapId, content, userId } = params;
 
@@ -17,6 +17,4 @@ export const addCommentOnRoadmapCore = async (
   if (error) {
     throw new Error(error.message);
   }
-
-  return { success: true };
 };

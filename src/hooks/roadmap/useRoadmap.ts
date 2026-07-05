@@ -16,8 +16,7 @@ import {
   DEFAULT_NODE_DATA,
   ROADMAP_TYPES,
 } from '@/constants/roadmap';
-import { useFlowStore } from '@/store/roadmap/useFlowStore';
-import { useReconnectStore } from '@/store/roadmap/useReconnectStore';
+import { useFlowStore, useReconnectStore } from '@/store/roadmap';
 
 import type {
   Edge,
@@ -33,8 +32,7 @@ import type {
   OnReconnect,
 } from '@xyflow/react';
 
-import type { EdgeData } from '@/schemas/EdgeDataSchema';
-import type { NodeData } from '@/schemas/roadmap/NodeDataSchema';
+import type { EdgeData, NodeData } from '@/schemas/roadmap';
 
 interface UseRoadmapParams {
   initialNodes: Node<NodeData>[];

@@ -4,11 +4,11 @@ import { mutationOptions } from '@next-safe-action/adapter-tanstack-query';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
-import { deleteCommentOnRoadmap } from '@/actions/roadmap/deleteCommentOnRoadmap';
+import { deleteCommentOnRoadmap } from '@/actions/roadmap';
 import { ROADMAP_COMMENTS_KEY } from '@/constants/queries';
-import { handleActionError } from '@/utils/error/handleActionError';
+import { handleActionError } from '@/utils/error';
 
-import type { PublicComment } from '@/schemas/roadmap/RoadmapCommentSchema';
+import type { RoadmapComment } from '@/schemas/roadmap';
 
 export const useDeleteCommentOnRoadmap = ({
   roadmapId,
@@ -24,10 +24,10 @@ export const useDeleteCommentOnRoadmap = ({
         await queryClient.cancelQueries({ queryKey });
 
         const previousComments =
-          queryClient.getQueryData<PublicComment[]>(queryKey);
+          queryClient.getQueryData<RoadmapComment[]>(queryKey);
 
         if (previousComments) {
-          queryClient.setQueryData<PublicComment[]>(
+          queryClient.setQueryData<RoadmapComment[]>(
             queryKey,
             previousComments.filter((comment) => comment.id !== id),
           );

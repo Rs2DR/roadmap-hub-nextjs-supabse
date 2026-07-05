@@ -12,5 +12,5 @@ export const likeRoadmapCore = async (
     throw new Error('Не удалось изменить статус лайка');
   }
 
-  return { isLiked: data as boolean };
+  return data;
 };

@@ -1,14 +1,10 @@
-import { z } from 'zod';
-
-import { PublicRoadmapSchema } from '@/schemas/PublicRoadmapSchema';
-
 import type { SupabaseClient } from '@supabase/supabase-js';
 
-import type { GetPublicRoadmapsInput } from '@/schemas/roadmap/form/PublicRoadmapsInputSchema';
+import type { PublicRoadmapsInput } from '@/schemas/roadmap/form';
 
 export const getPublicRoadmapsCore = async (
   supabase: SupabaseClient,
-  params: GetPublicRoadmapsInput,
+  params: PublicRoadmapsInput,
 ) => {
   const { search, orderBy = 'newest', userId } = params;
 
@@ -47,5 +43,5 @@ export const getPublicRoadmapsCore = async (
     throw new Error('Не удалось получить опубликованные Roadmaps');
   }
 
-  return z.array(PublicRoadmapSchema).parse(data);
+  return data;
 };

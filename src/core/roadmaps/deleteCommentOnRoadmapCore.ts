@@ -15,6 +15,4 @@ export const deleteCommentOnRoadmapCore = async (
   if (error) {
     throw new Error('Не удалось удалить комментарий или у вас нет прав');
   }
-
-  return { success: true };
 };

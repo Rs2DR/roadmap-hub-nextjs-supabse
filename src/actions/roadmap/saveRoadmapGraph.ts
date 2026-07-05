@@ -2,15 +2,17 @@
 
 import { saveRoadmapGraphCore } from '@/core/roadmaps';
 import { authActionClient } from '@/lib/next-safe-actions';
-import { SaveRoadmapGraphSchema } from '@/schemas/roadmap/RoadmapGraphInputSchema';
+import {
+  RoadmapGraphBaseSchema,
+  RoadmapGraphInputSchema,
+} from '@/schemas/roadmap';
 
 export const saveRoadmapGraph = authActionClient
-  .inputSchema(SaveRoadmapGraphSchema)
+  .inputSchema(RoadmapGraphInputSchema)
+  .outputSchema(RoadmapGraphBaseSchema)
   .action(async ({ parsedInput, ctx }) => {
     const { supabase } = ctx;
     const { id, nodes, edges, viewport } = parsedInput;
-
-    console.log(parsedInput);
 
     return saveRoadmapGraphCore(supabase, { id, nodes, edges, viewport });
   });

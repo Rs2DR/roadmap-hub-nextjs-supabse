@@ -1,12 +1,10 @@
-import { MyRoadmapSchema } from '@/schemas/MyRoadmapSchema';
-
 import type { SupabaseClient } from '@supabase/supabase-js';
 
-import type { ManageMyRoadmapInput } from '@/schemas/roadmap/form/MyRoadmapInfoInputSchema';
+import type { MyRoadmapInfoInput } from '@/schemas/roadmap/form';
 
 export const updateRoadmapInfoCore = async (
   supabase: SupabaseClient,
-  params: ManageMyRoadmapInput & { id: string; userId: string },
+  params: MyRoadmapInfoInput & { id: string; userId: string },
 ) => {
   const { id, userId, title, description } = params;
 
@@ -25,5 +23,5 @@ export const updateRoadmapInfoCore = async (
     throw new Error('Не удалось обновить roadmap');
   }
 
-  return MyRoadmapSchema.parse(data);
+  return data;
 };

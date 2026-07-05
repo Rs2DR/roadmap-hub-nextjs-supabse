@@ -4,11 +4,11 @@ import { mutationOptions } from '@next-safe-action/adapter-tanstack-query';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
-import { updateRoadmapInfo } from '@/actions/roadmap/updateRoadmapInfo';
+import { updateRoadmapInfo } from '@/actions/roadmap';
 import { MY_ROADMAPS_KEY } from '@/constants/queries';
-import { handleActionError } from '@/utils/error/handleActionError';
+import { handleActionError } from '@/utils/error';
 
-import type { MyRoadmap } from '@/schemas/MyRoadmapSchema';
+import type { MyRoadmapInfo } from '@/schemas/roadmap';
 
 export const useUpdateRoadmapInfo = () => {
   const queryClient = useQueryClient();
@@ -18,11 +18,11 @@ export const useUpdateRoadmapInfo = () => {
       onMutate: async (updatedRoadmap) => {
         await queryClient.cancelQueries({ queryKey: [MY_ROADMAPS_KEY] });
 
-        const previousRoadmaps = queryClient.getQueryData<MyRoadmap[]>([
+        const previousRoadmaps = queryClient.getQueryData<MyRoadmapInfo[]>([
           MY_ROADMAPS_KEY,
         ]);
 
-        queryClient.setQueryData<MyRoadmap[]>(
+        queryClient.setQueryData<MyRoadmapInfo[]>(
           [MY_ROADMAPS_KEY],
           (oldRoadmaps) => {
             if (!oldRoadmaps) return oldRoadmaps;
@@ -45,7 +45,7 @@ export const useUpdateRoadmapInfo = () => {
 
       onError: (error, _vars, context) => {
         if (context?.previousRoadmaps) {
-          queryClient.setQueryData<MyRoadmap[]>(
+          queryClient.setQueryData<MyRoadmapInfo[]>(
             [MY_ROADMAPS_KEY],
             context.previousRoadmaps,
           );
@@ -57,7 +57,7 @@ export const useUpdateRoadmapInfo = () => {
       onSuccess: (data) => {
         toast.success('Roadmap успешно обновлена');
 
-        queryClient.setQueryData<MyRoadmap[]>(
+        queryClient.setQueryData<MyRoadmapInfo[]>(
           [MY_ROADMAPS_KEY],
           (oldRoadmaps) => {
             if (!oldRoadmaps) return oldRoadmaps;

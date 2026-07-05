@@ -10,3 +10,5 @@ export const RoadmapGraphBaseSchema = RoadmapGraphBaseDbSchema.omit({
   nodes: z.array(RoadmapNodeSchema).default([]),
   edges: z.array(RoadmapEdgeSchema).default([]),
 });
+
+export type RoadmapGraphBase = z.infer<typeof RoadmapGraphBaseSchema>;

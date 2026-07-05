@@ -8,8 +8,7 @@ import { DEFAULT_EDGE_DATA } from '@/constants/roadmap';
 
 import type { Edge, Node } from '@xyflow/react';
 
-import type { EdgeData } from '@/schemas/EdgeDataSchema';
-import type { NodeData } from '@/schemas/roadmap/NodeDataSchema';
+import type { EdgeData, NodeData } from '@/schemas/roadmap';
 
 interface UseFlowClipboardParams {
   mousePosRef: RefObject<{ x: number; y: number }>;

@@ -2,10 +2,10 @@
 
 import { addCommentOnRoadmapCore } from '@/core/roadmaps';
 import { authActionClient } from '@/lib/next-safe-actions';
-import { CreateCommentSchema } from '@/schemas/roadmap/form/RoadmapCommentInputSchema';
+import { RoadmapCommentInputSchema } from '@/schemas/roadmap/form';
 
 export const addCommentOnRoadmap = authActionClient
-  .inputSchema(CreateCommentSchema)
+  .inputSchema(RoadmapCommentInputSchema)
   .action(async ({ parsedInput, ctx }) => {
     const { supabase, userId } = ctx;
     const { roadmapId, content } = parsedInput;

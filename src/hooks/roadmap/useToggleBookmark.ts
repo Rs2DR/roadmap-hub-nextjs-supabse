@@ -4,16 +4,16 @@ import { mutationOptions } from '@next-safe-action/adapter-tanstack-query';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
-import { toggleBookmarkAction } from '@/actions/roadmap/toggleBookmark';
+import { toggleBookmarkAction } from '@/actions/roadmap';
 import {
   ROADMAPS_KEY,
   BOOKMARKED_ROADMAPS_KEY,
   ROADMAP_VIEW_KEY,
 } from '@/constants/queries';
-import { handleActionError } from '@/utils/error/handleActionError';
-import { asArray } from '@/utils/share/asArray';
+import { handleActionError } from '@/utils/error';
+import { asArray } from '@/utils/share';
 
-import type { PublicRoadmap } from '@/schemas/PublicRoadmapSchema';
+import type { PublicRoadmapGraph, PublicRoadmapInfo } from '@/schemas/roadmap';
 
 export const useToggleBookmark = () => {
   const queryClient = useQueryClient();
@@ -27,22 +27,20 @@ export const useToggleBookmark = () => {
         });
         await queryClient.cancelQueries({ queryKey: [ROADMAP_VIEW_KEY, id] });
 
-        const toggle = (r: PublicRoadmap): PublicRoadmap => ({
-          ...r,
-          isBookmarked: !r.isBookmarked,
-        });
-
-        queryClient.setQueryData<PublicRoadmap>(
+        queryClient.setQueryData<PublicRoadmapGraph>(
           [ROADMAP_VIEW_KEY, id],
-          (old) => (old ? toggle(old) : old),
+          (old) => (old ? { ...old, isBookmarked: !old.isBookmarked } : old),
         );
 
-        queryClient.setQueriesData<PublicRoadmap[]>(
+        queryClient.setQueriesData<PublicRoadmapInfo[]>(
           { queryKey: [ROADMAPS_KEY] },
-          (old) => asArray(old).map((r) => (r.id === id ? toggle(r) : r)),
+          (old) =>
+            asArray(old).map((r) =>
+              r.id === id ? { ...r, isBookmarked: !r.isBookmarked } : r,
+            ),
         );
 
-        queryClient.setQueriesData<PublicRoadmap[]>(
+        queryClient.setQueriesData<PublicRoadmapInfo[]>(
           { queryKey: [BOOKMARKED_ROADMAPS_KEY] },
           (old) => {
             const arr = asArray(old);
@@ -54,7 +52,7 @@ export const useToggleBookmark = () => {
             }
 
             const fromRoadmap = queryClient
-              .getQueriesData<PublicRoadmap[]>({
+              .getQueriesData<PublicRoadmapInfo[]>({
                 queryKey: [ROADMAPS_KEY],
               })
               .flatMap(([, d]) => asArray(d))

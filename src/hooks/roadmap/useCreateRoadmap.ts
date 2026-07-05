@@ -4,16 +4,16 @@ import { mutationOptions } from '@next-safe-action/adapter-tanstack-query';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
-import { createRoadmap } from '@/actions/roadmap/createRoadmap';
+import { createRoadmap } from '@/actions/roadmap';
 import { MY_ROADMAPS_KEY } from '@/constants/queries';
-import { handleActionError } from '@/utils/error/handleActionError';
+import { handleActionError } from '@/utils/error';
 
-import type { MyRoadmap } from '@/schemas/MyRoadmapSchema';
-import type { ManageMyRoadmapInput } from '@/schemas/roadmap/form/MyRoadmapInfoInputSchema';
+import type { MyRoadmapInfo } from '@/schemas/roadmap';
+import type { MyRoadmapInfoInput } from '@/schemas/roadmap/form';
 
 const createOptimisticRoadmap = (
-  newRoadmap: ManageMyRoadmapInput,
-): MyRoadmap => {
+  newRoadmap: MyRoadmapInfoInput,
+): MyRoadmapInfo => {
   const timestamp = Date.now().toString();
 
   return {
@@ -37,11 +37,11 @@ export const useCreateRoadmap = () => {
         await queryClient.cancelQueries({ queryKey });
 
         const previousRoadmaps =
-          queryClient.getQueryData<MyRoadmap[]>(queryKey);
+          queryClient.getQueryData<MyRoadmapInfo[]>(queryKey);
 
         const optimisticRoadmap = createOptimisticRoadmap(newRoadmap);
 
-        queryClient.setQueryData<MyRoadmap[]>(queryKey, (oldRoadmap) => [
+        queryClient.setQueryData<MyRoadmapInfo[]>(queryKey, (oldRoadmap) => [
           optimisticRoadmap,
           ...(oldRoadmap ?? []),
         ]);
@@ -59,7 +59,7 @@ export const useCreateRoadmap = () => {
 
       onError: (error, _vars, context) => {
         if (context?.previousRoadmaps) {
-          queryClient.setQueryData<MyRoadmap[]>(
+          queryClient.setQueryData<MyRoadmapInfo[]>(
             queryKey,
             context.previousRoadmaps,
           );

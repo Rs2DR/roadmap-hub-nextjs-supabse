@@ -15,6 +15,4 @@ export const requestPasswordResetCore = async (
   if (error) {
     throw new Error('Не удалось отправить письмо для сброса пароля');
   }
-
-  return { success: true };
 };

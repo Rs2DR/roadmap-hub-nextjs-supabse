@@ -2,15 +2,17 @@
 
 import { updateRoadmapInfoCore } from '@/core/roadmaps';
 import { authActionClient } from '@/lib/next-safe-actions';
-import { RoadmapBaseSchema } from '@/schemas/roadmap/db/RoadmapBaseInfoDbSchema';
-import { ManageMyRoadmapSchema } from '@/schemas/roadmap/form/MyRoadmapInfoInputSchema';
+import { UuidSchema } from '@/schemas/common';
+import { MyRoadmapInfoSchema } from '@/schemas/roadmap';
+import { MyRoadmapInfoInputSchema } from '@/schemas/roadmap/form';
+
+const UpdateRoadmapInfoSchema = MyRoadmapInfoInputSchema.extend({
+  id: UuidSchema,
+});
 
 export const updateRoadmapInfo = authActionClient
-  .inputSchema(
-    ManageMyRoadmapSchema.extend({
-      id: RoadmapBaseSchema.shape.id,
-    }),
-  )
+  .inputSchema(UpdateRoadmapInfoSchema)
+  .outputSchema(MyRoadmapInfoSchema)
   .action(async ({ parsedInput, ctx }) => {
     const { supabase, userId } = ctx;
     const { id, title, description } = parsedInput;

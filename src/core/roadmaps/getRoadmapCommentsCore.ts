@@ -1,7 +1,3 @@
-import z from 'zod';
-
-import { PublicCommentSchema } from '@/schemas/roadmap/RoadmapCommentSchema';
-
 import type { SupabaseClient } from '@supabase/supabase-js';
 
 export const getRoadmapCommentsCore = async (
@@ -18,5 +14,5 @@ export const getRoadmapCommentsCore = async (
     throw new Error(error.message);
   }
 
-  return z.array(PublicCommentSchema).parse(data);
+  return data;
 };

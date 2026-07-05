@@ -10,10 +10,10 @@ import { toast } from 'sonner';
 
 import { addCommentOnRoadmap } from '@/actions/roadmap';
 import { ROADMAP_COMMENTS_KEY } from '@/constants/queries';
-import { getUserQueryOptions } from '@/queries/user/makeUserOptions';
+import { makeUserOptions } from '@/queries/user';
 import { handleActionError } from '@/utils/error';
 
-import type { PublicComment } from '@/schemas/roadmap/RoadmapCommentSchema';
+import type { RoadmapComment } from '@/schemas/roadmap';
 
 export const useAddCommentOnRoadmap = ({
   roadmapId,
@@ -23,7 +23,7 @@ export const useAddCommentOnRoadmap = ({
   const queryClient = useQueryClient();
   const queryKey = [ROADMAP_COMMENTS_KEY, roadmapId];
 
-  const { data: user } = useSuspenseQuery(getUserQueryOptions());
+  const { data: user } = useSuspenseQuery(makeUserOptions());
 
   return useMutation(
     mutationOptions(addCommentOnRoadmap, {
@@ -31,9 +31,9 @@ export const useAddCommentOnRoadmap = ({
         await queryClient.cancelQueries({ queryKey });
 
         const previousComments =
-          queryClient.getQueryData<PublicComment[]>(queryKey) ?? [];
+          queryClient.getQueryData<RoadmapComment[]>(queryKey) ?? [];
 
-        const optimisticComment: PublicComment = {
+        const optimisticComment: RoadmapComment = {
           id: crypto.randomUUID(),
           roadmapId: roadmapId,
           userId: user.id,
@@ -43,7 +43,7 @@ export const useAddCommentOnRoadmap = ({
           avatar: user.user_metadata?.avatar ?? '',
         };
 
-        queryClient.setQueryData<PublicComment[]>(queryKey, [
+        queryClient.setQueryData<RoadmapComment[]>(queryKey, [
           optimisticComment,
           ...previousComments,
         ]);

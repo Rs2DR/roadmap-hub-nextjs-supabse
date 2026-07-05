@@ -15,6 +15,4 @@ export const deleteRoadmapCore = async (
   if (error) {
     throw new Error('Не удалось удалить roadmap');
   }
-
-  return { success: true };
 };

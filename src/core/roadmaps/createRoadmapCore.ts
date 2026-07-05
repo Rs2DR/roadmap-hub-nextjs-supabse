@@ -1,12 +1,10 @@
-import { MyRoadmapSchema } from '@/schemas/MyRoadmapSchema';
-
 import type { SupabaseClient } from '@supabase/supabase-js';
 
-import type { ManageMyRoadmapInput } from '@/schemas/roadmap/form/MyRoadmapInfoInputSchema';
+import type { MyRoadmapInfoInput } from '@/schemas/roadmap/form';
 
 export const createRoadmapCore = async (
   supabase: SupabaseClient,
-  params: ManageMyRoadmapInput & { userId: string },
+  params: MyRoadmapInfoInput & { userId: string },
 ) => {
   const { userId, title, description } = params;
 
@@ -26,5 +24,5 @@ export const createRoadmapCore = async (
     throw new Error('Не удалось создать roadmap');
   }
 
-  return MyRoadmapSchema.parse(data);
+  return data;
 };

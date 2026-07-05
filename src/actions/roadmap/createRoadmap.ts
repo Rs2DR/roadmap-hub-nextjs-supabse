@@ -2,10 +2,12 @@
 
 import { createRoadmapCore } from '@/core/roadmaps';
 import { authActionClient } from '@/lib/next-safe-actions';
-import { ManageMyRoadmapSchema } from '@/schemas/roadmap/form/MyRoadmapInfoInputSchema';
+import { MyRoadmapInfoSchema } from '@/schemas/roadmap';
+import { MyRoadmapInfoInputSchema } from '@/schemas/roadmap/form';
 
 export const createRoadmap = authActionClient
-  .inputSchema(ManageMyRoadmapSchema)
+  .inputSchema(MyRoadmapInfoInputSchema)
+  .outputSchema(MyRoadmapInfoSchema)
   .action(async ({ parsedInput, ctx }) => {
     const { supabase, userId } = ctx;
     const { title, description } = parsedInput;

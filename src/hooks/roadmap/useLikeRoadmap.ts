@@ -4,16 +4,11 @@ import { mutationOptions } from '@next-safe-action/adapter-tanstack-query';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'sonner';
 
-import { likeRoadmap } from '@/actions/roadmap/likeRoadmap';
-import {
-  ROADMAP_VIEW_KEY,
-  ROADMAPS_KEY,
-  MY_ROADMAPS_KEY,
-} from '@/constants/queries';
-import { handleActionError } from '@/utils/error/handleActionError';
-import { asArray } from '@/utils/share/asArray';
+import { likeRoadmap } from '@/actions/roadmap';
+import { ROADMAP_VIEW_KEY, ROADMAPS_KEY } from '@/constants/queries';
+import { handleActionError } from '@/utils/error';
 
-import type { PublicRoadmap } from '@/schemas/PublicRoadmapSchema';
+import type { PublicRoadmapGraph } from '@/schemas/roadmap';
 
 export const useLikeRoadmap = () => {
   const queryClient = useQueryClient();
@@ -24,33 +19,23 @@ export const useLikeRoadmap = () => {
         await queryClient.cancelQueries({ queryKey: [ROADMAPS_KEY] });
         await queryClient.cancelQueries({ queryKey: [ROADMAP_VIEW_KEY, id] });
 
-        const previousView = queryClient.getQueryData<PublicRoadmap>([
+        const previousView = queryClient.getQueryData<PublicRoadmapGraph>([
           ROADMAP_VIEW_KEY,
           id,
         ]);
 
-        const toggle = (r: PublicRoadmap): PublicRoadmap => {
+        const toggle = (r: PublicRoadmapGraph): PublicRoadmapGraph => {
           const isLiked = !r.isLiked;
 
           return {
             ...r,
             isLiked,
-            likesCount: (r.likesCount ?? 0) + (isLiked ? 1 : -1),
           };
         };
 
-        queryClient.setQueryData<PublicRoadmap>(
+        queryClient.setQueryData<PublicRoadmapGraph>(
           [ROADMAP_VIEW_KEY, id],
           (old) => (old ? toggle(old) : old),
-        );
-
-        queryClient.setQueriesData<PublicRoadmap[]>(
-          { queryKey: [ROADMAPS_KEY] },
-          (old) => {
-            if (!old) return old;
-
-            return asArray(old).map((r) => (r.id === id ? toggle(r) : r));
-          },
         );
 
         return { previousView };
@@ -65,12 +50,6 @@ export const useLikeRoadmap = () => {
             context.previousView,
           );
         }
-      },
-
-      onSuccess: () => {
-        queryClient.invalidateQueries({
-          queryKey: [MY_ROADMAPS_KEY],
-        });
       },
     }),
   );

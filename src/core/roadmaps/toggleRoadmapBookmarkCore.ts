@@ -14,5 +14,5 @@ export const toggleRoadmapBookmarkCore = async (
     throw new Error('Не удалось переключить закладку');
   }
 
-  return { isBookmarked: data as boolean };
+  return data;
 };

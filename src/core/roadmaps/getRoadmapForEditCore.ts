@@ -1,5 +1,3 @@
-import { RoadmapGraphSchema } from '@/schemas/roadmap/db/RoadmapGrahpBaseDbSchema';
-
 import type { SupabaseClient } from '@supabase/supabase-js';
 
 export const getRoadmapForEditCore = async (
@@ -38,5 +36,5 @@ export const getRoadmapForEditCore = async (
     })),
   };
 
-  return RoadmapGraphSchema.parse(formattedGraph);
+  return formattedGraph;
 };

@@ -6,6 +6,4 @@ export const signOutCore = async (supabase: SupabaseClient) => {
   if (error) {
     throw new Error('Не удалось выйти из аккаунта');
   }
-
-  return { success: true };
 };

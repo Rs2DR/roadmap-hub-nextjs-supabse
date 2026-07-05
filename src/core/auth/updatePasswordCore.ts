@@ -15,6 +15,4 @@ export const updatePasswordCore = async (
   if (error) {
     throw new Error('Не удалось обновить пароль');
   }
-
-  return { success: true };
 };

@@ -1,12 +1,10 @@
-import { RoadmapGraphSchema } from '@/schemas/roadmap/db/RoadmapGrahpBaseDbSchema';
-
 import type { SupabaseClient } from '@supabase/supabase-js';
 
-import type { SaveRoadmapGraphInput } from '@/schemas/roadmap/RoadmapGraphInputSchema';
+import type { RoadmapGraphInput } from '@/schemas/roadmap';
 
 export const saveRoadmapGraphCore = async (
   supabase: SupabaseClient,
-  params: SaveRoadmapGraphInput,
+  params: RoadmapGraphInput,
 ) => {
   const { id, nodes, edges, viewport } = params;
 
@@ -17,11 +15,9 @@ export const saveRoadmapGraphCore = async (
     p_viewport: viewport,
   });
 
-  console.log(error);
-
   if (error) {
     throw new Error('Не удалось сохранить roadmap');
   }
 
-  return RoadmapGraphSchema.parse(data);
+  return data;
 };

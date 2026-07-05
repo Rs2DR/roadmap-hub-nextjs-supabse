@@ -1,5 +1,3 @@
-import { PublicRoadmapGraphSchema } from '@/schemas/roadmap/PublicRoadmapGraphSchema';
-
 import type { SupabaseClient } from '@supabase/supabase-js';
 
 export const getRoadmapForViewCore = async (
@@ -47,5 +45,5 @@ export const getRoadmapForViewCore = async (
     })),
   };
 
-  return PublicRoadmapGraphSchema.parse(formattedGraph);
+  return formattedGraph;
 };
