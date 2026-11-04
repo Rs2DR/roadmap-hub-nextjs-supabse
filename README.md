@@ -1,36 +1,112 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🗺️ Roadmap Hub
 
-## Getting Started
+[![Next.js](https://img.shields.io/badge/Next.js-black?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
+[![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)](https://supabase.com/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
 
-First, run the development server:
+**Roadmap Hub** — это интерактивная платформа для создания, просмотра, комментирования и отслеживания дорожных карт (роадмапов) развития. Проект позволяет пользователям визуально конструировать пути обучения с помощью узлов и связей, а также делиться ими с сообществом.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+🌐 **Демонстрация проекта:** [rodion.lol](https://rodion.lol/)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## ✨ Реализованный функционал
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 🔐 Авторизация и безопасность (Supabase Auth)
+- Регистрация и авторизация по Email/Паролю.
+- Социальная авторизация (GitHub Provider).
+- Восстановление и обновление пароля.
+- Защита приватных маршрутов (Auth Guards) и проверка сессий.
 
-## Learn More
+### 🛠 Визуальный редактор дорожных карт (Flow Editor)
+- **Интерактивный конструктор:** Создание роадмапов с помощью графов (узлы и связи).
+- **Редактор узлов (Node Editor):** Настройка цвета, иконок (эмодзи), меток, ссылок и времени для каждого шага.
+- **Редактор связей (Edge Editor):** Настройка стилей, цветов и анимаций для линий, соединяющих узлы.
+- Автоматическое сохранение графа дорожной карты.
 
-To learn more about Next.js, take a look at the following resources:
+### 🌍 Публичные и приватные роадмапы
+- **Дашборд пользователя:** Управление собственными дорожными картами (создание, редактирование, удаление).
+- **Публичная лента:** Просмотр дорожных карт, созданных другими пользователями сообщества.
+- **Фильтрация и поиск:** Удобный поиск по созданным и публичным роадмапам.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 💬 Социальные взаимодействия
+- **Лайки и закладки:** Возможность оценить чужой роадмап и сохранить его себе в «Закладки» (Bookmarks) для быстрого доступа.
+- **Комментарии:** Оставление комментариев к публичным дорожным картам, а также удаление своих комментариев.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 💻 Стек технологий
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Проект построен на современном стеке с акцентом на производительность, строгую типизацию и удобство разработки:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Фронтенд
+- **[Next.js](https://nextjs.org/)** (App Router) — серверный рендеринг, маршрутизация и API роуты.
+- **[React](https://reactjs.org/)** — библиотека для построения пользовательских интерфейсов.
+- **[TypeScript](https://www.typescriptlang.org/)** — строгая типизация всего проекта.
+- **[Tailwind CSS](https://tailwindcss.com/)** — утилитарный CSS-фреймворк для стилизации.
+- **[shadcn/ui](https://ui.shadcn.com/)** — набор переиспользуемых и кастомизируемых UI компонентов (Кнопки, Модалки, Дропдауны, Скелетоны и т.д.).
+- **[TanStack Query (React Query)](https://tanstack.com/query/latest)** — управление серверным состоянием, кэширование и мутации данных.
+- **Zustand** — легковесное управление клиентским состоянием (хранение состояния графов/узлов).
+
+### Бэкенд и База данных
+- **[Supabase](https://supabase.com/)** — Backend-as-a-Service (BaaS).
+  - PostgreSQL для хранения данных (пользователи, роадмапы, узлы, комментарии, лайки).
+  - Supabase Auth для управления пользователями.
+
+### Валидация и Утилиты
+- **[Zod](https://zod.dev/)** — декларативная валидация данных и форм.
+- **next-safe-actions** — безопасная обработка серверных действий (Server Actions) с валидацией типов.
+- **xior** — легковесный HTTP клиент.
+
+### Инструменты разработчика
+- **[Bun](https://bun.sh/)** — сверхбыстрый пакетный менеджер (используется `bun.lock`).
+- **ESLint & Prettier** — линтинг и форматирование кода.
+- **Husky & Commitlint** — pre-commit хуки для поддержания чистоты коммитов.
+
+---
+
+## 🚀 Локальный запуск
+
+Для запуска проекта на вашем локальном компьютере выполните следующие шаги:
+
+1. **Клонируйте репозиторий:**
+   ```bash
+   git clone https://github.com/Rs2DR/roadmap-hub-nextjs-supabse.git
+   cd roadmap-hub-nextjs-supabse
+   ```
+
+2. **Установите зависимости:**
+   Проект использует `bun` в качестве пакетного менеджера, но вы можете использовать `npm` или `yarn`.
+   ```bash
+   bun install
+   # или npm install
+   ```
+
+3. **Настройте переменные окружения:**
+   Создайте файл `.env.local` в корне проекта и добавьте ваши ключи доступа к Supabase.
+   ```env
+   NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+   ```
+
+4. **Запустите сервер разработки:**
+   ```bash
+   bun run dev
+   # или npm run dev
+   ```
+
+5. **Откройте приложение:**
+   Перейдите по адресу [http://localhost:3000](http://localhost:3000) в вашем браузере.
+
+---
+
+## 📂 Структура проекта (основная)
+
+- `src/app/` — Маршрутизация (App Router), страницы (`(auth)`, `(root)/dashboard`) и API роуты.
+- `src/components/` — Переиспользуемые UI компоненты (включая компоненты редактора графов и UI-кит).
+- `src/core/` & `src/services/` — Бизнес-логика, серверные функции и взаимодействие с Supabase.
+- `src/hooks/` — Кастомные React хуки для инкапсуляции логики.
+- `src/schemas/` — Схемы валидации данных Zod (для форм и API).
+- `src/queries/` — Настройки TanStack Query для получения данных.
+- `src/store/` — Глобальные стейты приложения.
